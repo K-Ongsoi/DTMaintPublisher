@@ -1,0 +1,122 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Technical Department : Document Editor Page">
+    <meta name="author" content="Keerati Ongsoi" />
+
+    <title>THAI - Technical Department : Document Editor Page</title>
+    <link rel="icon" href="images/favicon.png" />
+    <link href="framework/bootstrap4/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="framework/css/all.css" rel="stylesheet" />
+    <link href="style/fonts.css" rel="stylesheet" />
+    <link href="style/master.css" rel="stylesheet" />
+</head>
+<body>
+    <nav class="navbar sticky-top flex-md-nowrap p-0">
+        <a class="navbar-brand" href="#"><img src="images/LightLogo.png" /></a>
+        <div class="col-sm-2 col-md-2 mr-0 navbar page-title" style="float: left;">Document Editors</div>
+        <div class="w-100" style="align-content:center;text-align:center;" ><img src="images/DarkLogo.png" style="vertical-align: central;" />TECHNICAL DEPARTMENT</div>
+        <div class="col-sm-2 col-md-2">
+            <ul class="navbar-nav px-2" style="float:right;">
+                <li class="nav-item text-nowrap dropdown" style="text-align:right;">
+                    <a class="nav-link navbar dropdown-toggle" href="#" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false"><i class="fas fa-user-circle" style="vertical-align:middle;color:#808080;"></i><span class="user-name">&nbsp; Keerati Ongsoi</span></a>
+                    <div class="dropdown-menu">
+                        <a class="dropdown-item" href="logout.html">Logout</a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="row">
+            <nav class="d-none d-md-block bg-light sidebar">
+                <div class="sidebar-sticky">
+                    <ul class="nav flex-column">
+                        <li class="nav-item">
+                            <a class="nav-link active" href="#" title="Document Editor">
+                                <span data-feather="home"></span>
+                                <i class="far fa-clipboard fa-2x"></i>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">
+                                <span data-feather="file"></span>
+                                <i class="far fa-lightbulb fa-2x"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+        </div>
+        <main role="main" class="main col-md-11 ml-sm-auto col-lg-12 pt-0 px-5 mh-100 h-100" style="position:page;">
+            <div class="d-flex justify-content-between flex-wrap flex-md-nowrap border-bottom">
+                <nav class="nav" style="float:left;">                    
+                     <a class="nav-link active" href="#"><i class="far fa-file"></i> New Document</a>
+                     <a class="nav-link" href="#"><i class="far fa-copy"></i> New Revision</a>                    
+                </nav>
+            </div>
+            <span class="pageTitle"><i class="far fa-file"></i> New Document</span>
+            <div class="container-fluid h-100">
+                <div class="row mw-100 h-100">
+                    <div class="col-md-6 p-2">
+                        <div class="card mw-100">
+                            <form class="p-1">
+                                <div class="form-row">
+                                    <div class="col-auto ml-md-auto">
+                                        <label>Document Status:&nbsp;</label><span class="badge badge-primary">CREATED</span>
+                                    </div>                                    
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <label for="documentNo">Document Number</label>
+                                            <input type="text" class="form-control" id="documentNo" placeholder="Document Number" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label for="documentPart">Part</label>
+                                            <input type="text" class="form-control" id="documentPart" placeholder="Part" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label for="documentVersion">Version</label>
+                                            <input type="text" class="form-control" id="documentVersion" placeholder="Version" />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-md-6 mr-md-auto">
+                                        <div class="form-group">
+                                            <label for="labOffice">Lab Office</label>
+                                            <input type="text" class="form-control" id="labOffice" placeholder="Lab Office" />
+                                        </div>
+                                    </div>                                    
+                                </div>
+                                <div class="form-row">
+                                    <div class="col mw-100">
+                                        <div class="form-group">
+                                            <label for="documentDesc">Description</label>
+                                            <textarea class="form-control" id="documentDesc" rows="10"></textarea>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="col-md-6 p-2">
+                       Additional Data
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+</body>
+<!-- Java Script Section -->
+<script src="framework/jquery-3.3.1.min.js"></script>
+<script src="framework/bootstrap4/js/bootstrap.min.js"></script>
+<!-- End Java Script -->
+</html>
