@@ -1,6 +1,6 @@
 ﻿body {
     font-size: .875rem;
-    background-color: #fafafa;
+    background-color: #fafafa;    
 }
 
 .sidebar {
@@ -25,9 +25,22 @@
     width: 48px;
 }
 
+.main_content {
+    height: calc(100vh - 60px - 110px);
+}
+
+.scrollable {
+    overflow-x: scroll;
+    overflow-y: scroll;
+}
+
 .main {
     top: 10px;
     left: 17px;
+}
+
+textarea {
+    resize: none;
 }
 
 .sidebar .nav-link {

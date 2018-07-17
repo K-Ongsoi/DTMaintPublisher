@@ -11,7 +11,7 @@ using System.Web.Services;
 [WebService(Namespace = "http://thaitechnical.com/")]
 [WebServiceBinding(ConformsTo = WsiProfiles.BasicProfile1_1)]
 // To allow this Web Service to be called from script, using ASP.NET AJAX, uncomment the following line. 
-// [System.Web.Script.Services.ScriptService]
+[System.Web.Script.Services.ScriptService]
 public class DocumentWS : System.Web.Services.WebService
 {
     [WebMethod]
@@ -45,5 +45,18 @@ public class DocumentWS : System.Web.Services.WebService
         }
 
         return JsonConvert.SerializeObject(fleet);
+    }
+
+    [WebMethod]
+    public String getIntervalUnit()
+    {
+        List<String> iUnits = new List<string>();
+
+        iUnits.Add("FH");
+        iUnits.Add("FC");
+        iUnits.Add("MO");
+        iUnits.Add("YR");
+
+        return JsonConvert.SerializeObject(iUnits);
     }
 }

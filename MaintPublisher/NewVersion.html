@@ -50,11 +50,11 @@
         <main role="main" class="main col-md-11 ml-sm-auto col-lg-12 pt-0 px-5 mh-100 h-100" style="position:page;">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap border-bottom">
                 <nav class="nav" style="float:left;">
-                    <a class="nav-link active" href="#"><i class="far fa-file"></i> New Document</a>
-                    <a class="nav-link" href="NewVersion.html"><i class="far fa-copy"></i> New Revision</a>
+                    <a class="nav-link" href="DocEditor.html"><i class="far fa-file"></i> New Document</a>
+                    <a class="nav-link active" href="#"><i class="far fa-copy"></i> New Revision</a>
                 </nav>
             </div>
-            <span class="pageTitle"><i class="far fa-file"></i> New Document</span>
+            <span class="pageTitle"><i class="far fa-copy"></i> New Revision</span>
             <div class="container-fluid h-100">
                 <div class="row mw-100 h-100">
                     <div class="col-md-6 p-2">
@@ -70,19 +70,19 @@
                                         <div class="col-md-8">
                                             <div class="form-group">
                                                 <label for="documentNo">Document Number</label>
-                                                <input type="text" class="form-control" id="documentNo" placeholder="Document Number" />
+                                                <input type="text" class="form-control" id="documentNo" placeholder="Document Number" readonly/>
                                             </div>
                                         </div>
                                         <div class="col-md-2">
                                             <div class="form-group">
                                                 <label for="documentPart">Part</label>
-                                                <input type="text" class="form-control" id="documentPart" placeholder="Part" />
+                                                <input type="text" class="form-control" id="documentPart" placeholder="Part" readonly/>
                                             </div>
                                         </div>
                                         <div class="col-md-2">
                                             <div class="form-group">
                                                 <label for="documentVersion">Version</label>
-                                                <input type="number" class="form-control" id="documentVersion" placeholder="Version" value="00" />
+                                                <input type="number" class="form-control" id="documentVersion" placeholder="Version" value="00" readonly />
                                             </div>
                                         </div>
                                     </div>
@@ -309,6 +309,74 @@
             </div>
         </main>
     </div>
+    <div class="modal fade" id="DocumentSelector" tabindex="-1" role="dialog" aria-labelledby="DocumentSelector" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title"><i class="far fa-clone"></i>Select Document</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body p-0">
+                    <div class="container-fluid">
+                        <div class="row p-0">
+                            <div class="col-md-4">
+                                <div class="form-group">
+                                    <label for="s_documentNumber">Document</label>
+                                    <input type="number" class="form-control" id="s_documentNumber" placeholder="Version" value="00" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="s_documentPart">Part</label>
+                                    <input type="number" class="form-control" id="s_documentPart" placeholder="Version" value="00" />
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label for="s_documentVersion">Version</label>
+                                    <input type="number" class="form-control" id="s_documentVersion" placeholder="Version" value="00" />
+                                </div>
+                            </div>
+                            <div class="col-md-2" style="vertical-align:text-bottom;">
+                                <button type="button" class="btn-sm btn-outline-secondary" style="vertical-align:text-bottom;margin-top: 30px;"><i class="fas fa-search"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="container-fluid col-md-12" id="resultDocs">
+                        <select id="selectDocuments" class="form-control" multiple>
+                            <option value="0810000101-TG01|380|00">   
+                                <div class="row">
+                                    <div class="col-xs-6">0810000101-TG01</div>
+                                    <div class="col-xs-3">380</div>
+                                    <div class="col-xs-3">00</div>
+                                </div>
+                            </option>
+                            <option value="122112100807TG|787|02">
+                                <div class="row">
+                                    <div class="col-xs-6">122112100807TG</div>
+                                    <div class="col-xs-3">787</div>
+                                    <div class="col-xs-3">02</div>
+                                </div>
+                            </option>
+                            <option value="200253-00001-01|380|09">
+                                <div class="row">
+                                    <div class="col-xs-6">200253-00001-01</div>
+                                    <div class="col-xs-3">380</div>
+                                    <div class="col-xs-3">09</div>
+                                </div>
+                            </option>                            
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-outline-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-outline-primary" id="selectDocAction">Select</button>
+                </div>
+            </div>
+        </div>
+    </div>
 </body>
 <!-- Java Script Section -->
 <script src="framework/jquery-3.3.1.min.js"></script>
@@ -410,6 +478,9 @@
     $(document).ready(function () {
         getIntervalUnit();
         getAircraftModel();
+
+        $('[data-toggle="tooltip"]').tooltip();
+
         $('#TG_ACEff').multiselect({
             nonSelectedText: 'Please select an aircraft',
             enableClickableOptGroups: true,
@@ -417,6 +488,46 @@
             enableFiltering: true,
             buttonWidth: '100%'
         });        
+
+        $("#s_documentNumber").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#selectDocuments option").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
+        $("#s_documentPart").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            $("#selectDocuments option").filter(function () {
+                $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+            });
+        });
+
+        $('#selectDocAction').click(function () {
+            var selectedDoc = $('#selectDocuments').find(":selected").val();
+
+            if (selectedDoc != undefined) {
+                var arr = selectedDoc.split("|");
+                $('#documentNo').val(arr[0]);
+                $('#documentPart').val(arr[1]);
+                var i_rev = parseInt(arr[2]);
+                i_rev++;
+                if (i_rev <= 9) {
+                    $('#documentVersion').val('0' + i_rev);
+                }
+                else {
+                    $('#documentVersion').val(i_rev);
+                }
+
+                $('#DocumentSelector').modal('hide');
+            }
+            else {
+                alert("Please select an existing document!");
+                return;
+            }
+        });
+
+        $('#DocumentSelector').modal('show');
     });
 </script>
 <!-- End Java Script -->
