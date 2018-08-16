@@ -62,6 +62,9 @@
                             <div class="card-body">
                                 <form class="p-1">
                                     <div class="form-row">
+                                        <div class="col-md-4">
+                                            <button id="fromTEMPLATE" class="btn btn-sm btn-outline-primary"><i class="fas fa-clone"></i> Use Template</button>
+                                        </div>
                                         <div class="col-auto ml-md-auto">
                                             <label>Document Status:&nbsp;</label><span class="badge badge-success">CREATED</span>
                                         </div>
@@ -151,8 +154,8 @@
                                 </form>
                             </div>
                             <div class="card-footer">
-                                <button type="button" class="btn btn-outline-primary"><i class="far fa-save"></i> Save</button>
-                                <button type="button" class="btn btn-outline-danger"><i class="fas fa-undo"></i> Cancel</button>
+                                <button type="button" class="btn btn-sm btn-outline-primary"><i class="far fa-save"></i> Save</button>
+                                <button type="button" class="btn btn-sm btn-outline-danger"><i class="fas fa-undo"></i> Cancel</button>
                             </div>
                         </div>
                     </div>
@@ -164,6 +167,10 @@
                                     <div class="form-row">
                                         <div class="col-md-4"><label>Aircraft Model:</label></div>
                                         <div class="col-md-8 p-1"><select class="mw-100 w-100" id="acModel" multiple="multiple"> </select></div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="col-md-4"><label>TG Aircraft Effectivity:</label></div>
+                                        <div class="col-md-8 p-1"><select class="mw-100 w-100" id="TG_ACEff" multiple="multiple"> </select></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>Revision No.:</label></div>
@@ -211,7 +218,7 @@
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>Beginning Effective Date</label></div>
-                                        <div class="col-md-8 p-1"><input type="date" class="form-control" data-date-format="DD.MM.YYYY" placeholder="Beginning Effective Date"/></div>
+                                        <div class="col-md-8 p-1"><input type="date" class="form-control" data-date-format="DD.MM.YYYY" placeholder="Beginning Effective Date" /></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>MP Task Status</label></div>
@@ -263,11 +270,7 @@
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>MPD Aircraft Effectivity</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="MPD Engine Effectivity" /></div>
-                                    </div>
-                                    <div class="form-row">
-                                        <div class="col-md-4"><label>TG Aircraft Effectivity:</label></div>
-                                        <div class="col-md-8 p-1"><select class="mw-100 w-100" id="TG_ACEff" multiple="multiple"> </select></div>
+                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="MPD Aircraft Effectivity" /></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>MPD Reference</label></div>

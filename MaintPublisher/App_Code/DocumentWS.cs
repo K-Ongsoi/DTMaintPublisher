@@ -15,6 +15,14 @@ using System.Web.Services;
 public class DocumentWS : System.Web.Services.WebService
 {
     [WebMethod]
+    public String SAPConnectionState()
+    {
+        SAPConnectionInterface sapConnector = new SAPConnectionInterface();
+        bool result = sapConnector.checkConnection();
+        return JsonConvert.SerializeObject(result);
+    }
+
+    [WebMethod]
     public string GetAircraftModel()
     {
         List<String> actypes = new List<String>();
