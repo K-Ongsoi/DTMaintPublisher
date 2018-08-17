@@ -14,6 +14,7 @@
     <link href="style/master.css" rel="stylesheet" />
     <link href="framework/bootstrap4/css/open-iconic-bootstrap.css" rel="stylesheet" />
     <link href="framework/bootstrap4/css/bootstrap-multiselect.css" rel="stylesheet" />
+    <link href="content/toastr.min.css" rel="stylesheet" />
 </head>
 <body>
     <nav class="navbar sticky-top flex-md-nowrap p-0" role="navigation">
@@ -22,7 +23,7 @@
         <div class="w-100" style="align-content:center;text-align:center;"><img src="images/DarkLogo.png" style="vertical-align: central;" />TECHNICAL DEPARTMENT</div>
         <div class="col-sm-2 col-md-2">
             <div class="navbar-nav px-2" style="float:right;">
-                <a href="#" role="button"><i class="fas fa-user-circle" style="vertical-align:middle;color:#808080;"></i><span class="user-name">&nbsp; Keerati Ongsoi</span></a>                
+                <a href="#" role="button"><i class="fas fa-user-circle" style="vertical-align:middle;color:#808080;"></i><span class="user-name">&nbsp; Keerati Ongsoi</span></a>
             </div>
         </div>
     </nav>
@@ -90,10 +91,10 @@
                                         </div>
                                     </div>
                                     <div class="form-row">
-                                        <div class="col-md-6 mr-md-auto">
+                                        <div class="col-md-12 mr-md-auto">
                                             <div class="form-group">
-                                                <label for="labOffice">Lab Office</label>
-                                                <input type="text" class="form-control" id="labOffice" placeholder="Lab Office" />
+                                                <label for="labOffice">Lab Office</label>                                                
+                                                <select class="form-control" id="labOffice"></select>
                                             </div>
                                         </div>
                                     </div>
@@ -110,15 +111,15 @@
                                             <div class="form-group">
                                                 <div>Originals:</div>
                                                 <div class="table-responsive-sm" id="originalDocs">
-                                                    <table class="table table-striped table-hover">                                                        
-                                                        <thead class="thead-light">                                                            
+                                                    <table class="table table-striped table-hover">
+                                                        <thead class="thead-light">
                                                             <tr>
                                                                 <th width="5%">APPL.</th>
                                                                 <th width="*">Application</th>
                                                                 <th width="15%">Storage Cat.</th>
                                                                 <th width="12%"></th>
                                                             </tr>
-                                                        </thead>                                                        
+                                                        </thead>
                                                         <tbody>
                                                             <tr>
                                                                 <td align="center"><i class="far fa-file-word fa-2x"></i></td>
@@ -141,8 +142,8 @@
                                                         </tbody>
                                                         <tfoot>
                                                             <tr>
-                                                                <td colspan="3">                                                                    
-                                                                    <button type="button" class="btn btn-outline-secondary"><i class="fas fa-file-import"></i></button>                                                                   
+                                                                <td colspan="3">
+                                                                    <button type="button" class="btn btn-outline-secondary"><i class="fas fa-file-import"></i></button>
                                                                 </td>
                                                             </tr>
                                                         </tfoot>
@@ -154,8 +155,8 @@
                                 </form>
                             </div>
                             <div class="card-footer">
-                                <button type="button" class="btn btn-sm btn-outline-primary"><i class="far fa-save"></i> Save</button>
-                                <button type="button" class="btn btn-sm btn-outline-danger"><i class="fas fa-undo"></i> Cancel</button>
+                                <button type="button" id="docSave" class="btn btn-sm btn-outline-primary"><i class="far fa-save"></i> Save</button>
+                                <button type="button" id="docCancel" class="btn btn-sm btn-outline-danger"><i class="fas fa-undo"></i> Cancel</button>
                             </div>
                         </div>
                     </div>
@@ -174,23 +175,23 @@
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>Revision No.:</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="Revision No." /></div>
+                                        <div class="col-md-8 p-1"><input type="text" id="mri_revNo" class="form-control" placeholder="Revision No." /></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>Revision/Edition/Issue Date:</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="Revision/Edition/Issue Date" /></div>
+                                        <div class="col-md-8 p-1"><input type="text" id="mri_revDate" class="form-control" placeholder="Revision/Edition/Issue Date" /></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>Revision Code of Original Task:</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="Revision Code" /></div>
+                                        <div class="col-md-8 p-1"><input type="text" id="mri_revCode" class="form-control" placeholder="Revision Code" /></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>A/C Zone:</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="Aircraft Zonal" /></div>
+                                        <div class="col-md-8 p-1"><input type="text" id="mri_acZone" class="form-control" placeholder="Aircraft Zonal" /></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>MP Task Source</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="MP Task Source" /></div>
+                                        <div class="col-md-8 p-1"><input type="text" id="mri_mpSource" class="form-control" placeholder="MP Task Source" /></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>MP Task Section</label></div>
@@ -318,10 +319,94 @@
 <script src="framework/bootstrap4/js/popper.min.js"></script>
 <script src="framework/bootstrap4/js/bootstrap.min.js"></script>
 <script src="framework/bootstrap4/js/bootstrap-multiselect.js"></script>
+<script src="Scripts/toastr.min.js"></script>
 <script>
     var acModel = [];
+    var tgAcEff = [];
     var selected = [];
     var intervalUnits = [];
+    var laboratories = [];
+
+    var v_docHeader = {};
+    var v_mriClass = {};
+    var userName = 'TG27394';
+    
+    function getDocumentHeader() {
+        var docNumber = $('#documentNo').val();
+        var docType = 'MRI';
+        var docPart = $('#documentPart').val();
+        var docVersion = $('#documentVersion').val();
+        var labOffice = $('#labOffice').val();
+        var docDesc = $('#documentDesc').val();
+
+        v_docHeader = { 'docNo': docNumber, 'docType': docType, 'docPart': docPart, 'docVersion': docVersion, 'description': docDesc, 'laboratory': labOffice, 'userName': userName };
+    }
+
+    function getMRIClassData() {
+        var aircraftModel = '';
+        $(selected).each(function (index, item) {
+            aircraftModel = aircraftModel + (item.value + "; ");
+        });
+
+        var revNumber = $('#mri_revNo').val();
+        var revDate = $('#mri_revDate').val();
+        var revCode = $('#mri_revCode').val();
+        var acZone = $('#mri_acZone').val();
+        var mpSource = $('#mri_mpSource').val();
+        var taskSelection = '';
+        var samplingPercent = '';
+        var workType = '';
+        var inspectSpecial = '';
+        var mpTaskNumber = '';
+        var tgTaskNumber = '';
+        var validFrom = '';
+        var mpTaskStatus = '';
+        var mpTaskMH = '';
+        var accessPanel = '';
+        var mpdOffset = '';
+        var mpdLimitInterval = '';
+        var mpdOffsetSample = '';
+        var mpdIntervalSample = '';
+        var tgTaskOffset = '';
+        var tgTaskLimit = '';
+        var tgTaskOffsetSample = '';
+        var tgTaskLimitSample = '';
+        var mpdEngineEff = '';
+        var mpdAircraftEff = '';
+        var tgAircraftEff = '';
+        $(tgAcEff).each(function (index, item) {
+            tgAircraftEff = tgAircraftEff + (item + "; ");
+        });
+        var mpdReference = '';
+        var otherReference = '';
+        var detecCode = '';
+        var inspReportReq = '';
+        var tgIntervalOffsetNote = '';
+        var tgDepending = '';
+        var reason = '';
+        var engineeringNote = '';
+
+        v_mriClass = { 'acModel': aircraftModel, 'revNumber': revNumber, 'revDate': revDate, 'revCode': revCode, 'acZone': acZone, 'mpSource': mpSource, 'taskSelection': taskSelection, 'samplingPercent': samplingPercent, 'workType': workType, 'inspectSpecial': inspectSpecial, 'mpTaskNumber': mpTaskNumber, 'tgTaskNumber': tgTaskNumber, 'validFrom': validFrom, 'mpTaskStatus': mpTaskStatus, 'mpTaskMH': mpTaskMH, 'accessPanel': accessPanel, 'mpdOffset': mpdOffset, 'mpdLimitInterval': mpdLimitInterval, 'mpdOffsetSample': mpdOffsetSample, 'mpdIntervalSample': mpdIntervalSample, 'tgTaskOffset': tgTaskOffset, 'tgTaskLimit': tgTaskLimit, 'tgTaskOffsetSample': tgTaskOffsetSample, 'tgTaskLimitSample': tgTaskLimitSample, 'mpdEngineEff': mpdEngineEff, 'mpdAircraftEff': mpdAircraftEff, 'tgAircraftEff': tgAircraftEff, 'mpdReference': mpdReference, 'otherReference': otherReference, 'detecCode': detecCode, 'inspReportReq': inspReportReq, 'tgIntervalOffsetNote': tgIntervalOffsetNote, 'tgDepending': tgDepending, 'reason': reason, 'engineeringNote': engineeringNote };
+    }
+
+    function getLaboratories() {
+        $.ajax({
+            type: 'POST',
+            url: 'DocumentWS.asmx/GetLaboratories',
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            success: function (response) {
+                var jsonData = (response.d) ? $.parseJSON(response.d) : $.parseJSON(response);
+                $(jsonData).each(function (index, value) {
+                    laboratories.push(value);
+                });               
+
+                $(laboratories).each(function (index,  item) {
+                    $('#labOffice').append("<option value='" + item.labCode + "'>" + item.labText + "</option>");                   
+                });
+            }
+        });
+    }
 
     function getIntervalUnit() {
         $.ajax({
@@ -354,17 +439,18 @@
             dataType: 'json',
             success: function (response) {
                 var jsonData = (response.d) ? $.parseJSON(response.d) : $.parseJSON(response);
+                acModel = [];
                 $(jsonData).each(function (index, value) {
                     acModel.push(value);
                 });
-                renderAcModel();                
+                renderAcModel();
             }
         });
     }
 
-    function renderAircraftEff() {        
+    function renderAircraftEff() {
         $('#TG_ACEff').empty();
-        $(selected).each(function (i, item) {           
+        $(selected).each(function (i, item) {
             var jsonRequest = '{model : ' + JSON.stringify(item.value) + '}';
             $.ajax({
                 type: 'POST',
@@ -385,18 +471,25 @@
                         enableClickableOptGroups: true,
                         enableCollapsibleOptGroups: true,
                         enableFiltering: true,
-                        buttonWidth: '100%'
+                        buttonWidth: '100%',
+                        onChange: function (element, checked) {
+                            var tgAircrafts = $('#TG_ACEff option:selected');
+                            tgAcEff = [];
+                            $(tgAircrafts).each(function (index, sel_acreg) {
+                                tgAcEff.push(sel_acreg.label);
+                            });
+                        }
                     });
                 }
-            });                        
-        });               
+            });
+        });
     }
 
     function renderAcModel() {
         $(acModel).each(function (item, value) {
             $('#acModel').append("<option value='" + value + "'>" + value + "</option>");
         });
-        $('#acModel').multiselect({            
+        $('#acModel').multiselect({
             nonSelectedText: 'Please select aircraft model',
             onChange: function (element, checked) {
                 var fleetModel = $('#acModel option:selected');
@@ -411,6 +504,7 @@
     }
 
     $(document).ready(function () {
+        getLaboratories();
         getIntervalUnit();
         getAircraftModel();
         $('#TG_ACEff').multiselect({
@@ -418,9 +512,62 @@
             enableClickableOptGroups: true,
             enableCollapsibleOptGroups: true,
             enableFiltering: true,
-            buttonWidth: '100%'
-        });        
+            buttonWidth: '100%',
+            onChange: function (element, checked) {
+                var tgAircrafts = $('#TG_ACEff option:selected');
+                tgAcEff = [];
+                $(tgAircrafts).each(function (index, acreg) {
+                    tgAcEff.push(acreg);
+                });
+            }
+        });
+
+        toastr.options = {
+            "closeButton": true,
+            "debug": false,
+            "newestOnTop": true,
+            "progressBar": false,
+            "positionClass": "toast-top-full-width",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+        }
     });
+
+    $('#docSave').click(function () {
+        getDocumentHeader();
+        getMRIClassData();
+        var postObj = {
+            doc: v_docHeader,
+            mriClass: v_mriClass
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: 'DocumentWS.asmx/createMRIDoc',
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            data: JSON.stringify(postObj),
+            success: function (response) {
+                var jsonData = (response.d) ? $.parseJSON(response.d) : $.parseJSON(response);
+
+                if (jsonData.result)
+                    toastr["success"](jsonData.message);
+                else
+                    toastr["error"](jsonData.message);
+            },
+            error: function (response) {                
+                toastr["error"]("Error while saving document data to SAP system!!!");
+            }
+        });
+    })
 </script>
 <!-- End Java Script -->
 </html>

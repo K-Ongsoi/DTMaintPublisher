@@ -23,6 +23,24 @@ public class DocumentWS : System.Web.Services.WebService
     }
 
     [WebMethod]
+    public String createMRIDoc(DMSDocument doc, MRIClass mriClass)
+    {
+        SAPConnectionInterface sapConnector = new SAPConnectionInterface();        
+
+        RfcResult result = sapConnector.createMRIDocument(doc, mriClass);
+        return JsonConvert.SerializeObject(result);
+    }
+
+    [WebMethod]
+    public String GetLaboratories()
+    {
+        SAPConnectionInterface sapConnector = new SAPConnectionInterface();
+
+        List<Laboratory> result = sapConnector.listLaboratories();
+        return JsonConvert.SerializeObject(result);
+    }
+
+    [WebMethod]
     public string GetAircraftModel()
     {
         List<String> actypes = new List<String>();

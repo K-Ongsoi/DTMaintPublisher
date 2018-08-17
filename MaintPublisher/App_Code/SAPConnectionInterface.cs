@@ -31,9 +31,37 @@ public class SAPConnectionInterface
         return result;
     }
 
-    public bool createMRIDocument(DMSDocument doc, MRIClass mri)
+    public List<Laboratory> listLaboratories()
     {
-        bool result = false;
+        try
+        {
+            if (rfcDestination == null)
+            {
+                rfcDestination = RfcDestinationManager.GetDestination(System.Configuration.ConfigurationManager.AppSettings["SAP_SYSTEMNAME"]);
+            }
+
+            RfcRepository rfcRepo = rfcDestination.Repository;
+            IRfcFunction createFunc = rfcRepo.CreateFunction("ZPM_LIST_LABORATORY");
+            createFunc.Invoke(rfcDestination);
+
+            IRfcTable laboratories = createFunc.GetTable("IT_RESULT");
+            List<Laboratory> labs = new List<Laboratory>();
+            foreach (IRfcStructure laboratory in laboratories)
+            {
+                Laboratory lab = new Laboratory(laboratory.GetString("LABOR"), laboratory.GetString("LBTXT"));
+                labs.Add(lab);
+            }
+            return labs;
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("List laboratories error: " + ex.Message);
+        }        
+    }
+
+    public RfcResult createMRIDocument(DMSDocument doc, MRIClass mri)
+    {
+        RfcResult result = new RfcResult();
         try
         {
             if (rfcDestination == null)
@@ -46,11 +74,11 @@ public class SAPConnectionInterface
             IRfcStructure document = rfcRepo.GetStructureMetadata("BAPI_DOC_DRAW2").CreateStructure();
             document.SetValue("DOCUMENTTYPE", doc.docType);
             document.SetValue("DOCUMENTNUMBER", doc.docNo);
-            document.SetValue("DOCUMENTVERSION", doc.docVersion);
-            document.SetValue("DOCUMENTPART", doc.docPart);
+            //document.SetValue("DOCUMENTVERSION", doc.docVersion);            
+            //document.SetValue("DOCUMENTPART", doc.docPart);
             document.SetValue("DESCRIPTION", doc.description);
             document.SetValue("USERNAME", doc.userName);
-            document.SetValue("STATUSINTERN", doc.status);
+            //document.SetValue("STATUSINTERN", doc.status);
             document.SetValue("LABORATORY", doc.laboratory);
 
             IRfcStructure mriClass = rfcRepo.GetStructureMetadata("ZPMS158_DMS_MRI").CreateStructure();
@@ -93,7 +121,7 @@ public class SAPConnectionInterface
             IRfcFunction createFunc = rfcRepo.CreateFunction("ZPMEN158_DMS_CREATE");
             createFunc.SetValue("IM_DOCUMENT", document);
             createFunc.SetValue("IM_CLASS_MRI", mriClass);
-
+/*
             IRfcTable longTextTab = createFunc.GetTable("LT_LONGTXT");
             longTextTab.Append();
             longTextTab.SetValue("DELETEVALUE", ' ');
@@ -108,16 +136,26 @@ public class SAPConnectionInterface
             descTab.SetValue("LANGUAGE_ISO", "EN");
             descTab.SetValue("DESCRIPTION", "DESCRIPTION");
             descTab.SetValue("TEXTINDICATOR", 'X');            
-
+*/
             createFunc.Invoke(rfcDestination);
 
             IRfcStructure createResult = createFunc.GetStructure("EX_RETURN");
             char iResult = createResult.GetChar("TYPE");
 
             if (iResult == 'S' || iResult == 'W')
-                result = true;
+            {
+                result.result = true;
+                String docType = createFunc.GetString("EX_DOCTYPE");
+                String docNumber = createFunc.GetString("EX_DOCNUMBER");
+                String docPart = createFunc.GetString("EX_DOCPART");
+                String docVersion = createFunc.GetString("EX_DOCVERSION");
+                result.message = $"{docNumber}-{docType}-{docPart}-{docVersion} has been created successfully";
+            }
             else
-                result = false;
+            {
+                result.result = false;
+                result.message = createResult.GetString("MESSAGE");
+            }
         }
         catch (Exception ex)
         {
