@@ -163,4 +163,80 @@ public class SAPConnectionInterface
         }
         return result;
     }
+
+    public List<MRI_Charact_Values> getMRICharacteristics()
+    {
+        RfcResult result = new RfcResult();
+        try
+        {
+            List<MRI_Charact_Values> list = new List<MRI_Charact_Values>();
+            if (rfcDestination == null)
+            {
+                rfcDestination = RfcDestinationManager.GetDestination(System.Configuration.ConfigurationManager.AppSettings["SAP_SYSTEMNAME"]);
+            }
+
+            RfcRepository rfcRepo = rfcDestination.Repository;
+            IRfcFunction createFunc = rfcRepo.CreateFunction("BAPI_CLASS_GET_CHARACTERISTICS");
+            createFunc.SetValue("CLASSNUM", "Z_MRI");
+            createFunc.SetValue("CLASSTYPE", "017");
+            createFunc.SetValue("LANGU_ISO", "EN");
+            createFunc.SetValue("WITH_VALUES", "X");
+
+            createFunc.Invoke(rfcDestination);
+            IRfcTable charValues = createFunc.GetTable("CHAR_VALUES");
+
+            
+            foreach (IRfcStructure val in charValues)
+            {
+                MRI_Charact_Values allowVal = new MRI_Charact_Values(val.GetString("NAME_CHAR"), val.GetString("CHAR_VALUE"));
+                list.Add(allowVal);
+            }
+            return list;
+        }
+        catch (Exception e)
+        {
+            throw new Exception("Get MRI characteristics values error: " + e.Message);
+        }
+    }
+
+    public List<Aircraft>   getAircraftDetail()
+    {
+        List<Aircraft> acregs = new List<Aircraft>();
+        List<MRI_Charact_Values> char_values = getMRICharacteristics();
+        try
+        {
+            if (rfcDestination == null)
+            {
+                rfcDestination = RfcDestinationManager.GetDestination(System.Configuration.ConfigurationManager.AppSettings["SAP_SYSTEMNAME"]);
+            }
+                       
+            RfcRepository rfcRepo = rfcDestination.Repository;
+            IRfcFunction createFunc = rfcRepo.CreateFunction("ZPMFUNC_GETACTYPE");
+
+            foreach (MRI_Charact_Values value in char_values)
+            {
+            
+                if (value.characteristic!=null && value.characteristic.Trim().Equals("Z_TG_APPLICABILITY_AC"))
+                {
+                    String actype = "";
+                    try
+                    {
+                        createFunc.SetValue("ACREG", value.value);
+                        createFunc.Invoke(rfcDestination);
+                        actype = createFunc.GetString("ACTYPE");
+                    }catch (Exception)
+                    {
+                        actype = "N/A";
+                    }
+                    Aircraft acreg = new Aircraft(value.value, actype);
+                    acregs.Add(acreg);
+                }
+            }
+            return acregs;
+        }
+        catch (Exception e)
+        {
+            throw new Exception("Get MRI characteristics values error: " + e.Message);
+        }
+    }
 }

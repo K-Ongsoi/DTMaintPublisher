@@ -44,11 +44,16 @@ public class DocumentWS : System.Web.Services.WebService
     public string GetAircraftModel()
     {
         List<String> actypes = new List<String>();
-        
-        actypes.Add("A350-900");
-        actypes.Add("A380-800");
-        actypes.Add("B747-400");
-        actypes.Add("B787-800");
+        SAPConnectionInterface sapConnector = new SAPConnectionInterface();
+        List<MRI_Charact_Values> values = sapConnector.getMRICharacteristics();
+
+        foreach (MRI_Charact_Values value in values)
+        {
+            if (value.characteristic!=null && value.characteristic.Trim().Equals("Z_AC_MODEL"))
+            {
+                actypes.Add(value.value);
+            }
+        }
 
         return JsonConvert.SerializeObject(actypes);
     }
@@ -57,19 +62,15 @@ public class DocumentWS : System.Web.Services.WebService
     public String GetAircrafts(String model)
     {
         List<String> fleet = new List<string>();
-
-        switch (model)
+        SAPConnectionInterface sapConnector = new SAPConnectionInterface();
+        List<Aircraft> acregs = sapConnector.getAircraftDetail();
+        foreach (Aircraft acreg in acregs)
         {
-            case "B747-400": fleet.Add("HS-TGA"); fleet.Add("HS-TGB"); fleet.Add("HS-TGC");
-                break;
-            case "B787-800": fleet.Add("HS-TQA"); fleet.Add("HS-TQB"); fleet.Add("HS-TQC"); fleet.Add("HS-TQD");
-                break;
-            case "A350-900": fleet.Add("HS-THB"); fleet.Add("HS-THC"); fleet.Add("HS-THD"); fleet.Add("HS-THE"); fleet.Add("HS-THF"); fleet.Add("HS-THG");
-                break;
-            case "A380-800": fleet.Add("HS-TUA"); fleet.Add("HS-TUB");
-                break;
+            if (acreg.actype!=null && acreg.actype.Trim().Equals(model.Trim()))
+            {
+                fleet.Add(acreg.acreg);
+            }
         }
-
         return JsonConvert.SerializeObject(fleet);
     }
 
