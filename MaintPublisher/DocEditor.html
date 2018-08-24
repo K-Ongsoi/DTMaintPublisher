@@ -23,7 +23,7 @@
         <div class="w-100" style="align-content:center;text-align:center;"><img src="images/DarkLogo.png" style="vertical-align: central;" />TECHNICAL DEPARTMENT</div>
         <div class="col-sm-2 col-md-2">
             <div class="navbar-nav px-2" style="float:right;">
-                <a href="#" role="button"><i class="fas fa-user-circle" style="vertical-align:middle;color:#808080;"></i><span class="user-name">&nbsp; Keerati Ongsoi</span></a>
+                <a href="#" role="button"><i class="fas fa-user-circle" style="vertical-align:middle;color:#808080;"></i>&nbsp;<span id="userName" class="user-name"></span></a>
             </div>
         </div>
     </nav>
@@ -39,7 +39,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#" title="Log out">
+                            <a class="nav-link" href="Logout.html" title="Log out">
                                 <span data-feather="file"></span>
                                 <i class="fas fa-sign-out-alt fa-2x"></i>
                             </a>
@@ -507,6 +507,12 @@
         getLaboratories();
         getIntervalUnit();
         getAircraftModel();
+        var userName = localStorage.getItem("USERNAME");
+        if (userName == undefined || userName == "") {
+            window.location = "index.html";
+        }
+
+        $('#userName').text(userName);
         $('#TG_ACEff').multiselect({
             nonSelectedText: 'Please select an aircraft',
             enableClickableOptGroups: true,

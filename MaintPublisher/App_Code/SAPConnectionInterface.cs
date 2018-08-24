@@ -199,6 +199,37 @@ public class SAPConnectionInterface
         }
     }
 
+    public PersData getPersonnelDetail(String userID)
+    {
+        try
+        {
+            if (rfcDestination == null)
+            {
+                rfcDestination = RfcDestinationManager.GetDestination(System.Configuration.ConfigurationManager.AppSettings["SAP_SYSTEMNAME"]);
+            }
+
+            RfcRepository rfcRepo = rfcDestination.Repository;
+            IRfcFunction createFunc = rfcRepo.CreateFunction("ZHRBAPI_GET_PERSDETAIL");
+
+            String persID = String.Format("{0:00000000}", Convert.ToInt32(userID.Substring(2)));
+            createFunc.SetValue("PERSID", persID);
+            createFunc.Invoke(rfcDestination);
+            PersData pers = new PersData();
+            pers.firstName = createFunc.GetString("FNAME");
+            pers.lastName = createFunc.GetString("LNAME");
+            pers.thaiFirstName = createFunc.GetString("TFNAME");
+            pers.thaiLastName = createFunc.GetString("TLNAME");
+            pers.doe = createFunc.GetString("DOE");
+            pers.funcCode = createFunc.GetString("FUNC");
+            pers.position = createFunc.GetString("POSI");
+            return pers;
+        }
+        catch (Exception e)
+        {
+            throw new Exception("Get MRI characteristics values error: " + e.Message);
+        }
+    }
+
     public List<Aircraft>   getAircraftDetail()
     {
         List<Aircraft> acregs = new List<Aircraft>();

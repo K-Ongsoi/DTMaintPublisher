@@ -1,0 +1,232 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Technical Department : Login Page">
+    <meta name="author" content="Keerati Ongsoi" />
+
+    <title>THAI: Technical Department - Document Publisher</title>
+    <link rel="icon" href="images/favicon.png" />
+    <link href="style/fonts.css" rel="stylesheet" />
+    <link href="framework/bootstrap4/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="framework/css/all.css" rel="stylesheet" />
+
+    <style type="text/css">
+        .grad-background {
+            width: 100%;
+            height: 100vh;
+            font: 300 16px/22px "Lato", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            background: linear-gradient(left, #1f1c2c, #928dab);
+            background: -webkit-linear-gradient(left, #1f1c2c, #928dab);
+            background: -moz-linear-gradient(left, #1f1c2c, #928dab);
+            background: linear-gradient(left, #1f1c2c, #928dab);
+        }
+
+        .login-form {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            width: 50%;
+            height: 40vh;
+            transform: translate(-50%, -50%);
+            border-radius: 12px;
+            background-color: rgba(189, 189, 189, 0.2);
+            box-shadow: 10px 10px 12px rgba(0,0,0,0.2);
+        }
+
+        .logo-center {
+            position: fixed;
+            top: 15%;
+            left: 50%;
+            width: 150px;
+            height: 80px;
+            transform: translate(-75px, 40px);
+        }
+
+        .img_login {
+            background-image: url('images/dmsLogin.png');
+            border-top-left-radius: 12px;
+            border-bottom-left-radius: 12px;
+            background-repeat: no-repeat;
+            background-size: 98%;
+            opacity: 0.5;
+            position: relative;
+            background-clip: unset;
+            overflow: hidden;
+            height: 100vh;
+            width: 100%;
+        }
+
+        .welcome {
+            font-family: "Quicksand", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
+            font-size: 21pt;
+            color: rgba(255, 255, 255, 0.95);
+            padding: 8px;
+            text-align: left;
+        }
+
+        .login-input {
+            border-radius: 0px;
+            border-top: none;
+            border-left: none;
+            border-right: none;
+            border-bottom: 1px solid;
+            border-color: silver;
+            color: #ffd600;
+            background-color: transparent;
+        }
+
+        .status-text {
+            color: #ef9a9a;
+        }
+
+        .form-control::-webkit-input-placeholder {
+            color: #ffd600;
+            opacity: 0.6;
+        }
+
+        .form-control:focus {
+            color: white;
+            opacity: 0.75;
+            border-radius: 0px;
+            border: none;
+            background-color: transparent;
+        }
+
+        /* WebKit, Blink, Edge */
+        .form-control:-moz-placeholder {
+            color: #ffd600;
+            opacity: 0.6;
+        }
+        /* Mozilla Firefox 4 to 18 */
+        .form-control::-moz-placeholder {
+            color: #ffd600;
+            opacity: 0.6;
+        }
+        /* Mozilla Firefox 19+ */
+        .form-control:-ms-input-placeholder {
+            color: #ffd600;
+            opacity: 0.6;
+        }
+        /* Internet Explorer 10-11 */
+        .form-control::-ms-input-placeholder {
+            color: #ffd600;
+            opacity: 0.6;
+        }
+        /* Microsoft Edge */
+
+    </style>
+</head>
+<body>
+    <div class="grad-background">
+        <div class="logo-center"><img src="images/tgLogo.png" width="200" height="60" /></div>
+        <div class="login-form row">
+            <div class="col-md-4 img_login">&nbsp;</div>
+            <div class="col-md-8">
+                <form name="loginForm" id="loginForm">
+                    <div class="container">
+                        <div class="row">&nbsp;</div>
+                        <div class="row">&nbsp;</div>
+                        <div class="row" style="border-bottom: 1px solid;border-color:white;">
+                            <div class="col-md-12 welcome">
+                                Welcome to Document Editor System
+                            </div>
+                        </div>
+                        <div class="row">&nbsp;</div>
+                        <div class="row">&nbsp;</div>
+                        <div class="row">
+                            <div class="form-group" style="width:100%;">
+                                <label for="userID" style="color:silver;"><i class="fas fa-user"></i> User Name</label>
+                                <input type="text" class="form-control login-input" id="userID" placeholder="User Name" />
+                            </div>
+                        </div>
+                        <div class="row">&nbsp;</div>
+                        <div class="row">
+                            <div class="form-group" style="width:100%;">
+                                <label for="password" style="color:silver;"><i class="fas fa-key"></i> Password</label>
+                                <input type="password" class="form-control login-input" id="password" placeholder="Password" />
+                            </div>
+                        </div>
+                        <div class="row">&nbsp;</div>
+                        <div class="row">
+                            <button id="LoginBtn" type="button" class="col-md-6 btn-warning rounded"><i class="fas fa-lock-open"></i> Login</button>
+                            <button type="reset" class="col-md-6 btn-dark rounded"><i class="fas fa-power-off"></i> Cancel</button>
+                        </div>
+                        <div class="row">&nbsp;</div>
+                        <div class="row">
+                            <label id="loginStatus" class="status-text"></label>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="framework/jquery-3.3.1.min.js"></script>
+<script src="framework/bootstrap4/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+    function persistLocalStorage(persData) {
+        localStorage.setItem("USERID", persData.userID);
+        localStorage.setItem("USERNAME", persData.userName);
+        localStorage.setItem("FUNCCODE", persData.functionCode);
+        localStorage.setItem("EMAIL", persData.email);
+    }
+
+    $('#LoginBtn').click(function (e) {
+        e.preventDefault();
+
+        var userID = $('#userID').val();
+        var password = $('#password').val();
+
+        if (userID == undefined || userID == '' || password == undefined || password == '') {
+            $('#loginStatus').text("Please enter username and password!!!");
+            setTimeout(function () {
+                $('#loginStatus').text('');
+            }, 5000);
+            return;
+        }
+
+        var $this = $(this);
+        var loadingText = "<i class='fas fa-spinner fa-pulse'></i> Verifying...";
+        if ($(this).html() !== loadingText) {
+            $this.data('original-text', $(this).html());
+            $this.html(loadingText);
+        }
+
+        $.ajax({
+            type: 'POST',
+            url: 'DocumentWS.asmx/CheckUserLogin',
+            contentType: "application/json; charset=utf-8",
+            data: '{ usr: '+ JSON.stringify(userID) + ', pwd: '+ JSON.stringify(password) + '}',
+            dataType: 'json',
+            success: function (response) {
+                var jsonData = (response.d) ? $.parseJSON(response.d) : $.parseJSON(response);
+                if (jsonData.status != undefined && jsonData.status) {
+                    $this.html($this.data('original-text'));
+                    persistLocalStorage(jsonData);
+                    window.location = "DocEditor.html";
+                }
+                else {
+                    $this.html($this.data('original-text'));
+                    $('#loginStatus').text("Invalid username or password!!!");
+                    setTimeout(function () {
+                        $('#loginStatus').text('');
+                    }, 5000);
+                }
+            },
+            error: function () {
+                $this.html($this.data('original-text'));
+                $('#loginStatus').text("Authentication processing failed!!!");
+                setTimeout(function () {
+                    $('#loginStatus').text('');
+                }, 5000);
+            }
+        });
+    });
+
+    $(document).ready(function () {
+       
+    });
+</script>
+</html>

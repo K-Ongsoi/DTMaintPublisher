@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.DirectoryServices;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
@@ -14,6 +15,43 @@ using System.Web.Services;
 [System.Web.Script.Services.ScriptService]
 public class DocumentWS : System.Web.Services.WebService
 {
+    [WebMethod]
+    public String CheckUserLogin(String usr, String pwd)
+    {
+        try
+        {
+            DirectoryEntry root = new DirectoryEntry("LDAP://dt.thaiairways.co.th");
+            root.AuthenticationType = AuthenticationTypes.Secure;
+            root.Username = usr;
+            root.Password = pwd;
+
+            DirectorySearcher searcher = new DirectorySearcher(root);
+            searcher.PropertiesToLoad.Add("cn");
+            searcher.PropertiesToLoad.Add("displayName");
+            searcher.PropertiesToLoad.Add("mail");            
+
+            String v_criteria = "(anr=" + usr + ")";
+            searcher.Filter = v_criteria;
+            SearchResult result = searcher.FindOne();
+            String v_name = result.GetDirectoryEntry().Properties["displayName"].Value.ToString();
+            
+            DocUser user = new DocUser(usr, v_name);
+            String email = result.GetDirectoryEntry().Properties["mail"].Value.ToString();
+            user.email = email;
+
+            SAPConnectionInterface sapProxy = new SAPConnectionInterface();
+            PersData pers = sapProxy.getPersonnelDetail(usr);
+            user.functionCode = pers.funcCode;
+
+            return JsonConvert.SerializeObject(user);
+        }
+        catch (Exception)
+        {
+            DocUser user = new DocUser();
+            return JsonConvert.SerializeObject(user);
+        }
+    }
+
     [WebMethod]
     public String SAPConnectionState()
     {
