@@ -60,7 +60,7 @@
 
         .welcome {
             font-family: "Quicksand", "Open Sans", "Helvetica Neue", Helvetica, Arial, sans-serif;
-            font-size: 21pt;
+            font-size: 18pt;
             color: rgba(255, 255, 255, 0.95);
             padding: 8px;
             text-align: left;
@@ -126,15 +126,13 @@
             <div class="col-md-8">
                 <form name="loginForm" id="loginForm">
                     <div class="container">
-                        <div class="row">&nbsp;</div>
-                        <div class="row">&nbsp;</div>
+                        <div class="row">&nbsp;</div>                        
                         <div class="row" style="border-bottom: 1px solid;border-color:white;">
                             <div class="col-md-12 welcome">
                                 Welcome to Document Editor System
                             </div>
                         </div>
-                        <div class="row">&nbsp;</div>
-                        <div class="row">&nbsp;</div>
+                        <div class="row">&nbsp;</div>                        
                         <div class="row">
                             <div class="form-group" style="width:100%;">
                                 <label for="userID" style="color:silver;"><i class="fas fa-user"></i> User Name</label>
@@ -202,10 +200,20 @@
             dataType: 'json',
             success: function (response) {
                 var jsonData = (response.d) ? $.parseJSON(response.d) : $.parseJSON(response);
-                if (jsonData.status != undefined && jsonData.status) {
-                    $this.html($this.data('original-text'));
+                if (jsonData.status != undefined && jsonData.status) {                    
                     persistLocalStorage(jsonData);
-                    window.location = "DocEditor.html";
+                    $.ajax({
+                        type: 'POST',
+                        url: 'DocumentWS.asmx/GetAllAircrafts',
+                        contentType: "application/json; charset=utf-8",
+                        dataType: 'json',
+                        success: function (response) {
+                            var jsonData = (response.d) ? $.parseJSON(response.d) : $.parseJSON(response);
+                            localStorage.setItem("ACFLEET", JSON.stringify(jsonData));
+                            $this.html($this.data('original-text'));
+                            window.location = "DocEditor.html";
+                        }
+                    });                    
                 }
                 else {
                     $this.html($this.data('original-text'));

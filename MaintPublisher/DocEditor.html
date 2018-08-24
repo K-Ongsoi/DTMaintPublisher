@@ -329,6 +329,7 @@
 
     var v_docHeader = {};
     var v_mriClass = {};
+    var aircrafts = [];
     var userName = 'TG27394';
     
     function getDocumentHeader() {
@@ -447,38 +448,30 @@
             }
         });
     }
+    
 
     function renderAircraftEff() {
         $('#TG_ACEff').empty();
         $(selected).each(function (i, item) {
-            var jsonRequest = '{model : ' + JSON.stringify(item.value) + '}';
-            $.ajax({
-                type: 'POST',
-                url: 'DocumentWS.asmx/GetAircrafts',
-                contentType: "application/json; charset=utf-8",
-                dataType: 'json',
-                data: jsonRequest,
-                success: function (response) {
-                    var jsonData = (response.d) ? $.parseJSON(response.d) : $.parseJSON(response);
-                    $('#TG_ACEff').append("<optgroup label='" + item.value + "'>");
-                    $(jsonData).each(function (index, value) {
-                        $('#TG_ACEff').append("<option value='" + value + "'>" + value + "</option>");
-                    });
-                    $('#TG_ACEff').append("</optgroup>");
-                    $('#TG_ACEff').multiselect('destroy');
-                    $('#TG_ACEff').multiselect({
-                        nonSelectedText: 'Please select an aircraft',
-                        enableClickableOptGroups: true,
-                        enableCollapsibleOptGroups: true,
-                        enableFiltering: true,
-                        buttonWidth: '100%',
-                        onChange: function (element, checked) {
-                            var tgAircrafts = $('#TG_ACEff option:selected');
-                            tgAcEff = [];
-                            $(tgAircrafts).each(function (index, sel_acreg) {
-                                tgAcEff.push(sel_acreg.label);
-                            });
-                        }
+            $('#TG_ACEff').append("<optgroup label='" + item.value + "'>");
+            for (var i = 0, len = aircrafts.length; i < len; i++) {
+                if (aircrafts[i] && aircrafts[i].actype == item.value) {
+                    $('#TG_ACEff').append("<option value='" + aircrafts[i].acreg + "'>" + aircrafts[i].acreg + "</option>");
+                }                
+            }    
+            $('#TG_ACEff').append("</optgroup>");
+            $('#TG_ACEff').multiselect('destroy');
+            $('#TG_ACEff').multiselect({
+                nonSelectedText: 'Please select an aircraft',
+                enableClickableOptGroups: true,
+                enableCollapsibleOptGroups: true,
+                enableFiltering: true,
+                buttonWidth: '100%',
+                onChange: function (element, checked) {
+                    var tgAircrafts = $('#TG_ACEff option:selected');
+                    tgAcEff = [];
+                    $(tgAircrafts).each(function (index, sel_acreg) {
+                        tgAcEff.push(sel_acreg.label);
                     });
                 }
             });
@@ -507,11 +500,11 @@
         getLaboratories();
         getIntervalUnit();
         getAircraftModel();
+        
         var userName = localStorage.getItem("USERNAME");
         if (userName == undefined || userName == "") {
             window.location = "index.html";
-        }
-
+        }           
         $('#userName').text(userName);
         $('#TG_ACEff').multiselect({
             nonSelectedText: 'Please select an aircraft',
@@ -527,6 +520,8 @@
                 });
             }
         });
+
+        aircrafts = JSON.parse(localStorage.getItem("ACFLEET"));
 
         toastr.options = {
             "closeButton": true,

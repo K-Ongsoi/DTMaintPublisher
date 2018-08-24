@@ -113,6 +113,14 @@ public class DocumentWS : System.Web.Services.WebService
     }
 
     [WebMethod]
+    public String GetAllAircrafts()
+    {        
+        SAPConnectionInterface sapConnector = new SAPConnectionInterface();
+        List<Aircraft> acregs = sapConnector.getAircraftDetail();     
+        return JsonConvert.SerializeObject(acregs);
+    }
+
+    [WebMethod]
     public String getIntervalUnit()
     {
         List<String> iUnits = new List<string>();
