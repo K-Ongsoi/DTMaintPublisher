@@ -1,0 +1,285 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="Technical Department : Main Page">
+    <meta name="author" content="Keerati Ongsoi" />
+
+    <title>THAI - Technical Department : Document Main Page</title>
+    <link rel="icon" href="images/favicon.png" />
+    <link href="framework/jqwidgets/styles/jqx.base.css" rel="stylesheet" />
+    <link href="framework/jqwidgets/styles/jqx.web.css" rel="stylesheet" />
+    <link href="framework/bootstrap4/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="framework/css/all.css" rel="stylesheet" />
+    <link href="style/fonts.css" rel="stylesheet" />
+    <link href="style/master.css" rel="stylesheet" />
+    <link href="framework/bootstrap4/css/open-iconic-bootstrap.css" rel="stylesheet" />
+    <link href="framework/bootstrap4/css/bootstrap-multiselect.css" rel="stylesheet" />
+    <link href="content/toastr.min.css" rel="stylesheet" />
+    <style type="text/css">
+        .fullpage {
+            margin-top: 80px;
+            vertical-align: middle;
+            left: 50%;
+            margin-left: -43%;
+            position: absolute;
+            height: 80vh;
+            width: 86%;
+            background-color: #e8eaf6;
+            padding: 5px;
+            overflow-x: hidden;
+            overflow-y: scroll;
+        }
+
+        .jqx-grid-cell input[type="button"] {
+            width: 100%;
+            z-index: 10;
+            opacity: 0.01 !important;
+            z-index: 5 !important;
+            display: block !important;
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar sticky-top flex-md-nowrap p-0" role="navigation">
+        <a class="navbar-brand" href="#"><img src="images/LightLogo.png" /></a>
+        <div class="col-sm-2 col-md-2 mr-0 navbar page-title" style="float: left;">Document Main Page</div>
+        <div class="w-100" style="align-content:center;text-align:center;"><img src="images/DarkLogo.png" style="vertical-align: central;" />TECHNICAL DEPARTMENT</div>
+        <div class="col-sm-2 col-md-2">
+            <div class="navbar-nav px-2" style="float:right;">
+                <a href="#" role="button"><i class="fas fa-user-circle" style="vertical-align:middle;color:#808080;"></i>&nbsp;<span id="userName" class="user-name"></span></a>
+            </div>
+        </div>
+    </nav>
+    <div class="container-fluid">
+        <div class="fullpage">
+            <div class="row">
+                <div class="col-md-2 form-group"><label for="qryDocNo">Document Number</label><input type="text" id="qryDocNo" class="form-control" /></div>
+                <div class="col-md-1 form-group"><label for="qryDocPart">Part</label><input type="text" id="qryDocPart" class="form-control" /></div>
+                <div class="col-md-1 form-group"><label for="qryDocVers">Version</label><input type="text" id="qryDocVers" class="form-control" /></div>
+                <div class="col-md-2 form-group">
+                    <label for="qryDocStat">Status</label>
+                    <select id="qryDocStat" class="form-control">
+                        <option value="">ALL</option>
+                        <option value="AL">Created</option>
+                        <option value="NA">Not Applicable</option>
+                        <option value="NU">Not in Used</option>
+                        <option value="RE">Released</option>
+                    </select>
+                </div>
+                <div class="col-md-1 form-group">
+                    <label for="qryResponsible">Responsible</label>
+                    <input type="text" id="qryResponsible" class="form-control" />
+                </div>
+                <div class="col-md-3  form-group">
+                    <label for="qryLabOffice">Lab Office</label>
+                    <select id="qryLabOffice" class="form-control"></select>
+                </div>
+                <div class="col-md-1  form-group">
+                    <label for="btnQry">&nbsp;</label>
+                    <button id="btnQry" class="btn btn-outline-primary form-control"><i class="fas fa-search"></i> Query</button>
+                </div>
+                <div class="col-md-1 form-group">
+                    <label for="btnNew">&nbsp;</label>
+                    <button id="btnNew" class="btn btn-outline-success form-control"><i class="far fa-file"></i> New</button>
+                </div>
+            </div>
+            <div class="row" style="height:90%; overflow: hidden;">
+                <div class="col-md-12">
+                    <div id="search_result"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="framework/jquery-3.3.1.min.js"></script>
+<script src="framework/bootstrap4/js/popper.min.js"></script>
+<script src="framework/bootstrap4/js/bootstrap.min.js"></script>
+<script src="framework/jqwidgets/jqxcore.js"></script>
+<script src="framework/jqwidgets/jqxdata.js"></script>
+<script src="framework/jqwidgets/jqxbuttons.js"></script>
+<script src="framework/jqwidgets/jqxgrid.js"></script>
+<script src="framework/jqwidgets/jqxmenu.js"></script>
+<script src="framework/jqwidgets/jqxpanel.js"></script>
+<script src="framework/jqwidgets/jqxgrid.filter.js"></script>
+<script src="framework/jqwidgets/jqxgrid.sort.js"></script>
+<script src="framework/jqwidgets/jqxgrid.pager.js"></script>
+<script src="framework/jqwidgets/jqxgrid.selection.js"></script>
+<script src="framework/jqwidgets/jqxscrollbar.js"></script>
+<script src="framework/jqwidgets/jqxinput.js"></script>
+<script src="framework/jqwidgets/globalization/globalize.js"></script>
+<script src="Scripts/toastr.min.js"></script>
+<script type="text/javascript">
+    var userName = 'TG27394';
+    var laboratories = [];
+
+    function getLaboratories() {
+        $('#qryLabOffice').empty();
+        $.ajax({
+            type: 'POST',
+            url: 'DocumentWS.asmx/GetLaboratories',
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            success: function (response) {
+                var jsonData = (response.d) ? $.parseJSON(response.d) : $.parseJSON(response);
+                $(jsonData).each(function (index, value) {
+                    laboratories.push(value);
+                });
+
+                $('#qryLabOffice').append("<option value=''>ALL</option>");
+                $(laboratories).each(function (index, item) {
+                    $('#qryLabOffice').append("<option value='" + item.labCode + "'>" + item.labText + "</option>");
+                });
+            }
+        });
+    }
+
+    function queryDMS() {
+        var qryDocNo = $('#qryDocNo').val();
+        if (qryDocNo == undefined) {
+            qryDocNo = '';
+        }
+
+        var qryDocPart = $('#qryDocPart').val();
+        if (qryDocPart == undefined) {
+            qryDocPart = '';
+        }
+
+        var qryDocVers = $('#qryDocVers').val();
+        if (qryDocVers == undefined) {
+            qryDocVers = '';
+        }
+        var qryDocStat = $('#qryDocStat').val();
+        if (qryDocStat == undefined) {
+            qryDocStat = '';
+        }
+
+        var qryResponsible = $('#qryResponsible').val();
+        if (qryResponsible == undefined) {
+            qryResponsible = '';
+        }
+
+        var qryLabOffice = $('#qryLabOffice').val();
+        if (qryLabOffice == undefined) {
+            qryLabOffice = '';
+        }
+
+        var columnRenderer = function (value) {
+            return '<div style="text-align: center; margin-top: 5px;">' + value + '</div>';
+        }
+
+        var statusRenderer = function (row, columnfield, value, defaulthtml, columnproperties) {
+            if (value) {
+                if (value == 'CR' || value == 'AL') {
+                    return '<div style="margin-top: 2px; text-align:center;"><h6><span class="badge badge-pill badge-warning" style="margin: 4px;height: 100%;">Created</span></h6></div>';
+                }
+                else if (value == 'NA') {
+                    return '<div style="margin-top: 2px; text-align:center;"><h6><span class="badge badge-pill badge-danger" style="margin: 4px;height: 100%;">Not Applicable</span></h6></div>';
+                }
+                else if (value == 'NU') {
+                    return '<div style="margin-top: 2px; text-align:center;"><h6><span class="badge badge-pill badge-danger" style="margin: 4px;height: 100%;">Not In Used</span></h6></div>';
+                }
+                else if (value == 'RE') {
+                    return '<div style="margin-top: 2px; text-align:center;"><h6><span class="badge badge-pill badge-success" style="margin: 4px;height: 100%;">Released</span></h6></div>';
+                }
+            }
+            else
+                return '';
+        }
+
+        var jsonReq = '{docType: ' + JSON.stringify('MRI') + ', docNo: ' + JSON.stringify(qryDocNo) + ', docPart: ' + JSON.stringify(qryDocPart) + ', docVer: ' + JSON.stringify(qryDocVers) + ', docStat: ' + JSON.stringify(qryDocStat) + ', userName: ' + JSON.stringify(qryResponsible) + ', labOffice: ' + JSON.stringify(qryLabOffice) + '}';
+
+        $.ajax({
+            type: 'POST',
+            url: 'DocumentWS.asmx/searchDMS',
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            data: jsonReq,
+            success: function (response) {
+                var jsonData = (response.d) ? $.parseJSON(response.d) : $.parseJSON(response);
+                var source = {
+                    datatype: "json",
+                    datafields: [
+                        { name: 'docNo' },
+                        { name: 'docType' },
+                        { name: 'docPart' },
+                        { name: 'docVersion' },
+                        { name: 'description' },
+                        { name: 'userName' },
+                        { name: 'status' },
+                        { name: 'labCode' },
+                        { name: 'laboratory' }
+                    ],
+                    localdata: jsonData
+                };
+
+                var selectedrow = -1;
+                var dataAdapter = new $.jqx.dataAdapter(source);
+                $('#search_result').jqxGrid({
+                    width: '100%',
+                    height: '100%',
+                    altrows: true,
+                    source: dataAdapter,
+                    sortable: true,
+                    columns: [
+                        { datafield: 'docNo', text: 'Document', width: '18% ', renderer: columnRenderer, cellsalign: 'left' },
+                        { datafield: 'docPart', text: 'Part', width: '5%', renderer: columnRenderer, cellsalign: 'center' },
+                        { datafield: 'docVersion', text: 'Version', width: '4%', renderer: columnRenderer, cellsalign: 'center' },
+                        { datafield: 'description', text: 'Description', width: '27%', renderer: columnRenderer, cellsalign: 'left' },
+                        { datafield: 'userName', text: 'Responsible', width: '6%', renderer: columnRenderer, cellsalign: 'center' },
+                        { datafield: 'laboratory', text: 'Lab Office', width: '22%', renderer: columnRenderer, cellsalign: 'left' },
+                        { datafield: 'status', text: 'Status', width: '10%', renderer: columnRenderer, cellsalign: 'center', cellsrenderer: statusRenderer },
+                        {
+                            text: 'Template', datafield: 'template', columntype: 'button', width: '4%', renderer: columnRenderer, cellsalign: 'center', cellsrenderer: function () {
+                                return '<i class="far fa-clone"></i>';
+                            },
+                            buttonclick: function (row) {
+                                selectedrow = row;
+                                var dataRecord = $('#search_result').jqxGrid('getrowdata', selectedrow);
+                                var selDocNo = dataRecord.docNo;
+                                var selDocPart = dataRecord.docPart;
+                                var selDocVersion = dataRecord.docVersion;
+
+                                alert('SELECT - ' + selDocNo + ':' + selDocPart + '-' + selDocVersion)
+                            }
+                        },
+                        {
+                            text: 'Version', datafield: 'version', columntype: 'button', width: '4%', renderer: columnRenderer, cellsalign: 'center', cellsrenderer: function () {
+                                return '<i class="far fa-plus-square"></i>'
+                            },
+                            buttonclick: function (row) {
+                                selectedrow = row;
+                                var dataRecord = $('#search_result').jqxGrid('getrowdata', selectedrow);
+                                var selDocNo = dataRecord.docNo;
+                                var selDocPart = dataRecord.docPart;
+                                var selDocVersion = dataRecord.docVersion;
+
+                                alert('SELECT - ' + selDocNo + ':' + selDocPart + '-' + selDocVersion)
+                            }
+                        }
+                    ]
+                });
+            }
+        });
+    }
+
+    $(document).ready(function () {
+        var userName = localStorage.getItem("USERNAME");
+        if (userName == undefined || userName == "") {
+            window.location = "index.html";
+        }
+        $('#userName').text(userName);
+
+        getLaboratories();
+
+        $('#btnQry').click(function () {
+            queryDMS();
+        });
+
+        $('#btnNew').click(function () {
+            window.location = "DocEditor.html";
+        });
+    });
+</script>
+</html>

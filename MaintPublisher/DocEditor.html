@@ -18,7 +18,7 @@
 </head>
 <body>
     <nav class="navbar sticky-top flex-md-nowrap p-0" role="navigation">
-        <a class="navbar-brand" href="#"><img src="images/LightLogo.png" /></a>
+        <a class="navbar-brand" href="LandingPage.html"><img src="images/LightLogo.png" /></a>
         <div class="col-sm-2 col-md-2 mr-0 navbar page-title" style="float: left;">Document Editors</div>
         <div class="w-100" style="align-content:center;text-align:center;"><img src="images/DarkLogo.png" style="vertical-align: central;" />TECHNICAL DEPARTMENT</div>
         <div class="col-sm-2 col-md-2">
@@ -56,12 +56,12 @@
                 </nav>
             </div>
             <span class="pageTitle"><i class="far fa-file"></i> New Document</span>
-            <div class="container-fluid h-100">
-                <div class="row mw-100 h-100">
-                    <div class="col-md-6 p-2">
-                        <div class="card mw-100 main_content">
-                            <div class="card-body">
-                                <form class="p-1">
+            <form id="docEditorForm" class="p-1">
+                <div class="container-fluid h-100">
+                    <div class="row mw-100 h-100">
+                        <div class="col-md-6 p-2">
+                            <div class="card mw-100 main_content">
+                                <div class="card-body">
                                     <div class="form-row">
                                         <div class="col-md-4">
                                             <button id="fromTEMPLATE" class="btn btn-sm btn-outline-primary"><i class="fas fa-clone"></i> Use Template</button>
@@ -93,7 +93,7 @@
                                     <div class="form-row">
                                         <div class="col-md-12 mr-md-auto">
                                             <div class="form-group">
-                                                <label for="labOffice">Lab Office</label>                                                
+                                                <label for="labOffice">Lab Office</label>
                                                 <select class="form-control" id="labOffice"></select>
                                             </div>
                                         </div>
@@ -152,19 +152,17 @@
                                             </div>
                                         </div>
                                     </div>
-                                </form>
-                            </div>
-                            <div class="card-footer">
-                                <button type="button" id="docSave" class="btn btn-sm btn-outline-primary"><i class="far fa-save"></i> Save</button>
-                                <button type="button" id="docCancel" class="btn btn-sm btn-outline-danger"><i class="fas fa-undo"></i> Cancel</button>
+                                </div>
+                                <div class="card-footer">
+                                    <button type="button" id="docSave" class="btn btn-sm btn-outline-primary"><i class="far fa-save"></i> Save</button>
+                                    <button type="button" id="docCancel" class="btn btn-sm btn-outline-danger"><i class="fas fa-undo"></i> Cancel</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-6 ml-md-auto p-2">
-                        <div class="card mw-100 main_content">
-                            <div class="card-header bg-warning">Additional Data</div>
-                            <div class="card-body scrollable">
-                                <form>
+                        <div class="col-md-6 ml-md-auto p-2">
+                            <div class="card mw-100 main_content">
+                                <div class="card-header bg-warning">Additional Data</div>
+                                <div class="card-body scrollable">
                                     <div class="form-row">
                                         <div class="col-md-4"><label>Aircraft Model:</label></div>
                                         <div class="col-md-8 p-1"><select class="mw-100 w-100" id="acModel" multiple="multiple"> </select></div>
@@ -195,122 +193,122 @@
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>MP Task Section</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="MP Task Section" /></div>
+                                        <div class="col-md-8 p-1"><input type="text" id="mri_mptasksection" class="form-control" placeholder="MP Task Section" /></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>Percentage of Sampling Inspect</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="Percentage of Sampling Inspect" /></div>
+                                        <div class="col-md-8 p-1"><input type="text" id="mri_persampinsp" class="form-control" placeholder="Percentage of Sampling Inspect" /></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>Work Type</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="Work Type" /></div>
+                                        <div class="col-md-8 p-1"><input type="text" id="mri_worktype" class="form-control" placeholder="Work Type" /></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>Spec. Ident. Inspection Task</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="Spec. Ident. Inspection Task" /></div>
+                                        <div class="col-md-8 p-1"><input type="text" id="mri_specident" class="form-control" placeholder="Spec. Ident. Inspection Task" /></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>Original MP Task Number</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="Original MP Task Number" /></div>
+                                        <div class="col-md-8 p-1"><input type="text" id="mri_origMPTask" class="form-control" placeholder="Original MP Task Number" /></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>TG MP Task Number</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="TG MP Task Number" /></div>
+                                        <div class="col-md-8 p-1"><input type="text" id="mri_tgmptask" class="form-control" placeholder="TG MP Task Number" /></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>Beginning Effective Date</label></div>
-                                        <div class="col-md-8 p-1"><input type="date" class="form-control" data-date-format="DD.MM.YYYY" placeholder="Beginning Effective Date" /></div>
+                                        <div class="col-md-8 p-1"><input type="date" id="mri_begEffDate" class="form-control" data-date-format="DD.MM.YYYY" placeholder="Beginning Effective Date" /></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>MP Task Status</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="MP Task Status" /></div>
+                                        <div class="col-md-8 p-1"><input type="text" id="mri_mpTaskStatus" class="form-control" placeholder="MP Task Status" /></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>MP Task MH</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="MP Task MH" /></div>
+                                        <div class="col-md-8 p-1"><input type="text" id="mri_mpTaskMH" class="form-control" placeholder="MP Task MH" /></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>Access Panel Information</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="Access Panel Information" /></div>
+                                        <div class="col-md-8 p-1"><input type="text" id="mri_accesspanelinfo" class="form-control" placeholder="Access Panel Information" /></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>MPD/OEM Task Offset</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="MPD/OEM Task Offset" /></div>
+                                        <div class="col-md-8 p-1"><input type="text" id="mri_oemtaskoffset" class="form-control" placeholder="MPD/OEM Task Offset" /></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>MPD/OEM Task Limit/Interval</label></div>
-                                        <div class="col-md-8 p-1 form-inline"><input type="number" class="form-control col-sm-8" placeholder="MPD/OEM Task Limit/Interval" /><select class="form-control col-sm-4" id="MPDInterval"></select></div>
+                                        <div class="col-md-8 p-1 form-inline"><input type="number" id="mri_oemtasklimit" class="form-control col-sm-8" placeholder="MPD/OEM Task Limit/Interval" /><select class="form-control col-sm-4" id="MPDInterval"></select></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>MPD/OEM Task Offset Sample</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="MPD/OEM Task Offset Sample" /></div>
+                                        <div class="col-md-8 p-1"><input type="text" class="form-control" id="mri_oemtaskoffset" placeholder="MPD/OEM Task Offset Sample" /></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>MPD/OEM Task Interval Sample</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="MPD/OEM Task Interval Sample" /></div>
+                                        <div class="col-md-8 p-1"><input type="text" class="form-control" id="mri_oemtaskinterval" placeholder="MPD/OEM Task Interval Sample" /></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>TG Task Offset</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="TG Task Offset" /></div>
+                                        <div class="col-md-8 p-1"><input type="text" class="form-control" id="mri_tgtaskoffset" placeholder="TG Task Offset" /></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>TG Task Limit/Interval</label></div>
-                                        <div class="col-md-8 p-1 form-inline"><input type="number" class="form-control col-sm-8" placeholder="TG Task Limit/Interval" /><select class="form-control col-sm-4" id="TGInterval"></select></div>
+                                        <div class="col-md-8 p-1 form-inline"><input type="number" id="mri_tgtasklimit" class="form-control col-sm-8" placeholder="TG Task Limit/Interval" /><select class="form-control col-sm-4" id="TGInterval"></select></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>TG Task Offset Sample</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="TG Task Offset Sample" /></div>
+                                        <div class="col-md-8 p-1"><input type="text" id="mri_tgoffsetsamp" class="form-control" placeholder="TG Task Offset Sample" /></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>TG Task Interval Sample</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="TG Task Interval Sample" /></div>
+                                        <div class="col-md-8 p-1"><input type="text" id="mri_tgintervalsam" class="form-control" placeholder="TG Task Interval Sample" /></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>MPD Engine Effectivity</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="MPD Engine Effectivity" /></div>
+                                        <div class="col-md-8 p-1"><input type="text" id="mri_mpdengeff" class="form-control" placeholder="MPD Engine Effectivity" /></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>MPD Aircraft Effectivity</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="MPD Aircraft Effectivity" /></div>
+                                        <div class="col-md-8 p-1"><input type="text" id="mri_mpdaceff" class="form-control" placeholder="MPD Aircraft Effectivity" /></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>MPD Reference</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="MPD Reference" /></div>
+                                        <div class="col-md-8 p-1"><input type="text" id="mri_mpdref" class="form-control" placeholder="MPD Reference" /></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>Other Reference</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="Other Reference" /></div>
+                                        <div class="col-md-8 p-1"><input type="text" id="mri_otherref" class="form-control" placeholder="Other Reference" /></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>Detectability Code</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="Detectability Code" /></div>
+                                        <div class="col-md-8 p-1"><input type="text" id="mri_detectcode" class="form-control" placeholder="Detectability Code" /></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>Insp. Report Req.</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="Insp. Report Req." /></div>
+                                        <div class="col-md-8 p-1"><input type="text" id="mri_inspreq" class="form-control" placeholder="Insp. Report Req." /></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>TG Interval/Offset Note</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="TG Interval/Offset Note" /></div>
+                                        <div class="col-md-8 p-1"><input id="mri_tgoffsetnote" type="text" class="form-control" placeholder="TG Interval/Offset Note" /></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>Depending</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="Depending" /></div>
+                                        <div class="col-md-8 p-1"><input id="mri_depending" type="text" class="form-control" placeholder="Depending" /></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>Reason of Add/Del./Rev.</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="Reason of Add/Del./Rev." /></div>
+                                        <div class="col-md-8 p-1"><input id="mri_reason" type="text" class="form-control" placeholder="Reason of Add/Del./Rev." /></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>Engineering Note</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="Engineering Note" /></div>
+                                        <div class="col-md-8 p-1"><input id="mri_engnote" type="text" class="form-control" placeholder="Engineering Note" /></div>
                                     </div>
-                                </form>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
+            </form>
         </main>
     </div>
 </body>
@@ -354,38 +352,38 @@
         var revCode = $('#mri_revCode').val();
         var acZone = $('#mri_acZone').val();
         var mpSource = $('#mri_mpSource').val();
-        var taskSelection = '';
-        var samplingPercent = '';
-        var workType = '';
-        var inspectSpecial = '';
-        var mpTaskNumber = '';
-        var tgTaskNumber = '';
-        var validFrom = '';
-        var mpTaskStatus = '';
-        var mpTaskMH = '';
-        var accessPanel = '';
-        var mpdOffset = '';
-        var mpdLimitInterval = '';
-        var mpdOffsetSample = '';
-        var mpdIntervalSample = '';
-        var tgTaskOffset = '';
-        var tgTaskLimit = '';
-        var tgTaskOffsetSample = '';
-        var tgTaskLimitSample = '';
-        var mpdEngineEff = '';
-        var mpdAircraftEff = '';
+        var taskSelection = $('#mri_mptasksection').val();
+        var samplingPercent = $('#mri_persampinsp').val();
+        var workType = $('#mri_worktype').val();
+        var inspectSpecial = $('#mri_specident').val();
+        var mpTaskNumber = $('#mri_origMPTask').val();
+        var tgTaskNumber = $('#mri_origMPTask').val();
+        var validFrom = $('#mri_begEffDate').val();
+        var mpTaskStatus = $('#mri_mpTaskStatus').val();
+        var mpTaskMH = $('#mri_mpTaskMH').val();
+        var accessPanel = $('#mri_accesspanelinfo').val();
+        var mpdOffset = $('#mri_oemtaskoffset').val();
+        var mpdLimitInterval = $('#mri_oemtasklimit').val() + $('#MPDInterval').val();
+        var mpdOffsetSample = $('#mri_oemtaskoffset').val();
+        var mpdIntervalSample = $('#mri_oemtaskinterval').val();
+        var tgTaskOffset = $('#mri_tgtaskoffset').val();
+        var tgTaskLimit = $('#mri_tgtasklimit').val() + $('#TGInterval').val();
+        var tgTaskOffsetSample = $('#mri_tgoffsetsamp').val();
+        var tgTaskLimitSample = $('#mri_tgintervalsam').val();
+        var mpdEngineEff = $('#mri_mpdengeff').val();
+        var mpdAircraftEff = $('mri_mpdaceff').val();
         var tgAircraftEff = '';
         $(tgAcEff).each(function (index, item) {
             tgAircraftEff = tgAircraftEff + (item + "; ");
         });
-        var mpdReference = '';
-        var otherReference = '';
-        var detecCode = '';
-        var inspReportReq = '';
-        var tgIntervalOffsetNote = '';
-        var tgDepending = '';
-        var reason = '';
-        var engineeringNote = '';
+        var mpdReference = $('#mri_mpdref').val();
+        var otherReference = $('#mri_otherref').val();
+        var detecCode = $('#mri_detectcode').val();
+        var inspReportReq = $('#mri_inspreq').val();
+        var tgIntervalOffsetNote = $('#mri_tgoffsetnote').val();
+        var tgDepending = $('#mri_depending').val();
+        var reason = $('#mri_reason').val();
+        var engineeringNote = $('#mri_engnote').val();
 
         v_mriClass = { 'acModel': aircraftModel, 'revNumber': revNumber, 'revDate': revDate, 'revCode': revCode, 'acZone': acZone, 'mpSource': mpSource, 'taskSelection': taskSelection, 'samplingPercent': samplingPercent, 'workType': workType, 'inspectSpecial': inspectSpecial, 'mpTaskNumber': mpTaskNumber, 'tgTaskNumber': tgTaskNumber, 'validFrom': validFrom, 'mpTaskStatus': mpTaskStatus, 'mpTaskMH': mpTaskMH, 'accessPanel': accessPanel, 'mpdOffset': mpdOffset, 'mpdLimitInterval': mpdLimitInterval, 'mpdOffsetSample': mpdOffsetSample, 'mpdIntervalSample': mpdIntervalSample, 'tgTaskOffset': tgTaskOffset, 'tgTaskLimit': tgTaskLimit, 'tgTaskOffsetSample': tgTaskOffsetSample, 'tgTaskLimitSample': tgTaskLimitSample, 'mpdEngineEff': mpdEngineEff, 'mpdAircraftEff': mpdAircraftEff, 'tgAircraftEff': tgAircraftEff, 'mpdReference': mpdReference, 'otherReference': otherReference, 'detecCode': detecCode, 'inspReportReq': inspReportReq, 'tgIntervalOffsetNote': tgIntervalOffsetNote, 'tgDepending': tgDepending, 'reason': reason, 'engineeringNote': engineeringNote };
     }
@@ -402,6 +400,7 @@
                     laboratories.push(value);
                 });               
 
+                $('#labOffice').empty();
                 $(laboratories).each(function (index,  item) {
                     $('#labOffice').append("<option value='" + item.labCode + "'>" + item.labText + "</option>");                   
                 });

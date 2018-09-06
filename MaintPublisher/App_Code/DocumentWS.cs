@@ -132,4 +132,13 @@ public class DocumentWS : System.Web.Services.WebService
 
         return JsonConvert.SerializeObject(iUnits);
     }
+
+    [WebMethod]
+    public String searchDMS(String docType, String docNo, String docPart, String docVer, String docStat, String userName, String labOffice)
+    {
+        SAPConnectionInterface sapConnector = new SAPConnectionInterface();
+        List<DMSDocument> docs = sapConnector.searchDMS(docType, docNo, docPart, docVer, userName, labOffice, docStat);
+        return JsonConvert.SerializeObject(docs);
+    }
+
 }

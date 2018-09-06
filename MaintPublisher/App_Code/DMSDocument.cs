@@ -15,5 +15,6 @@ public class DMSDocument
     public String description;
     public String userName;
     public String status;
+    public String labCode;
     public String laboratory;    
 }

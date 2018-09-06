@@ -74,8 +74,9 @@ public class SAPConnectionInterface
             IRfcStructure document = rfcRepo.GetStructureMetadata("BAPI_DOC_DRAW2").CreateStructure();
             document.SetValue("DOCUMENTTYPE", doc.docType);
             document.SetValue("DOCUMENTNUMBER", doc.docNo);
+            document.SetValue("DOCUMENTPART", doc.docPart);
             //document.SetValue("DOCUMENTVERSION", doc.docVersion);            
-            //document.SetValue("DOCUMENTPART", doc.docPart);
+
             document.SetValue("DESCRIPTION", doc.description);
             document.SetValue("USERNAME", doc.userName);
             //document.SetValue("STATUSINTERN", doc.status);
@@ -190,6 +191,65 @@ public class SAPConnectionInterface
             {
                 MRI_Charact_Values allowVal = new MRI_Charact_Values(val.GetString("NAME_CHAR"), val.GetString("CHAR_VALUE"));
                 list.Add(allowVal);
+            }
+            return list;
+        }
+        catch (Exception e)
+        {
+            throw new Exception("Get MRI characteristics values error: " + e.Message);
+        }
+    }
+
+    public List<DMSDocument> searchDMS(String docType, String docNo, String docPart, String docVers, String persID, String labOffice, String docStatus)
+    {
+        try
+        {
+            List<DMSDocument> list = new List<DMSDocument>();
+            if (rfcDestination == null)
+            {
+                rfcDestination = RfcDestinationManager.GetDestination(System.Configuration.ConfigurationManager.AppSettings["SAP_SYSTEMNAME"]);
+            }
+
+            RfcRepository rfcRepo = rfcDestination.Repository;
+            IRfcFunction createFunc = rfcRepo.CreateFunction("ZPMEN158_DMS_SEARCH");
+            if (docType != null && docType.Trim().Length > 0)
+                createFunc.SetValue("DOKAR", docType);
+
+            if (docNo != null && docNo.Trim().Length > 0)
+                createFunc.SetValue("DOKNR", docNo);
+
+            if (docPart != null && docPart.Trim().Length > 0)
+                createFunc.SetValue("DOKTL", docPart);
+
+            if (docVers != null && docVers.Trim().Length > 0)
+                createFunc.SetValue("DOKVR", docVers);
+
+            if (persID != null && persID.Trim().Length > 0)
+                createFunc.SetValue("DWNAM", persID);
+
+            if (labOffice != null && labOffice.Trim().Length > 0)
+                createFunc.SetValue("LABOR", labOffice);
+
+            if (docStatus != null && docStatus.Trim().Length > 0)
+                createFunc.SetValue("DOKST", docStatus);
+
+            createFunc.Invoke(rfcDestination);
+            IRfcTable documents = createFunc.GetTable("DOC_RESULT");
+
+
+            foreach (IRfcStructure doc in documents)
+            {
+                DMSDocument document = new DMSDocument();
+                document.docType = doc.GetString("DOKAR");
+                document.docNo = doc.GetString("DOKNR");
+                document.docPart = doc.GetString("DOKTL");
+                document.docVersion = doc.GetString("DOKVR");
+                document.userName = doc.GetString("DWNAM");
+                document.labCode = doc.GetString("LABOR");
+                document.laboratory = doc.GetString("LABORATORY");
+                document.description = doc.GetString("DKTXT");
+                document.status = doc.GetString("DOKST");
+                list.Add(document);
             }
             return list;
         }
