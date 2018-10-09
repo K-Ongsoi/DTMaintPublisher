@@ -43,16 +43,19 @@ public class SAPDestinationConfig: IDestinationConfiguration
                         parms.Add(RfcConfigParameters.PoolSize, "8");
                         break;
             case "TEP":
-                        parms.Add(RfcConfigParameters.Name, destinationName);
-                        parms.Add(RfcConfigParameters.AppServerHost, "siamtep.dt.thaiairways.co.th");
-                        parms.Add(RfcConfigParameters.SystemNumber, "05");
-                        parms.Add(RfcConfigParameters.Client, "100");
-                        parms.Add(RfcConfigParameters.SystemID, destinationName);
-                        parms.Add(RfcConfigParameters.User, "webrfc");
-                        parms.Add(RfcConfigParameters.Password, "siamrfc1");
-                        parms.Add(RfcConfigParameters.Language, "EN");
-                        parms.Add(RfcConfigParameters.PoolSize, "16");
-                        break;
+                    parms.Add(RfcConfigParameters.Name, destinationName);
+                    //parms.Add(RfcConfigParameters.AppServerHost, "siamtep.dt.thaiairways.co.th");
+                    //parms.Add(RfcConfigParameters.SystemNumber, "05");
+                    parms.Add(RfcConfigParameters.Client, "100");
+                    parms.Add(RfcConfigParameters.SystemID, destinationName);
+                    parms.Add(RfcConfigParameters.User, "webrfc");
+                    parms.Add(RfcConfigParameters.Password, "siamrfc1");
+                    parms.Add(RfcConfigParameters.Language, "EN");
+                    parms.Add(RfcConfigParameters.MessageServerHost, "siamtep.dt.thaiairways.co.th");
+                    parms.Add(RfcConfigParameters.LogonGroup, "public");
+                    parms.Add(RfcConfigParameters.PoolSize, "16");
+                    
+                break;
             default:
                         return parms;
         }

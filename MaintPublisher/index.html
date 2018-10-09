@@ -210,10 +210,71 @@
                         success: function (response) {
                             var jsonData = (response.d) ? $.parseJSON(response.d) : $.parseJSON(response);
                             localStorage.setItem("ACFLEET", JSON.stringify(jsonData));
-                            $this.html($this.data('original-text'));
-                            window.location = "LandingPage.html";
+                            $.ajax({
+                                type: 'POST',
+                                url: 'DocumentWS.asmx/GetAllInspectSpecials',
+                                contentType: "application/json; charset=utf-8",
+                                dataType: 'json',
+                                success: function (response) {
+                                    var jsonData = (response.d) ? $.parseJSON(response.d) : $.parseJSON(response);
+                                    localStorage.setItem("INSPECTSPECIAL", JSON.stringify(jsonData));
+                                    $.ajax({
+                                        type: 'POST',
+                                        url: 'DocumentWS.asmx/GetAllWorkTypes',
+                                        contentType: "application/json; charset=utf-8",
+                                        dataType: 'json',
+                                        success: function (response) {
+                                            var jsonData = (response.d) ? $.parseJSON(response.d) : $.parseJSON(response);
+                                            localStorage.setItem("WORKTYPE", JSON.stringify(jsonData));
+                                            $.ajax({
+                                                type: 'POST',
+                                                url: 'DocumentWS.asmx/GetAllRevisionCodes',
+                                                contentType: "application/json; charset=utf-8",
+                                                dataType: 'json',
+                                                success: function (response) {
+                                                    var jsonData = (response.d) ? $.parseJSON(response.d) : $.parseJSON(response);
+                                                    localStorage.setItem("REVISIONCODE", JSON.stringify(jsonData));
+                                                    $.ajax({
+                                                        type: 'POST',
+                                                        url: 'DocumentWS.asmx/GetAllMPSources',
+                                                        contentType: "application/json; charset=utf-8",
+                                                        dataType: 'json',
+                                                        success: function (response) {
+                                                            var jsonData = (response.d) ? $.parseJSON(response.d) : $.parseJSON(response);
+                                                            localStorage.setItem("MPSOURCE", JSON.stringify(jsonData));
+                                                            $.ajax({
+                                                                type: 'POST',
+                                                                url: 'DocumentWS.asmx/GetAllTaskSections',
+                                                                contentType: "application/json; charset=utf-8",
+                                                                dataType: 'json',
+                                                                success: function (response) {
+                                                                    var jsonData = (response.d) ? $.parseJSON(response.d) : $.parseJSON(response);
+                                                                    localStorage.setItem("TASKSECTION", JSON.stringify(jsonData));
+                                                                    $.ajax({
+                                                                        type: 'POST',
+                                                                        url: 'DocumentWS.asmx/GetAllDetectCodes',
+                                                                        contentType: "application/json; charset=utf-8",
+                                                                        dataType: 'json',
+                                                                        success: function (response) {
+                                                                            var jsonData = (response.d) ? $.parseJSON(response.d) : $.parseJSON(response);
+                                                                            localStorage.setItem("DETECTCODE", JSON.stringify(jsonData));
+
+                                                                            $this.html($this.data('original-text'));
+                                                                            window.location = "LandingPage.html";
+                                                                        }
+                                                                    });                                                                   
+                                                                }
+                                                            });                                                                                            
+                                                        }
+                                                    });                                                                                    
+                                                }
+                                            });                                                                            
+                                        }
+                                    });                                                                    
+                                }
+                            });                                
                         }
-                    });                    
+                    });                             
                 }
                 else {
                     $this.html($this.data('original-text'));

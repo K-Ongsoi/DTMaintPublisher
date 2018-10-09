@@ -52,7 +52,7 @@
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap border-bottom">
                 <nav class="nav" style="float:left;">
                     <a class="nav-link active" href="#"><i class="far fa-file"></i> New Document</a>
-                    <a class="nav-link" href="NewVersion.html"><i class="far fa-copy"></i> New Revision</a>
+                    <a class="nav-link" href="NewVersion.html"><i class="far fa-copy"></i> New Version</a>
                 </nav>
             </div>
             <span class="pageTitle"><i class="far fa-file"></i> New Document</span>
@@ -217,7 +217,7 @@
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>Beginning Effective Date</label></div>
-                                        <div class="col-md-8 p-1"><input type="date" id="mri_begEffDate" class="form-control" data-date-format="DD.MM.YYYY" placeholder="Beginning Effective Date" /></div>
+                                        <div class="col-md-8 p-1"><input type="date" id="mri_begEffDate" class="form-control" data-date-format="YYYYMMDD" placeholder="Beginning Effective Date" /></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>MP Task Status</label></div>
@@ -363,11 +363,18 @@
         var mpTaskMH = $('#mri_mpTaskMH').val();
         var accessPanel = $('#mri_accesspanelinfo').val();
         var mpdOffset = $('#mri_oemtaskoffset').val();
-        var mpdLimitInterval = $('#mri_oemtasklimit').val() + $('#MPDInterval').val();
+        var mpdLimitInterval = '';
+        if ($('#mri_oemtasklimit').val() != undefined && $('#mri_oemtasklimit').val() != '')
+        {
+            mpdLimitInterval = $('#mri_oemtasklimit').val() + $('#MPDInterval').val();
+        }
         var mpdOffsetSample = $('#mri_oemtaskoffset').val();
         var mpdIntervalSample = $('#mri_oemtaskinterval').val();
         var tgTaskOffset = $('#mri_tgtaskoffset').val();
-        var tgTaskLimit = $('#mri_tgtasklimit').val() + $('#TGInterval').val();
+        var tgTaskLimit = '';
+        if ($('#mri_tgtasklimit').val() != undefined && $('#mri_tgtasklimit').val() != '') {
+            tgTaskLimit = $('#mri_tgtasklimit').val() + $('#TGInterval').val();
+        }
         var tgTaskOffsetSample = $('#mri_tgoffsetsamp').val();
         var tgTaskLimitSample = $('#mri_tgintervalsam').val();
         var mpdEngineEff = $('#mri_mpdengeff').val();
@@ -448,7 +455,6 @@
         });
     }
     
-
     function renderAircraftEff() {
         $('#TG_ACEff').empty();
         $(selected).each(function (i, item) {

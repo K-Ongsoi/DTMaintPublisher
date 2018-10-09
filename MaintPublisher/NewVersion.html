@@ -6,7 +6,7 @@
     <meta name="description" content="Technical Department : Document Editor Page">
     <meta name="author" content="Keerati Ongsoi" />
 
-    <title>THAI - Technical Department : Document Editor Page</title>    
+    <title>THAI - Technical Department : Document Editor Page</title>
     <link rel="icon" href="images/favicon.png" />
     <link href="framework/jqwidgets/styles/jqx.base.css" rel="stylesheet" />
     <link href="framework/jqwidgets/styles/jqx.web.css" rel="stylesheet" />
@@ -17,10 +17,11 @@
     <link href="framework/bootstrap4/css/open-iconic-bootstrap.css" rel="stylesheet" />
     <link href="framework/bootstrap4/css/bootstrap-multiselect.css" rel="stylesheet" />
     <link href="content/toastr.min.css" rel="stylesheet" />
+    <script src="framework/moment.js"></script>
 </head>
 <body>
     <nav class="navbar sticky-top flex-md-nowrap p-0" role="navigation">
-        <a class="navbar-brand" href="#"><img src="images/LightLogo.png" /></a>
+        <a class="navbar-brand" href="LandingPage.html"><img src="images/LightLogo.png" /></a>
         <div class="col-sm-2 col-md-2 mr-0 navbar page-title" style="float: left;">Document Editors</div>
         <div class="w-100" style="align-content:center;text-align:center;"><img src="images/DarkLogo.png" style="vertical-align: central;" />TECHNICAL DEPARTMENT</div>
         <div class="col-sm-2 col-md-2">
@@ -54,10 +55,10 @@
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap border-bottom">
                 <nav class="nav" style="float:left;">
                     <a class="nav-link" href="DocEditor.html"><i class="far fa-file"></i> New Document</a>
-                    <a class="nav-link active" href="#"><i class="far fa-copy"></i> New Revision</a>
+                    <a class="nav-link active" href="#"><i class="far fa-copy"></i> New Version</a>
                 </nav>
             </div>
-            <span class="pageTitle"><i class="far fa-copy"></i> New Revision</span>
+            <span class="pageTitle"><i class="far fa-copy"></i> New Version</span>
             <div class="container-fluid h-100">
                 <div class="row mw-100 h-100">
                     <div class="col-md-6 p-2">
@@ -85,7 +86,7 @@
                                         <div class="col-md-2">
                                             <div class="form-group">
                                                 <label for="documentVersion">Version</label>
-                                                <input type="number" class="form-control" id="documentVersion" placeholder="Version" value="00" readonly />
+                                                <input type="number" class="form-control" id="documentVersion" placeholder="Auto" value="00" readonly />
                                             </div>
                                         </div>
                                     </div>
@@ -154,8 +155,8 @@
                                 </form>
                             </div>
                             <div class="card-footer">
-                                <button type="button" class="btn btn-outline-primary"><i class="far fa-save"></i> Save</button>
-                                <button type="button" class="btn btn-outline-danger"><i class="fas fa-undo"></i> Cancel</button>
+                                <button type="button" id="docSave" class="btn btn-outline-primary"><i class="far fa-save"></i> Create</button>
+                                <button type="button" id="docCancel" class="btn btn-outline-danger"><i class="fas fa-undo"></i> Cancel</button>
                             </div>
                         </div>
                     </div>
@@ -174,137 +175,156 @@
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>Revision No.:</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="Revision No." /></div>
+                                        <div class="col-md-8 p-1"><input type="text" class="form-control" id="c_revno" placeholder="Revision No." /></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>Revision/Edition/Issue Date:</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="Revision/Edition/Issue Date" /></div>
+                                        <div class="col-md-8 p-1"><input type="text" class="form-control" id="c_revdate" placeholder="Revision/Edition/Issue Date" /></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>Revision Code of Original Task:</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="Revision Code" /></div>
+                                        <!-- <div class="col-md-8 p-1"><input type="text" class="form-control" id="c_revcode" placeholder="Revision Code" /></div> -->
+                                        <div class="col-md-8 p-1">
+                                            <select class="form-control" id="c_revcode"></select>
+                                        </div>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="col-md-4"><label>A/C Zone:</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="Aircraft Zonal" /></div>
+                                    <div id="acZoneArea">
+                                        <div class="form-row">
+                                            <div class="col-md-4"><label>A/C Zone <i id="more_aczone" class="fas fa-chevron-circle-down" ></i></label></div>
+                                            <div class="col-md-8 p-1"><input type="text" class="form-control" id="c_aczone" name="c_aczone" placeholder="Aircraft Zonal" /></div>
+                                        </div>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="col-md-4"><label>MP Task Source</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="MP Task Source" /></div>
+                                    <div id="mpSourceArea">
+                                        <div class="form-row">
+                                            <div class="col-md-4"><label>MP Task Source</label></div>
+                                            <div class="col-md-8 p-1"><select class="form-control" id="c_mpsource"></select></div>
+                                        </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>MP Task Section</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="MP Task Section" /></div>
+                                        <div class="col-md-8 p-1"><select class="form-control" id="c_mpsection"></select></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>Percentage of Sampling Inspect</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="Percentage of Sampling Inspect" /></div>
+                                        <div class="col-md-8 p-1"><input type="text" class="form-control" id="c_percsampling" placeholder="Percentage of Sampling Inspect" /></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>Work Type</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="Work Type" /></div>
+                                        <div class="col-md-8 p-1"><select class="form-control" id="c_worktype"></select></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>Spec. Ident. Inspection Task</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="Spec. Ident. Inspection Task" /></div>
+                                        <div class="col-md-8 p-1"><select class="form-control" id="c_insptask"></select></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>Original MP Task Number</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="Original MP Task Number" /></div>
+                                        <div class="col-md-8 p-1"><input type="text" class="form-control" id="c_mptasknumber" placeholder="Original MP Task Number" /></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>TG MP Task Number</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="TG MP Task Number" /></div>
+                                        <div class="col-md-8 p-1"><input type="text" class="form-control" id="c_tgtasknumber" placeholder="TG MP Task Number" /></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>Beginning Effective Date</label></div>
-                                        <div class="col-md-8 p-1"><input type="date" class="form-control" data-date-format="DD.MM.YYYY" placeholder="Beginning Effective Date" /></div>
+                                        <div class="col-md-8 p-1"><input type="date" class="form-control" id="c_validfrom" data-date-format="YYYYMMDD" placeholder="Beginning Effective Date" /></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>MP Task Status</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="MP Task Status" /></div>
+                                        <div class="col-md-8 p-1"><input type="text" class="form-control" id="c_mptaskstatus" placeholder="MP Task Status" /></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>MP Task MH</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="MP Task MH" /></div>
+                                        <div class="col-md-8 p-1"><input type="text" class="form-control" id="c_mptaskmh" placeholder="MP Task MH" /></div>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="col-md-4"><label>Access Panel Information</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="Access Panel Information" /></div>
+                                    <div id="accessPanelArea">
+                                        <div class="form-row">
+                                            <div class="col-md-4"><label>Access Panel Information <i id="more_accesspanel" class="fas fa-chevron-circle-down"></i></label></div>
+                                            <div class="col-md-8 p-1"><input type="text" class="form-control" id="c_accesspanel" name="c_accesspanel" placeholder="Access Panel Information" /></div>
+                                        </div>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="col-md-4"><label>MPD/OEM Task Offset</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="MPD/OEM Task Offset" /></div>
+                                    <div id="mpdOffsetArea">
+                                        <div class="form-row">
+                                            <div class="col-md-4"><label>MPD/OEM Task Offset</label></div>
+                                            <div class="col-md-8 p-1"><input type="text" class="form-control" id="c_mpdoffset" name="c_mpdoffset" placeholder="MPD/OEM Task Offset" /></div>
+                                        </div>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="col-md-4"><label>MPD/OEM Task Limit/Interval</label></div>
-                                        <div class="col-md-8 p-1 form-inline"><input type="number" class="form-control col-sm-8" placeholder="MPD/OEM Task Limit/Interval" /><select class="form-control col-sm-4" id="MPDInterval"></select></div>
+                                    <div id="mpdLimitIntervalArea">
+                                        <div class="form-row">
+                                            <div class="col-md-4"><label>MPD/OEM Task Limit/Interval</label></div>
+                                            <div class="col-md-8 p-1 form-inline"><input type="number" class="form-control col-sm-8" id="c_mpdlimitinterval" name="c_mpdlimitinterval" placeholder="MPD/OEM Task Limit/Interval" /><select class="form-control col-sm-4" id="MPDInterval" name="MPDInterval"></select></div>
+                                        </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>MPD/OEM Task Offset Sample</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="MPD/OEM Task Offset Sample" /></div>
+                                        <div class="col-md-8 p-1"><input type="text" class="form-control" id="c_mpdoffsetsample" placeholder="MPD/OEM Task Offset Sample" /></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>MPD/OEM Task Interval Sample</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="MPD/OEM Task Interval Sample" /></div>
+                                        <div class="col-md-8 p-1"><input type="text" class="form-control" id="c_mpdintervalsample" placeholder="MPD/OEM Task Interval Sample" /></div>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="col-md-4"><label>TG Task Offset</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="TG Task Offset" /></div>
+                                    <div id="tgTaskOffsetArea">
+                                        <div class="form-row">
+                                            <div class="col-md-4"><label>TG Task Offset</label></div>
+                                            <div class="col-md-8 p-1"><input type="text" class="form-control" id="c_tgtaskoffset" name="c_tgtaskoffset" placeholder="TG Task Offset" /></div>
+                                        </div>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="col-md-4"><label>TG Task Limit/Interval</label></div>
-                                        <div class="col-md-8 p-1 form-inline"><input type="number" class="form-control col-sm-8" placeholder="TG Task Limit/Interval" /><select class="form-control col-sm-4" id="TGInterval"></select></div>
+                                    <div id="tgTaskLimitArea">
+                                        <div class="form-row">
+                                            <div class="col-md-4"><label>TG Task Limit/Interval</label></div>
+                                            <div class="col-md-8 p-1 form-inline"><input type="number" class="form-control col-sm-8" id="c_tgtasklimit" name="c_tgtasklimit" placeholder="TG Task Limit/Interval" /><select class="form-control col-sm-4" id="TGInterval" name="TGInterval"></select></div>
+                                        </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>TG Task Offset Sample</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="TG Task Offset Sample" /></div>
+                                        <div class="col-md-8 p-1"><input type="text" class="form-control" id="c_tgtaskoffsetsample" placeholder="TG Task Offset Sample" /></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>TG Task Interval Sample</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="TG Task Interval Sample" /></div>
+                                        <div class="col-md-8 p-1"><input type="text" class="form-control" id="c_tgtasklimitsample" placeholder="TG Task Interval Sample" /></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>MPD Engine Effectivity</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="MPD Engine Effectivity" /></div>
+                                        <div class="col-md-8 p-1"><input type="text" class="form-control" id="c_mpdengineeff" placeholder="MPD Engine Effectivity" /></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>MPD Aircraft Effectivity</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="MPD Engine Effectivity" /></div>
+                                        <div class="col-md-8 p-1"><input type="text" class="form-control" id="c_mpdaircrafteff" placeholder="MPD Aircraft Effectivity" /></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>MPD Reference</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="MPD Reference" /></div>
+                                        <div class="col-md-8 p-1"><input type="text" class="form-control" id="c_mpdreference" placeholder="MPD Reference" /></div>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="col-md-4"><label>Other Reference</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="Other Reference" /></div>
+                                    <div id="otherReferenceArea">
+                                        <div class="form-row">
+                                            <div class="col-md-4"><label>Other Reference</label></div>
+                                            <div class="col-md-8 p-1"><input type="text" class="form-control" id="c_otherreference" name="c_otherreference" placeholder="Other References" /></div>
+                                        </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>Detectability Code</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="Detectability Code" /></div>
+                                        <div class="col-md-8 p-1"><select class="form-control" id="c_deteccode"></select></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>Insp. Report Req.</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="Insp. Report Req." /></div>
+                                        <div class="col-md-8 p-1"><div class="form-check-inline"><input type="checkbox" class="form-check-input" id="c_inspreportreq" value="Y"/><label class="form-check-label" for=" c_inspreqporereq"> YES</label></div></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>TG Interval/Offset Note</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="TG Interval/Offset Note" /></div>
+                                        <div class="col-md-8 p-1"><input type="text" class="form-control" id="c_tgintervaloffsetnote" placeholder="TG Interval/Offset Note" /></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>Depending</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="Depending" /></div>
+                                        <div class="col-md-8 p-1"><input type="text" class="form-control" id="c_tgdepending" placeholder="Depending" /></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>Reason of Add/Del./Rev.</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="Reason of Add/Del./Rev." /></div>
+                                        <div class="col-md-8 p-1"><input type="text" class="form-control" id="c_reason" placeholder="Reason of Add/Del./Rev." /></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>Engineering Note</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" placeholder="Engineering Note" /></div>
+                                        <div class="col-md-8 p-1"><input type="text" class="form-control" id="c_engineeringnote" placeholder="Engineering Note" /></div>
                                     </div>
-                                </form>
+                            </form>
                             </div>
                         </div>
                     </div>
@@ -380,10 +400,34 @@
 <script src="Scripts/toastr.min.js"></script>
 <script>
     var acModel = [];
+    var tgAcEff = []
     var selected = [];
     var intervalUnits = [];
     var laboratories = [];
     var aircrafts = [];
+    var revisionCodes = [];
+    var workTypes = [];
+    var mpSources = [];
+    var taskSections = [];
+    var inspectSpecials = [];
+    var detectCodes = [];
+
+    function getUrlVars() {
+        var vars = [], hash;
+        var hashes = window.location.href.slice(window.location.href.indexOf('?') + 1).split('&');
+        for (var i = 0; i < hashes.length; i++) {
+            hash = hashes[i].split('=');
+
+            if ($.inArray(hash[0], vars) > -1) {
+                vars[hash[0]] += "," + hash[1];
+            }
+            else {
+                vars.push(hash[0]);
+                vars[hash[0]] = hash[1];
+            }
+        }
+        return vars;
+    }
 
     function getIntervalUnit() {
         $.ajax({
@@ -450,7 +494,7 @@
             $('#TG_ACEff').append("<optgroup label='" + item.value + "'>");
             for (var i = 0, len = aircrafts.length; i < len; i++) {
                 if (aircrafts[i] && aircrafts[i].actype == item.value) {
-                    $('#TG_ACEff').append("<option value='" + aircrafts[i].acreg + "'>" + aircrafts[i].acreg + "</option>");
+                    $('#TG_ACEff').append("<option value='" + aircrafts[i].acreg + "'>" + aircrafts[i].displayAC + "</option>");
                 }
             }
             $('#TG_ACEff').append("</optgroup>");
@@ -488,6 +532,42 @@
                 renderAircraftEff();
             },
             buttonWidth: '100%'
+        });
+    }
+
+    function renderRevisionCode() {
+        $(revisionCodes).each(function (item, value) {
+            $('#c_revcode').append("<option value='" + value.revisionCode + "'>" + value.revisionText + "</option>");
+        });
+    }
+
+    function renderMPSource() {
+        $(mpSources).each(function (item, value) {
+            $('#c_mpsource').append("<option value='" + value.sourceCode + "'>" + value.sourceText + "</option>");
+        });
+    }
+
+    function renderTaskSection() {
+        $(taskSections).each(function (item, value) {
+            $('#c_mpsection').append("<option value='" + value.taskCode + "'>" + value.taskText + "</option>");
+        });
+    }
+
+    function renderWorkType() {
+        $(workTypes).each(function (item, value) {
+            $('#c_worktype').append("<option value='" + value.workValue + "'>" + value.workText + "</option>");
+        });
+    }
+
+    function renderInspectSpecial() {
+        $(inspectSpecials).each(function (item, value) {
+            $('#c_insptask').append("<option value='" + value.inspectValue + "'>" + value.inspectText + "</option>");
+        });
+    }
+
+    function renderDetectCode() {
+        $(detectCodes).each(function (item, value) {
+            $('#c_deteccode').append("<option value='" + value.detectCode + "'>" + value.detectText + "</option>");
         });
     }
 
@@ -559,6 +639,298 @@
         });
     }
 
+    function dissectCharacteristics(charact) {
+        var arr_acModel = [];
+        selected = [];
+        $.each(charact.acModel, function (index, value) {
+            arr_acModel.push(value);
+            selected.push({ 'value': value });
+        });
+        $("#acModel").multiselect("select", arr_acModel);
+
+        renderAircraftEff();
+
+        var arr_tgAcEff = [];
+        $.each(charact.tgAircraftEff, function (index, value) {
+            var acValue = aircrafts.filter(function (item) {
+                return item.displayAC == value;
+            })[0].acreg;
+            arr_tgAcEff.push(acValue);
+        });
+
+        if (arr_tgAcEff && arr_tgAcEff.indexOf('ALL') >= 0) {
+            $("#TG_ACEff").multiselect("selectAll", false);
+        }
+        else {
+            $("#TG_ACEff").multiselect("select", arr_tgAcEff);
+        }
+        var tgAircrafts = $('#TG_ACEff option:selected');
+        tgAcEff = [];
+        $(tgAircrafts).each(function (index, sel_acreg) {
+            tgAcEff.push(sel_acreg.label);
+        });
+        $('#TG_ACEff').multiselect('refresh');
+
+        $("#c_revno").val(charact.revNumber);
+        $("#c_revdate").val(charact.revDate);
+        var revCode = revisionCodes.filter(function (item) {
+            return item.revisionText == charact.revCode;
+        })[0].revisionCode;
+        $("#c_revcode").val(revCode);
+
+        $.each(charact.acZone, function (index, value) {
+            if (index == 0) {
+                $("[name=c_aczone]")[0].value = value;
+            }
+            else {
+                $('#acZoneArea').append('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1"><input type="text" class="form-control" name="c_aczone[]" placeholder="Aircraft Zonal" value="' + value + '" /></div></div>');
+            }
+        });
+
+        var s_tasksection = taskSections.filter(function (item) {
+            return item.taskText == charact.taskSection;
+        })[0].taskCode;
+        $("#c_mpsection").val(s_tasksection);
+
+        $("#c_percsampling").val(charact.samplingPercent);
+
+        var s_worktype = workTypes.filter(function (item) {
+            return item.workText == charact.workType;
+        })[0].workValue;
+        $("#c_worktype").val(s_worktype);
+
+        var s_inspectspecial = inspectSpecials.filter(function (item) {
+            return item.inspectText == charact.inspectSpecial;
+        })[0].inspectValue;
+        $("#c_insptask").val(s_inspectspecial);
+
+        var v_mpSource = mpSources.filter(function (item) {
+            return item.sourceText == charact.mpSource;
+        })[0].sourceCode;
+        $("#c_mpsource").val(v_mpSource);
+
+        $("#c_mptasknumber").val(charact.mpTaskNumber);
+        $("#c_tgtasknumber").val(charact.tgTaskNumber);
+        var s_date = charact.validFrom;
+        var begDate = moment(s_date, "DD.MM.YYYY").format('YYYY-MM-DD');
+
+        $("#c_validfrom").val(begDate);
+        $("#c_mptaskstatus").val(charact.mpTaskStatus);
+        $("#c_mptaskmh").val(charact.mpTaskMH);
+
+        $.each(charact.accessPanel, function (index, value) {
+            if (index == 0) {
+                $("[name=c_accesspanel]")[0].value = value;
+            }
+            else {
+                $('#accessPanelArea').append('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1"><input type="text" class="form-control" name="c_accesspanel[]" placeholder="Access Panel Information" value="' + value + '" /></div></div>');
+            }
+        });
+
+        $.each(charact.mpdOffset, function (index, value) {
+            if (index == 0) {
+                $("[name=c_mpdoffset]")[0].value = value;
+            }
+            else {
+                $('#mpdOffsetArea').append('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1"><input type="text" class="form-control" name="c_mpdoffset[]" placeholder="MPD/OEM Task Offset" value="' + value + '" /></div></div>');
+            }
+        });
+
+        $.each(charact.mpdLimitInterval, function (index, value) {
+            if (index == 0) {
+                var valToken = value.split(" ");
+                $("[name=c_mpdlimitinterval]")[0].value = valToken[0];
+                $("[name=MPDInterval]")[0].value = valToken[1];
+            }
+            else {
+                var valToken = value.split(" ");
+                var strHTML = ""
+                strHTML = ('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1 form-inline"><input type="number" class="form-control col-sm-8" name="c_mpdlimitinterval[]" placeholder="MPD / OEM Task Limit / Interval" value="' + valToken[0] + '" /><select class="form-control col-sm-4" name="MPDInterval[]">');
+                $(intervalUnits).each(function (index, val) {
+                    if (val == valToken[1]) {
+                        strHTML += ("<option value='" + val + "' selected>" + val + "</option>");
+                    } else {
+                        strHTML += ("<option value='" + val + "'>" + val + "</option>");
+                    }
+                });
+                strHTML += '</select></div ></div >'
+                $('#mpdLimitIntervalArea').append(strHTML);
+            }
+        });
+
+        var s_mpdoffsetsample = "";
+        $.each(charact.mpdOffsetSample, function (index, value) {
+            if (index == charact.mpdOffsetSample.length - 1) {
+                s_mpdoffsetsample += value;
+            }
+            else {
+                s_mpdoffsetsample += (value + ";");
+            }
+        });
+        $("#c_mpdoffsetsample").val(s_mpdoffsetsample);
+
+        var s_mpdintervalsample = "";
+        $.each(charact.mpdIntevalSample, function (index, value) {
+            if (index == charact.mpdIntervalSample.length - 1) {
+                s_mpdintervalsample += value;
+            }
+            else {
+                s_mpdintervalsample += (value + ";");
+            }
+        });
+        $("#c_mpdintervalsample").val(s_mpdintervalsample);
+
+        $.each(charact.tgTaskOffset, function (index, value) {
+            if (index == 0) {
+                $("[name=c_tgtaskoffset]")[0].value = value;
+            }
+            else {
+                $('#tgTaskOffsetArea').append('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1"><input type="text" class="form-control" name="c_tgtaskoffset[]" placeholder="TG Task Offset" value="' + value + '" /></div></div>');
+            }
+        });
+
+        $.each(charact.tgTaskLimit, function (index, value) {
+            if (index == 0) {
+                var valToken = value.split(" ");
+                $("[name=c_tgtasklimit]")[0].value = valToken[0];
+                $("[name=TGInterval]")[0].value = valToken[1];
+            }
+            else {
+                var valToken = value.split(" ");
+                var strHTML = ""
+                strHTML = ('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1 form-inline"><input type="number" class="form-control col-sm-8" name="c_tgtasklimit[]" placeholder="TG Task Task Limit/Interval" value="' + valToken[0] + '" /><select class="form-control col-sm-4" name="TGInterval[]">');
+                $(intervalUnits).each(function (index, val) {
+                    if (val == valToken[1]) {
+                        strHTML += ("<option value='" + val + "' selected>" + val + "</option>");
+                    } else {
+                        strHTML += ("<option value='" + val + "'>" + val + "</option>");
+                    }
+                });
+                strHTML += '</select></div ></div >'
+                $('#tgTaskLimitArea').append(strHTML);
+            }
+        });
+
+        var s_tgtaskoffsetsample = "";
+        $.each(charact.tgTaskOffsetSample, function (index, value) {
+            if (index == charact.tgTaskOffsetSample.length - 1) {
+                s_tgtaskoffsetsample += value;
+            }
+            else {
+                s_tgtaskoffsetsample += (value + ";");
+            }
+        });
+        $("#c_tgtaskoffsetsample").val(s_tgtaskoffsetsample);
+
+        var s_tgtasklimitsample = "";
+        $.each(charact.tgTaskLimitSample, function (index, value) {
+            if (index == charact.tgTaskLimitSample.length - 1) {
+                s_tgtasklimitsample += value;
+            }
+            else {
+                s_tgtasklimitsample += (value + ";");
+            }
+        });
+        $("#c_tgtasklimitsample").val(s_tgtasklimitsample);
+
+        var s_mpdengineeff = "";
+        $.each(charact.mpdEngineEff, function (index, value) {
+            if (index == charact.mpdEngineEff.length - 1) {
+                s_mpdengineeff += value;
+            }
+            else {
+                s_mpdengineeff += (value + ";");
+            }
+        });
+        $("#c_mpdengineeff").val(s_mpdengineeff);
+
+        var s_mpdaircrafteff = "";
+        $.each(charact.mpdAircraftEff, function (index, value) {
+            if (index == charact.mpdAircraftEff.length - 1) {
+                s_mpdaircrafteff += value;
+            }
+            else {
+                s_mpdaircrafteff += (value + ";");
+            }
+        });
+        $("#c_mpdaircrafteff").val(s_mpdaircrafteff);
+
+        var s_mpdreference = "";
+        $.each(charact.mpdReference, function (index, value) {
+            if (index == charact.mpdReference.length - 1) {
+                s_mpdreference += value;
+            }
+            else {
+                s_mpdreference += (value + ";");
+            }
+        });
+        $("#c_mpdreference").val(s_mpdreference);
+
+        $.each(charact.otherReference, function (index, value) {
+            if (index == 0) {
+                $("[name=c_otherreference]")[0].value = value;
+            }
+            else {
+                $('#otherReferenceArea').append('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1"><input type="text" class="form-control" name="c_otherreference[]" placeholder="Other References" value="' + value + '" /></div></div>');
+            }
+        });
+
+        var v_detecCode = detectCodes.filter(function (item) {
+            return item.detectText == charact.detecCode;
+        })[0].detectCode;
+        $("#c_deteccode").val(v_detecCode);
+
+        if (charact.inspReportReq != undefined && charact.inspReportReq == "Yes") {
+            $("#c_inspreportreq").prop('checked', true);
+        }
+        else {
+            $("#c_inspreportreq").prop('checked', false);
+        }
+
+        var s_tgintervaloffsetnote = "";
+        $.each(charact.tgIntervalOffsetNote, function (index, value) {
+            if (index == charact.tgIntervalOffsetNote.length - 1) {
+                s_tgintervaloffsetnote += value;
+            }
+            else {
+                s_tgintervaloffsetnote += (value + ";");
+            }
+        });
+        $("#c_tgintervaloffsetnote").val(s_tgintervaloffsetnote);
+
+        var s_tgdepending = "";
+        $.each(charact.tgDepending, function (index, value) {
+            if (index == charact.tgDepending.length - 1) {
+                s_tgdepending += value;
+            }
+            else {
+                s_tgdepending += (value + ";");
+            }
+        });
+        $("#c_tgdepending").val(s_tgdepending);
+
+        $("#c_reason").val(charact.reason);
+        $("#c_engineeringnote").val(charact.engineeringNote);
+    }
+
+    function getDocumentDetail(docNo, docPart, docVersion) {
+        var jsonReq = '{docNo: ' + JSON.stringify(docNo) + ', docPart: ' + JSON.stringify(docPart) + ', docVersion: ' + JSON.stringify(docVersion) + '}';
+
+        $.ajax({
+            type: 'POST',
+            url: 'DocumentWS.asmx/getDocDetails',
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            data: jsonReq,
+            success: function (response) {
+                var jsonData = (response.d) ? $.parseJSON(response.d) : $.parseJSON(response);
+                $('#documentDesc').val(jsonData.description);
+                $('#labOffice').val(jsonData.labCode);
+                dissectCharacteristics(jsonData.characteristics);
+            }
+        });
+    }
+
     function getSelectedRow() {
         var rowIndex = $('#search_result').jqxGrid('getselectedrowindexes');
         if (rowIndex == undefined || rowIndex.length == 0) {
@@ -571,7 +943,141 @@
             $('#documentPart').val(selectedRowData.docPart);
             $('#documentVersion').val(selectedRowData.docVersion);
             $('#DocumentSelector').modal('hide');
+            getDocumentDetail(selectedRowData.docNo, selectedRowData.docPart, selectedRowData.docVersion);
         }
+    }
+
+    function getURLsDoc(docNo, docPart, docVersion) {
+        $('#documentNo').val(docNo);
+        $('#documentPart').val(docPart);
+        $('#documentVersion').val("");
+        getDocumentDetail(docNo, docPart, docVersion);
+    }
+
+    var v_docHeader = {};
+    var v_mriClass = {};
+    var userName = 'TG27394';
+
+    function getDocumentHeader() {
+        var docNumber = $('#documentNo').val();
+        var docType = 'MRI';
+        var docPart = $('#documentPart').val();
+        var docVersion = $('#documentVersion').val();
+        var labOffice = $('#labOffice').val();
+        var docDesc = $('#documentDesc').val();
+
+        v_docHeader = { 'docNo': docNumber, 'docType': docType, 'docPart': docPart, 'docVersion': docVersion, 'description': docDesc, 'laboratory': labOffice, 'userName': userName };
+    }
+
+    function getMRIClassData() {
+        var aircraftModel = '';
+        $(selected).each(function (index, item) {
+            aircraftModel = aircraftModel + (item.value + "; ");
+        });
+
+        var revNumber = $('#c_revno').val();
+        var revDate = $('#c_revdate').val();
+        var revCode = $('#c_revcode').val();
+
+
+        var acZone = '';
+        $('input[name ^= "c_aczone"]').each(function () {
+            acZone = acZone + ($(this).val() + "; ");
+        });
+        
+        var mpSource = $('#c_mpsource').val();        
+        var taskSelection = $('#c_mpsection').val();
+        var samplingPercent = $('#c_persampling').val();
+        var workType = $('#c_worktype').val();
+        var inspectSpecial = $('#c_insptask').val();
+        var mpTaskNumber = $('c_mptasknumber').val();
+        var tgTaskNumber = $('#c_tgtasknumber').val();
+        var validFrom = $('#c_validfrom').val();
+        var mpTaskStatus = $('#c_mptaskstatus').val();
+        var mpTaskMH = $('#c_mptaskmh').val();
+
+        var accessPanel = '';
+        $('input[name ^= "c_accesspanel"]').each(function () {
+            accessPanel = accessPanel + ($(this).val() + "; ");
+        });
+        
+        var mpdOffset = '';
+        $('input[name ^= "c_mpdoffset"]').each(function () {
+            mpdOffset = mpdOffset + ($(this).val() + "; ");
+        });
+
+        var arr_mpdlimitinterval = [];
+        var arr_mpdinterval = [];
+
+        $('input[name ^= "c_mpdlimitinterval"]').each(function () {
+            if ($(this).val() && $(this).val() != undefined && $(this).val() != "") {
+                arr_mpdlimitinterval.push($(this).val());
+            }
+        });
+        
+        $('select[name ^= "MPDInterval"]').each(function () {
+            arr_mpdinterval.push($(this).val());
+        });
+
+        var mpdLimitInterval = '';
+        $.each(arr_mpdlimitinterval, function (index, value) {
+            mpdLimitInterval = mpdLimitInterval + (value + " " + arr_mpdinterval[index] + "; ");
+        });
+
+        var mpdOffsetSample = $('#c_mpdoffsetsample').val();
+        var mpdIntervalSample = $('#c_mpdintervalsample').val();
+
+        var tgTaskOffset = '';
+        $('input[name ^= "c_tgtaskoffset"]').each(function () {
+            tgTaskOffset = tgTaskOffset + ($(this).val() + "; ");
+        });
+
+        var arr_tglimitinterval = [];
+        var arr_tginterval = [];
+
+        $('input[name ^= "c_tgtasklimit"]').each(function () {
+            if ($(this).val() && $(this).val() != undefined && $(this).val() != "") {
+                arr_tglimitinterval.push($(this).val());
+            }
+        });
+
+        $('select[name ^= "TGInterval"]').each(function () {
+            arr_tginterval.push($(this).val());
+        });
+
+        var tgTaskLimit = '';
+        $.each(arr_tglimitinterval, function (index, value) {
+            tgTaskLimit = tgTaskLimit + (value + " " + arr_tginterval[index] + "; ");
+        });
+       
+        var tgTaskOffsetSample = $('#c_tgtaskoffsetsample').val();
+        var tgTaskLimitSample = $('#mri_tgtasklimitsample').val();
+        var mpdEngineEff = $('#c_mpdengineeff').val();
+        var mpdAircraftEff = $('c_mpdaircrafteff').val();
+        var tgAircraftEff = '';
+        $(tgAcEff).each(function (index, item) {
+            tgAircraftEff = tgAircraftEff + (item + "; ");
+        });
+        var mpdReference = $('#c_mpdreference').val();
+
+        var otherReference = '';
+        $('input[name ^= "c_otherreference"]').each(function () {
+            otherReference = otherReference + ($(this).val() + "; ");
+        });
+        
+        var detecCode = $('#c_deteccode').val();
+
+        var v_inspreq = "";
+        if ($('#c_inspreportreq').prop('checked') == true) {
+            v_inspreq = "Y";
+        }
+        var inspReportReq = v_inspreq;
+        var tgIntervalOffsetNote = $('#c_tgintervaloffsetnote').val();
+        var tgDepending = $('#c_tgdepending').val();
+        var reason = $('#c_reason').val();
+        var engineeringNote = $('#c_engineeringnote').val();
+
+        v_mriClass = { 'acModel': aircraftModel, 'revNumber': revNumber, 'revDate': revDate, 'revCode': revCode, 'acZone': acZone, 'mpSource': mpSource, 'taskSection': taskSelection, 'samplingPercent': samplingPercent, 'workType': workType, 'inspectSpecial': inspectSpecial, 'mpTaskNumber': mpTaskNumber, 'tgTaskNumber': tgTaskNumber, 'validFrom': validFrom, 'mpTaskStatus': mpTaskStatus, 'mpTaskMH': mpTaskMH, 'accessPanel': accessPanel, 'mpdOffset': mpdOffset, 'mpdLimitInterval': mpdLimitInterval, 'mpdOffsetSample': mpdOffsetSample, 'mpdIntervalSample': mpdIntervalSample, 'tgTaskOffset': tgTaskOffset, 'tgTaskLimit': tgTaskLimit, 'tgTaskOffsetSample': tgTaskOffsetSample, 'tgTaskLimitSample': tgTaskLimitSample, 'mpdEngineEff': mpdEngineEff, 'mpdAircraftEff': mpdAircraftEff, 'tgAircraftEff': tgAircraftEff, 'mpdReference': mpdReference, 'otherReference': otherReference, 'detecCode': detecCode, 'inspReportReq': inspReportReq, 'tgIntervalOffsetNote': tgIntervalOffsetNote, 'tgDepending': tgDepending, 'reason': reason, 'engineeringNote': engineeringNote };
     }
 
     $(document).ready(function () {
@@ -580,7 +1086,13 @@
         getAircraftModel();
 
         aircrafts = JSON.parse(localStorage.getItem("ACFLEET"));
-
+        revisionCodes = JSON.parse(localStorage.getItem("REVISIONCODE")); renderRevisionCode();
+        workTypes = JSON.parse(localStorage.getItem("WORKTYPE")); renderWorkType();
+        inspectSpecials = JSON.parse(localStorage.getItem("INSPECTSPECIAL")); renderInspectSpecial();
+        mpSources = JSON.parse(localStorage.getItem("MPSOURCE")); renderMPSource();
+        taskSections = JSON.parse(localStorage.getItem("TASKSECTION")); renderTaskSection();
+        detectCodes = JSON.parse(localStorage.getItem("DETECTCODE")); renderDetectCode();
+       
         $('[data-toggle="tooltip"]').tooltip();
 
         $('#TG_ACEff').multiselect({
@@ -613,7 +1125,62 @@
             getSelectedRow();
         });
 
-        $('#DocumentSelector').modal('show');
+        var u_docNo = decodeURIComponent(getUrlVars()["DOCUMENTNUMBER"]);
+        var u_docPart = decodeURIComponent(getUrlVars()["DOCUMENTPART"]);
+        var u_docVersion = decodeURIComponent(getUrlVars()["DOCUMENTVERSION"]);
+
+        if (u_docNo != 'undefined' && u_docNo != '') {
+            getURLsDoc(u_docNo, u_docPart, u_docVersion);
+        }
+        else {
+            $('#DocumentSelector').modal('show');
+        }
+    });
+
+    $('#docSave').click(function () {
+        v_docHeader = {};
+        v_mriClass = {};
+        getDocumentHeader();
+        getMRIClassData();
+        var postObj = {
+            doc: v_docHeader,
+            mriClass: v_mriClass
+        };
+
+        $.ajax({
+            type: 'POST',
+            url: 'DocumentWS.asmx/createMRIDoc',
+            contentType: "application/json; charset=utf-8",
+            dataType: 'json',
+            data: JSON.stringify(postObj),
+            success: function (response) {
+                var jsonData = (response.d) ? $.parseJSON(response.d) : $.parseJSON(response);
+
+                if (jsonData.result)
+                    toastr["success"](jsonData.message);
+                else
+                    toastr["error"](jsonData.message);
+            },
+            error: function (response) {
+                toastr["error"]("Error while saving document data to SAP system!!!");
+            }
+        });
+    });
+
+    $('#more_aczone').click(function (e) {
+        lastValue = $('#acZoneArea input:last').val();
+
+        if (lastValue != undefined && lastValue != "") {
+            $('#acZoneArea').append('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1"><input type="text" class="form-control" name="c_aczone[]" placeholder="Aircraft Zonal" value="" /></div></div>');
+        }
+    });
+
+    $('#more_accesspanel').click(function (e) {
+        lastValue = $('#accessPanelArea input:last').val();
+
+        if (lastValue != undefined && lastValue != "") {
+            $('#accessPanelArea').append('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1"><input type="text" class="form-control" name="c_accesspanel[]" placeholder="Access Panel Information" value="" /></div></div>');
+        }
     });
 </script>
 <!-- End Java Script -->

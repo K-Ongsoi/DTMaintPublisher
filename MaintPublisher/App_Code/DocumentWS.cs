@@ -125,12 +125,62 @@ public class DocumentWS : System.Web.Services.WebService
     {
         List<String> iUnits = new List<string>();
 
+        iUnits.Add("DY");
         iUnits.Add("FH");
         iUnits.Add("FC");
         iUnits.Add("MO");
         iUnits.Add("YR");
 
         return JsonConvert.SerializeObject(iUnits);
+    }
+
+    [WebMethod]
+    public String GetAllInspectSpecials()
+    {
+        SAPConnectionInterface sapConnector = new SAPConnectionInterface();
+        List<InspectSpecial> inspectSpecials = sapConnector.getAllInspectSpecial();
+        return JsonConvert.SerializeObject(inspectSpecials);
+    }
+
+    [WebMethod]
+    public String GetAllWorkTypes()
+    {
+        SAPConnectionInterface sapConnector = new SAPConnectionInterface();
+        List<WorkType> workTypes = sapConnector.getAllWorkType();
+        return JsonConvert.SerializeObject(workTypes);
+    }
+
+    [WebMethod]
+    public String GetAllRevisionCodes()
+    {
+        SAPConnectionInterface sapConnector = new SAPConnectionInterface();
+        List<RevisionCode> revisionCodes = sapConnector.getAllRevisionCode();
+        return JsonConvert.SerializeObject(revisionCodes);
+    }
+
+    [WebMethod]
+    public String GetAllMPSources()
+    {
+        SAPConnectionInterface sapConnector = new SAPConnectionInterface();
+        List<MPSource> mpSources = sapConnector.getAllMPSource();
+        return JsonConvert.SerializeObject(mpSources);
+    }
+
+    [WebMethod]
+    public String GetAllTaskSections()
+    {
+        SAPConnectionInterface sapConnector = new SAPConnectionInterface();
+        List<TaskSection> taskSections = sapConnector.getAllTaskSection();
+        return JsonConvert.SerializeObject(taskSections);
+    }
+
+
+    [WebMethod]
+    public String GetAllDetectCodes()
+    {
+        SAPConnectionInterface sapConnector = new SAPConnectionInterface();
+        List<DetectCode> detectCodes = sapConnector.getAllDetectCode();
+        return JsonConvert.SerializeObject(detectCodes);
     }
 
     [WebMethod]
@@ -141,4 +191,11 @@ public class DocumentWS : System.Web.Services.WebService
         return JsonConvert.SerializeObject(docs);
     }
 
+    [WebMethod]
+    public String getDocDetails(String docNo, String docPart, String docVersion)
+    {
+        SAPConnectionInterface sapConnector = new SAPConnectionInterface();
+        DMSDocument doc = sapConnector.getDocumentDetail(docNo, docPart, docVersion);
+        return JsonConvert.SerializeObject(doc);
+    }
 }

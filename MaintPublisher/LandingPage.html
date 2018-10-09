@@ -16,6 +16,7 @@
     <link href="style/master.css" rel="stylesheet" />
     <link href="framework/bootstrap4/css/open-iconic-bootstrap.css" rel="stylesheet" />
     <link href="framework/bootstrap4/css/bootstrap-multiselect.css" rel="stylesheet" />
+    <link href="framework/css/animate.css" rel="stylesheet" />
     <link href="content/toastr.min.css" rel="stylesheet" />
     <style type="text/css">
         .fullpage {
@@ -88,6 +89,34 @@
             <div class="row" style="height:90%; overflow: hidden;">
                 <div class="col-md-12">
                     <div id="search_result"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="dmsCreateFromTemplate" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title"><i class="far fa-clone"></i> Create MRI Document from Template</h4>
+                   
+                </div>
+                <div class="modal-body" style="background-color:#f5f5f5;">
+                    <p><h6>Template Document:</h6></p>
+                    <div class="row">
+                        <div class="col-md-6"><label for="t_docNo">Document No.</label><input type="text" class="form-control" id="t_docNo" readonly /></div>
+                        <div class="col-md-3"><label for="t_docPart">Part</label><input type="text" class="form-control" id="t_docPart" readonly/></div>
+                        <div class="col-md-3"><label for="t_docVersion">Version</label><input type="text" class="form-control" id="t_docVersion" readonly/></div>
+                    </div>
+                    <hr />
+                    <p style="color:#ef6c00;"><h6>New Document:</h6></p>
+                    <div class="row">
+                        <div class="col-md-6"><label for="n_docNo" style="color:#ef6c00;">Document No.</label><input type="text" class="form-control" id="n_docNo" /></div>
+                        <div class="col-md-3"><label for="n_docPart" style="color:#ef6c00;">Part</label><input type="text" class="form-control" id="n_docPart" /></div>
+                        <div class="col-md-3"><label for="n_docVersion" style="color:#ef6c00;">Version</label><input type="text" class="form-control" id="n_docVersion" /></div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="close" data-dismiss="modal">Cancel</button>
                 </div>
             </div>
         </div>
@@ -241,7 +270,18 @@
                                 var selDocPart = dataRecord.docPart;
                                 var selDocVersion = dataRecord.docVersion;
 
-                                alert('SELECT - ' + selDocNo + ':' + selDocPart + '-' + selDocVersion)
+                                $("#t_docNo").val(selDocNo);
+                                $("#t_docPart").val(selDocPart);
+                                $("#t_docVersion").val(selDocVersion);
+
+                                $("#dmsCreateFromTemplate").on("show.bs.modal", function (e) {
+                                    $(".modal .modal-dialog").attr("class", "modal-dialog zoomIn animated");
+                                });
+                                $("#dmsCreateFromTemplate").on("hide.bs.modal", function (e) {
+                                    $(".modal .modal-dialog").attr("class", "modal-dialog zoomOut animated");
+                                });
+
+                                $("#dmsCreateFromTemplate").modal({ show: true });
                             }
                         },
                         {
@@ -255,7 +295,7 @@
                                 var selDocPart = dataRecord.docPart;
                                 var selDocVersion = dataRecord.docVersion;
 
-                                alert('SELECT - ' + selDocNo + ':' + selDocPart + '-' + selDocVersion)
+                                window.open("NewVersion.html?DOCUMENTNUMBER=" + selDocNo + "&DOCUMENTPART=" + selDocPart + "&DOCUMENTVERSION=" + selDocVersion, "_blank");
                             }
                         }
                     ]
