@@ -55,10 +55,10 @@
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap border-bottom">
                 <nav class="nav" style="float:left;">
                     <a class="nav-link" href="DocEditor.html"><i class="far fa-file"></i> New Document</a>
-                    <a class="nav-link active" href="#"><i class="far fa-copy"></i> New Version</a>
+                    <a class="nav-link active" href="#"><i class="far fa-copy"></i> Document Viewer</a>
                 </nav>
             </div>
-            <span class="pageTitle"><i class="far fa-copy"></i> New Version</span>
+            <span class="pageTitle"><i class="far fa-copy"></i> Document Viewer</span>
             <div class="container-fluid h-100">
                 <div class="row mw-100 h-100">
                     <div class="col-md-6 p-2">
@@ -67,7 +67,7 @@
                                 <form class="p-1">
                                     <div class="form-row">
                                         <div class="col-auto ml-md-auto">
-                                            <label>Document Status:&nbsp;</label><span class="badge badge-success">CREATED</span>
+                                            <label>Document Status:&nbsp;</label><span id="badgeCREATE" class="badge badge-warning" hidden>CREATED</span><span id="badgeRELEASE" class="badge badge-success" hidden>RELEASED</span>
                                         </div>
                                     </div>
                                     <div class="form-row">
@@ -155,7 +155,7 @@
                                 </form>
                             </div>
                             <div class="card-footer">
-                                <button type="button" id="docSave" class="btn btn-outline-primary"><i class="far fa-save"></i> Create</button>
+                                <button type="button" id="docSave" class="btn btn-outline-primary"><i class="far fa-save"></i> <span id="docSave_lbl">Create</span></button>
                                 <button type="button" id="docCancel" class="btn btn-outline-danger"><i class="fas fa-undo"></i> Cancel</button>
                             </div>
                         </div>
@@ -196,13 +196,15 @@
                                     </div>
                                     <div id="mpSourceArea">
                                         <div class="form-row">
-                                            <div class="col-md-4"><label>MP Task Source</label></div>
-                                            <div class="col-md-8 p-1"><select class="form-control" id="c_mpsource"></select></div>
+                                            <div class="col-md-4"><label>MP Task Source <i id="more_mpsource" class="fas fa-chevron-circle-down"></i></label></div>
+                                            <div class="col-md-8 p-1"><select class="form-control" id="c_mpsource" name="c_mpsource"></select></div>
                                         </div>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="col-md-4"><label>MP Task Section</label></div>
-                                        <div class="col-md-8 p-1"><select class="form-control" id="c_mpsection"></select></div>
+                                    <div id="mpSectionArea">
+                                        <div class="form-row">
+                                            <div class="col-md-4"><label>MP Task Section <i id="more_mpsection" class="fas fa-chevron-circle-down"></i></label></div>
+                                            <div class="col-md-8 p-1"><select class="form-control" id="c_mpsection" name="c_mpsection"></select></div>
+                                        </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>Percentage of Sampling Inspect</label></div>
@@ -212,9 +214,11 @@
                                         <div class="col-md-4"><label>Work Type</label></div>
                                         <div class="col-md-8 p-1"><select class="form-control" id="c_worktype"></select></div>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="col-md-4"><label>Spec. Ident. Inspection Task</label></div>
-                                        <div class="col-md-8 p-1"><select class="form-control" id="c_insptask"></select></div>
+                                    <div id="inspTaskArea">
+                                        <div class="form-row">
+                                            <div class="col-md-4"><label>Spec. Ident. Inspection Task <i id="more_insptask" class="fas fa-chevron-circle-down"></i></label></div>
+                                            <div class="col-md-8 p-1"><select class="form-control" id="c_insptask" name="c_insptask"></select></div>
+                                        </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>Original MP Task Number</label></div>
@@ -244,13 +248,13 @@
                                     </div>
                                     <div id="mpdOffsetArea">
                                         <div class="form-row">
-                                            <div class="col-md-4"><label>MPD/OEM Task Offset</label></div>
+                                            <div class="col-md-4"><label>MPD/OEM Task Offset <i id="more_mpdoffset" class="fas fa-chevron-circle-down"></i></label></div>
                                             <div class="col-md-8 p-1"><input type="text" class="form-control" id="c_mpdoffset" name="c_mpdoffset" placeholder="MPD/OEM Task Offset" /></div>
                                         </div>
                                     </div>
                                     <div id="mpdLimitIntervalArea">
                                         <div class="form-row">
-                                            <div class="col-md-4"><label>MPD/OEM Task Limit/Interval</label></div>
+                                            <div class="col-md-4"><label>MPD/OEM Task Limit/Interval <i id="more_mpdinterval" class="fas fa-chevron-circle-down"></i></label></div>
                                             <div class="col-md-8 p-1 form-inline"><input type="number" class="form-control col-sm-8" id="c_mpdlimitinterval" name="c_mpdlimitinterval" placeholder="MPD/OEM Task Limit/Interval" /><select class="form-control col-sm-4" id="MPDInterval" name="MPDInterval"></select></div>
                                         </div>
                                     </div>
@@ -264,13 +268,13 @@
                                     </div>
                                     <div id="tgTaskOffsetArea">
                                         <div class="form-row">
-                                            <div class="col-md-4"><label>TG Task Offset</label></div>
+                                            <div class="col-md-4"><label>TG Task Offset <i id="more_tgtaskoffset" class="fas fa-chevron-circle-down"></i></label></div>
                                             <div class="col-md-8 p-1"><input type="text" class="form-control" id="c_tgtaskoffset" name="c_tgtaskoffset" placeholder="TG Task Offset" /></div>
                                         </div>
                                     </div>
                                     <div id="tgTaskLimitArea">
                                         <div class="form-row">
-                                            <div class="col-md-4"><label>TG Task Limit/Interval</label></div>
+                                            <div class="col-md-4"><label>TG Task Limit/Interval <i id="more_tgtasklimit" class="fas fa-chevron-circle-down"></i></label></div>
                                             <div class="col-md-8 p-1 form-inline"><input type="number" class="form-control col-sm-8" id="c_tgtasklimit" name="c_tgtasklimit" placeholder="TG Task Limit/Interval" /><select class="form-control col-sm-4" id="TGInterval" name="TGInterval"></select></div>
                                         </div>
                                     </div>
@@ -290,13 +294,15 @@
                                         <div class="col-md-4"><label>MPD Aircraft Effectivity</label></div>
                                         <div class="col-md-8 p-1"><input type="text" class="form-control" id="c_mpdaircrafteff" placeholder="MPD Aircraft Effectivity" /></div>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="col-md-4"><label>MPD Reference</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" id="c_mpdreference" placeholder="MPD Reference" /></div>
+                                    <div id="mpdReferenceArea">
+                                        <div class="form-row">
+                                            <div class="col-md-4"><label>MPD Reference <i id="more_mpdreference" class="fas fa-chevron-circle-down"></i></label></div>
+                                            <div class="col-md-8 p-1"><input type="text" class="form-control" id="c_mpdreference" name="c_mpdreference" placeholder="MPD Reference" /></div>
+                                        </div>
                                     </div>
                                     <div id="otherReferenceArea">
                                         <div class="form-row">
-                                            <div class="col-md-4"><label>Other Reference</label></div>
+                                            <div class="col-md-4"><label>Other Reference <i id="more_otherreference" class="fas fa-chevron-circle-down"></i> </label></div>
                                             <div class="col-md-8 p-1"><input type="text" class="form-control" id="c_otherreference" name="c_otherreference" placeholder="Other References" /></div>
                                         </div>
                                     </div>
@@ -687,10 +693,27 @@
             }
         });
 
-        var s_tasksection = taskSections.filter(function (item) {
-            return item.taskText == charact.taskSection;
-        })[0].taskCode;
-        $("#c_mpsection").val(s_tasksection);
+        $.each(charact.taskSection, function (index, value) {
+            if (index == 0) {
+                var s_tasksection = taskSections.filter(function (item) {
+                    return item.taskText == value;
+                })[0].taskCode;
+                $("#c_mpsection").val(s_tasksection);
+            }
+            else {
+                var strHTML = ""
+                strHTML = ('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1"><select class="form-control" name="c_mpsection[]">');
+                $(taskSections).each(function (index, val) {
+                    if (val.taskText == value) {
+                        strHTML += ("<option value='" + val.taskCode + "' selected>" + val.taskText + "</option>");
+                    } else {
+                        strHTML += ("<option value='" + val.taskCode + "'>" + val.taskText + "</option>");
+                    }
+                });
+                strHTML += '</select></div ></div >';
+                $('#mpSectionArea').append(strHTML);
+            }
+        });        
 
         $("#c_percsampling").val(charact.samplingPercent);
 
@@ -699,15 +722,48 @@
         })[0].workValue;
         $("#c_worktype").val(s_worktype);
 
-        var s_inspectspecial = inspectSpecials.filter(function (item) {
-            return item.inspectText == charact.inspectSpecial;
-        })[0].inspectValue;
-        $("#c_insptask").val(s_inspectspecial);
+        $.each(charact.inspectSpecial, function (index, value) {
+            if (index == 0) {
+                var s_inspectspecial = inspectSpecials.filter(function (item) {
+                    return item.inspectText == value;
+                })[0].inspectValue;
+                $("#c_insptask").val(s_inspectspecial);
+            }
+            else {
+                var strHTML = ('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1"><select class="form-control" name="c_insptask[]">');
+                $(inspectSpecials).each(function (index, val) {
+                    if (val.inspectText == value) {
+                        strHTML += ("<option value='" + val.inspectValue + "' selected>" + val.inspectText + "</option>");
+                    } else {
+                        strHTML += ("<option value='" + val.inspectValue + "'>" + val.inspectText + "</option>");
+                    }
+                });
+                strHTML += '</select></div ></div >';
+                $('#inspTaskArea').append(strHTML);
+            }
+        });        
 
-        var v_mpSource = mpSources.filter(function (item) {
-            return item.sourceText == charact.mpSource;
-        })[0].sourceCode;
-        $("#c_mpsource").val(v_mpSource);
+        $.each(charact.mpSource, function (index, value) {
+            if (index == 0) {
+                var v_mpSource = mpSources.filter(function (item) {
+                    return item.sourceText == value;
+                })[0].sourceCode;
+                $("[name=c_mpsource")[0].value = v_mpSource;
+            }
+            else {                
+                var strHTML = ""
+                strHTML = ('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1"><select class="form-control" name="c_mpsource[]">');
+                $(mpSources).each(function (index, val) {
+                    if (val.sourceText == value) {
+                        strHTML += ("<option value='" + val.sourceCode + "' selected>" + val.sourceText + "</option>");
+                    } else {
+                        strHTML += ("<option value='" + val.sourceCode + "'>" + val.sourceText + "</option>");
+                    }
+                });
+                strHTML += '</select></div ></div >';
+                $('#mpSourceArea').append(strHTML);
+            }
+        });        
 
         $("#c_mptasknumber").val(charact.mpTaskNumber);
         $("#c_tgtasknumber").val(charact.tgTaskNumber);
@@ -857,14 +913,13 @@
 
         var s_mpdreference = "";
         $.each(charact.mpdReference, function (index, value) {
-            if (index == charact.mpdReference.length - 1) {
-                s_mpdreference += value;
+            if (index == 0) {
+                $("[name=c_mpdreference]")[0].value = value;
             }
             else {
-                s_mpdreference += (value + ";");
+                $('#mpdReferenceArea').append('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1"><input type="text" class="form-control" name="c_mpdreference[]" placeholder="MPD Reference" value="' + value + '" /></div></div>');
             }
-        });
-        $("#c_mpdreference").val(s_mpdreference);
+        });        
 
         $.each(charact.otherReference, function (index, value) {
             if (index == 0) {
@@ -926,6 +981,12 @@
                 var jsonData = (response.d) ? $.parseJSON(response.d) : $.parseJSON(response);
                 $('#documentDesc').val(jsonData.description);
                 $('#labOffice').val(jsonData.labCode);
+                var statusText = jsonData.status;
+                switch (statusText) {
+                    case 'CR': $('#badgeCREATE').removeAttr('hidden'); $('#badgeRELEASE').hide(); break;
+                    case 'RE': $('#badgeCREATE').hide(); $('#badgeRELEASE').removeAttr('hidden'); break;
+                    default: $('#badgeCREATE').removeAttr('hidden'); $('#badgeRELEASE').hide(); break;
+                }
                 dissectCharacteristics(jsonData.characteristics);
             }
         });
@@ -947,10 +1008,17 @@
         }
     }
 
-    function getURLsDoc(docNo, docPart, docVersion) {
+    function getURLsDoc(operation, docNo, docPart, docVersion) {
         $('#documentNo').val(docNo);
         $('#documentPart').val(docPart);
-        $('#documentVersion').val("");
+        if (operation != undefined && operation == 'CHANGE') {
+            $('#docSave_lbl').text('Save');
+            $('#documentVersion').val(docVersion);
+        }
+        else {
+            $('#docSave_lbl').text('Create');
+            $('#documentVersion').val("");
+        }        
         getDocumentDetail(docNo, docPart, docVersion);
     }
 
@@ -1125,12 +1193,13 @@
             getSelectedRow();
         });
 
+        var u_mode = decodeURIComponent(getUrlVars()["MODE"]);
         var u_docNo = decodeURIComponent(getUrlVars()["DOCUMENTNUMBER"]);
         var u_docPart = decodeURIComponent(getUrlVars()["DOCUMENTPART"]);
         var u_docVersion = decodeURIComponent(getUrlVars()["DOCUMENTVERSION"]);
 
         if (u_docNo != 'undefined' && u_docNo != '') {
-            getURLsDoc(u_docNo, u_docPart, u_docVersion);
+            getURLsDoc(u_mode, u_docNo, u_docPart, u_docVersion);
         }
         else {
             $('#DocumentSelector').modal('show');
@@ -1173,6 +1242,7 @@
         if (lastValue != undefined && lastValue != "") {
             $('#acZoneArea').append('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1"><input type="text" class="form-control" name="c_aczone[]" placeholder="Aircraft Zonal" value="" /></div></div>');
         }
+        $('#acZoneArea input:last').focus();
     });
 
     $('#more_accesspanel').click(function (e) {
@@ -1181,6 +1251,121 @@
         if (lastValue != undefined && lastValue != "") {
             $('#accessPanelArea').append('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1"><input type="text" class="form-control" name="c_accesspanel[]" placeholder="Access Panel Information" value="" /></div></div>');
         }
+        $('#accessPanelArea input:last').focus();
+    });
+
+    $('#more_mpsource').click(function (e) {
+        lastValue = $('#mpSourceArea select:last').val();
+        if (lastValue != undefined && lastValue != "") {
+            var strHTML = ""
+            strHTML = ('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1"><select class="form-control" name="c_mpsource[]">');            
+            $(mpSources).each(function (index, val) {
+                if (val == '') {
+                    strHTML += ("<option value='" + val.sourceCode + "' selected>" + val.sourceText + "</option>");
+                } else {
+                    strHTML += ("<option value='" + val.sourceCode + "'>" + val.sourceText + "</option>");
+                }
+            });
+            strHTML += '</select></div ></div >';
+            $('#mpSourceArea').append(strHTML);
+        }        
+        $('#mpSourceArea select:last').focus();
+    });
+
+    $('#more_mpdoffset').click(function (e) {
+        lastValue = $('#mpdOffsetArea input:last').val();
+        if (lastValue != undefined && lastValue != "") {
+            $('#mpdOffsetArea').append('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1"><input type="text" class="form-control" name="c_mpdoffset[]" placeholder="MPD/OEM Task Offset" value="" /></div></div>');
+        }
+        $('#mpdOffsetArea input:last').focus();
+    });
+
+    $('#more_mpdinterval').click(function (e) {
+        lastValue = $('#mpdLimitIntervalArea input:last').val();
+        if (lastValue != undefined && lastValue != "") {
+            var strHTML = ""
+            strHTML = ('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1 form-inline"><input type="number" class="form-control col-sm-8" name="c_mpdlimitinterval[]" placeholder="MPD / OEM Task Limit / Interval" value="" /><select class="form-control col-sm-4" name="MPDInterval[]">');
+            $(intervalUnits).each(function (index, val) {
+                strHTML += ("<option value='" + val + "'>" + val + "</option>");
+            });
+            strHTML += '</select></div ></div >'
+            $('#mpdLimitIntervalArea').append(strHTML);
+        }
+        $('#mpdLimitIntervalArea input:last').focus();
+    });
+
+    $('#more_tgtaskoffset').click(function (e) {
+        lastValue = $('#tgTaskOffsetArea input:last').val();
+        if (lastValue != undefined && lastValue != "") {
+            $('#tgTaskOffsetArea').append('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1"><input type="text" class="form-control" name="c_tgtaskoffset[]" placeholder="TG Task Offset" value="" /></div></div>');
+        }
+        $('#tgTaskOffsetArea input:last').focus();
+    });
+
+    $('#more_tgtasklimit').click(function (e) {
+        lastValue = $('#tgTaskLimitArea input:last').val();
+        if (lastValue != undefined && lastValue != "") {
+            var strHTML = ""
+            strHTML = ('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1 form-inline"><input type="number" class="form-control col-sm-8" name="c_tgtasklimit[]" placeholder=""TG Task Interval Sample" value="" /><select class="form-control col-sm-4" name="TGInterval[]">');
+            $(intervalUnits).each(function (index, val) {
+                strHTML += ("<option value='" + val + "'>" + val + "</option>");
+            });
+            strHTML += '</select></div ></div >'
+            $('#tgTaskLimitArea').append(strHTML);
+        }
+        $('#tgTaskLimitArea input:last').focus();
+    });
+
+    $('#more_mpdreference').click(function (e) {
+        lastValue = $('#mpdReferenceArea input:last').val();
+        if (lastValue != undefined && lastValue != "") {
+            $('#mpdReferenceArea').append('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1"><input type="text" class="form-control" name="c_mpdreference[]" placeholder="MPD References" value="" /></div></div>');
+        }
+        $('#mpdReferenceArea input:last').focus();
+    });
+
+    $('#more_otherreference').click(function (e) {
+        lastValue = $('#otherReferenceArea input:last').val();
+        if (lastValue != undefined && lastValue != "") {
+            $('#otherReferenceArea').append('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1"><input type="text" class="form-control" name="c_otherreference[]" placeholder="Other References" value="" /></div></div>');
+        }
+        $('#otherReferenceArea input:last').focus();
+    });
+
+    $('#more_mpsection').click(function (e) {
+        lastValue = $('#mpSectionArea select:last').val();
+        if (lastValue != undefined && lastValue != "") {
+            var strHTML = ""
+            strHTML = ('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1"><select class="form-control" name="c_mpsection[]">');
+            $(taskSections).each(function (index, val) {
+                if (val == '') {
+                    strHTML += ("<option value='" + val.taskCode + "' selected>" + val.taskText + "</option>");
+                } else {
+                    strHTML += ("<option value='" + val.taskCode + "'>" + val.taskText + "</option>");
+                }
+            });
+            strHTML += '</select></div ></div >';
+            $('#mpSectionArea').append(strHTML);
+        }
+        $('#mpSectionArea select:last').focus();
+    });
+
+    $('#more_insptask').click(function (e) {
+        lastValue = $('#inspTaskArea select:last').val();
+        if (lastValue != undefined && lastValue != "") {
+            var strHTML = ""
+            strHTML = ('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1"><select class="form-control" name="c_insptask[]">');
+            $(inspectSpecials).each(function (index, val) {
+                if (val == '') {
+                    strHTML += ("<option value='" + val.inspectValue + "' selected>" + val.inspectText + "</option>");
+                } else {
+                    strHTML += ("<option value='" + val.inspectValue + "'>" + val.inspectText + "</option>");
+                }
+            });
+            strHTML += '</select></div ></div >';
+            $('#inspTaskArea').append(strHTML);
+        }
+        $('#inspTaskArea select:last').focus();
     });
 </script>
 <!-- End Java Script -->
