@@ -287,6 +287,292 @@ public class SAPConnectionInterface
         return result;
     }
 
+    public RfcResult saveMRIDocument(DMSDocument doc, MRIClass mri)
+    {
+        RfcResult result = new RfcResult();
+        try
+        {
+            if (rfcDestination == null)
+            {
+                rfcDestination = RfcDestinationManager.GetDestination(System.Configuration.ConfigurationManager.AppSettings["SAP_SYSTEMNAME"]);
+            }
+
+            RfcRepository rfcRepo = rfcDestination.Repository;            
+            IRfcFunction createFunc = rfcRepo.CreateFunction("ZPMEN158_DMS_MAINTAIN");
+            createFunc.SetValue("IM_DOCUMENTTYPE", doc.docType);
+            createFunc.SetValue("IM_DOCUMENTNUMBER", doc.docNo);
+            createFunc.SetValue("IM_DOCUMENTPART", doc.docPart);
+            createFunc.SetValue("IM_DOCUMENTVERSION", doc.docVersion);
+            createFunc.SetValue("IM_LAB_OFFICE", doc.laboratory);
+
+            IRfcTable allocTab = createFunc.GetTable("IT_ALLOC");
+            allocTab.Append();
+            allocTab.SetValue("CLASSTYPE", "017");
+            allocTab.SetValue("CLASSNAME", "Z_MRI");
+
+            IRfcTable mriClass = createFunc.GetTable("IT_CHARACT");
+            mriClass.Append();
+            mriClass.SetValue("CLASSTYPE", "017");
+            mriClass.SetValue("CLASSNAME", "Z_MRI");
+            mriClass.SetValue("CHARNAME", "Z_AC_MODEL");
+            mriClass.SetValue("CHARVALUE", mri.acModel);
+
+            mriClass.Append();
+            mriClass.SetValue("CLASSTYPE", "017");
+            mriClass.SetValue("CLASSNAME", "Z_MRI");
+            mriClass.SetValue("CHARNAME", "Z_MPD_REV_NUMBER");
+            mriClass.SetValue("CHARVALUE", mri.revNumber);
+
+            mriClass.Append();
+            mriClass.SetValue("CLASSTYPE", "017");
+            mriClass.SetValue("CLASSNAME", "Z_MRI");
+            mriClass.SetValue("CHARNAME", "Z_DOC_REVDATE");            
+            mriClass.SetValue("CHARVALUE", mri.revDate);
+
+            mriClass.Append();
+            mriClass.SetValue("CLASSTYPE", "017");
+            mriClass.SetValue("CLASSNAME", "Z_MRI");
+            mriClass.SetValue("CHARNAME", "Z_TASK_REV_CODE");
+            mriClass.SetValue("CHARVALUE", mri.revCode);
+
+            mriClass.Append();
+            mriClass.SetValue("CLASSTYPE", "017");
+            mriClass.SetValue("CLASSNAME", "Z_MRI");
+            mriClass.SetValue("CHARNAME", "Z_AC_ZONE");
+            mriClass.SetValue("CHARVALUE", mri.acZone);
+
+            mriClass.Append();
+            mriClass.SetValue("CLASSTYPE", "017");
+            mriClass.SetValue("CLASSNAME", "Z_MRI");
+            mriClass.SetValue("CHARNAME", "Z_MP_SOURCE");
+            mriClass.SetValue("CHARVALUE", mri.mpSource);
+
+            mriClass.Append();
+            mriClass.SetValue("CLASSTYPE", "017");
+            mriClass.SetValue("CLASSNAME", "Z_MRI");
+            mriClass.SetValue("CHARNAME", "Z_TASK_SECTION");
+            mriClass.SetValue("CHARVALUE", mri.taskSection);
+
+            mriClass.Append();
+            mriClass.SetValue("CLASSTYPE", "017");
+            mriClass.SetValue("CLASSNAME", "Z_MRI");
+            mriClass.SetValue("CHARNAME", "Z_SAM_PERCENT");
+            mriClass.SetValue("CHARVALUE", mri.samplingPercent);
+
+            mriClass.Append();
+            mriClass.SetValue("CLASSTYPE", "017");
+            mriClass.SetValue("CLASSNAME", "Z_MRI");
+            mriClass.SetValue("CHARNAME", "Z_WORK_TYPE");
+            mriClass.SetValue("CHARVALUE", mri.workType);
+
+            mriClass.Append();
+            mriClass.SetValue("CLASSTYPE", "017");
+            mriClass.SetValue("CLASSNAME", "Z_MRI");
+            mriClass.SetValue("CHARNAME", "Z_INSP_SPECIAL1");
+            mriClass.SetValue("CHARVALUE", mri.inspectSpecial);
+
+            mriClass.Append();
+            mriClass.SetValue("CLASSTYPE", "017");
+            mriClass.SetValue("CLASSNAME", "Z_MRI");
+            mriClass.SetValue("CHARNAME", "Z_MP_TASK_NUMBER");
+            mriClass.SetValue("CHARVALUE", mri.mpTaskNumber);
+
+            mriClass.Append();
+            mriClass.SetValue("CLASSTYPE", "017");
+            mriClass.SetValue("CLASSNAME", "Z_MRI");
+            mriClass.SetValue("CHARNAME", "Z_MP_TG_TASK_NUMBER");
+            mriClass.SetValue("CHARVALUE", mri.tgTaskNumber);            
+
+            if (mri.validFrom != null && mri.validFrom.Trim().Length > 0)
+            {
+                DateTime validFrom = DateTime.ParseExact(mri.validFrom, "yyyy-MM-dd", System.Globalization.CultureInfo.InvariantCulture);
+                mriClass.Append();
+                mriClass.SetValue("CLASSTYPE", "017");
+                mriClass.SetValue("CLASSNAME", "Z_MRI");
+                mriClass.SetValue("CHARNAME", "Z_VALID_FROM");
+                mriClass.SetValue("CHARVALUE", validFrom.ToString("dd.MM.yyyy"));                
+            }
+
+            mriClass.Append();
+            mriClass.SetValue("CLASSTYPE", "017");
+            mriClass.SetValue("CLASSNAME", "Z_MRI");
+            mriClass.SetValue("CHARNAME", "Z_MP_TASK_STATUS");
+            mriClass.SetValue("CHARVALUE", mri.mpTaskStatus);
+
+            mriClass.Append();
+            mriClass.SetValue("CLASSTYPE", "017");
+            mriClass.SetValue("CLASSNAME", "Z_MRI");
+            mriClass.SetValue("CHARNAME", "Z_MP_TASK_MH");
+            mriClass.SetValue("CHARVALUE", mri.mpTaskMH);
+
+            mriClass.Append();
+            mriClass.SetValue("CLASSTYPE", "017");
+            mriClass.SetValue("CLASSNAME", "Z_MRI");
+            mriClass.SetValue("CHARNAME", "Z_ACCESS_PANEL_NUMBER");
+            mriClass.SetValue("CHARVALUE", mri.accessPanel);
+
+            mriClass.Append();
+            mriClass.SetValue("CLASSTYPE", "017");
+            mriClass.SetValue("CLASSNAME", "Z_MRI");
+            mriClass.SetValue("CHARNAME", "Z_MPD_OFFSET");
+            mriClass.SetValue("CHARVALUE", mri.mpdOffset);
+
+            mriClass.Append();
+            mriClass.SetValue("CLASSTYPE", "017");
+            mriClass.SetValue("CLASSNAME", "Z_MRI");
+            mriClass.SetValue("CHARNAME", "Z_MPD_LIMIT-INTERVAL");
+            mriClass.SetValue("CHARVALUE", mri.mpdLimitInterval);
+
+            mriClass.Append();
+            mriClass.SetValue("CLASSTYPE", "017");
+            mriClass.SetValue("CLASSNAME", "Z_MRI");
+            mriClass.SetValue("CHARNAME", "Z_MPD_OFFSET_SAMPLE");
+            mriClass.SetValue("CHARVALUE", mri.mpdOffsetSample);
+
+            mriClass.Append();
+            mriClass.SetValue("CLASSTYPE", "017");
+            mriClass.SetValue("CLASSNAME", "Z_MRI");
+            mriClass.SetValue("CHARNAME", "Z_MPD_LIMIT-INTERVAL_SAMPLE");
+            mriClass.SetValue("CHARVALUE", mri.mpdIntervalSample);
+
+            mriClass.Append();
+            mriClass.SetValue("CLASSTYPE", "017");
+            mriClass.SetValue("CLASSNAME", "Z_MRI");
+            mriClass.SetValue("CHARNAME", "Z_TG_OFFSET");
+            mriClass.SetValue("CHARVALUE", mri.tgTaskOffset);
+
+            mriClass.Append();
+            mriClass.SetValue("CLASSTYPE", "017");
+            mriClass.SetValue("CLASSNAME", "Z_MRI");
+            mriClass.SetValue("CHARNAME", "Z_TG_LIMIT-INTERVAL");
+            mriClass.SetValue("CHARVALUE", mri.tgTaskLimit);
+
+            mriClass.Append();
+            mriClass.SetValue("CLASSTYPE", "017");
+            mriClass.SetValue("CLASSNAME", "Z_MRI");
+            mriClass.SetValue("CHARNAME", "Z_TG_OFFSET_SAMPLE");
+            mriClass.SetValue("CHARVALUE", mri.tgTaskOffsetSample);
+
+            mriClass.Append();
+            mriClass.SetValue("CLASSTYPE", "017");
+            mriClass.SetValue("CLASSNAME", "Z_MRI");
+            mriClass.SetValue("CHARNAME", "Z_TG_LIMIT-INTERVAL_SAMPLE");
+            mriClass.SetValue("CHARVALUE", mri.tgTaskLimitSample);
+
+            mriClass.Append();
+            mriClass.SetValue("CLASSTYPE", "017");
+            mriClass.SetValue("CLASSNAME", "Z_MRI");
+            mriClass.SetValue("CHARNAME", "Z_MPD_APPLICABILITY_ENG");
+            mriClass.SetValue("CHARVALUE", mri.mpdEngineEff);
+
+            mriClass.Append();
+            mriClass.SetValue("CLASSTYPE", "017");
+            mriClass.SetValue("CLASSNAME", "Z_MRI");
+            mriClass.SetValue("CHARNAME", "Z_MPD_APPLICABILITY_AC");
+            mriClass.SetValue("CHARVALUE", mri.mpdAircraftEff);
+
+            mriClass.Append();
+            mriClass.SetValue("CLASSTYPE", "017");
+            mriClass.SetValue("CLASSNAME", "Z_MRI");
+            mriClass.SetValue("CHARNAME", "Z_TG_APPLICABILITY_AC");
+            mriClass.SetValue("CHARVALUE", mri.tgAircraftEff);
+
+            mriClass.Append();
+            mriClass.SetValue("CLASSTYPE", "017");
+            mriClass.SetValue("CLASSNAME", "Z_MRI");
+            mriClass.SetValue("CHARNAME", "Z_MPD_REFERENCE_DOCUMENT");
+            mriClass.SetValue("CHARVALUE", mri.mpdReference);
+
+            mriClass.Append();
+            mriClass.SetValue("CLASSTYPE", "017");
+            mriClass.SetValue("CLASSNAME", "Z_MRI");
+            mriClass.SetValue("CHARNAME", "Z_REFERENCE_DOCUMENT");
+            mriClass.SetValue("CHARVALUE", mri.otherReference);
+
+            mriClass.Append();
+            mriClass.SetValue("CLASSTYPE", "017");
+            mriClass.SetValue("CLASSNAME", "Z_MRI");
+            mriClass.SetValue("CHARNAME", "Z_DETCD");
+            mriClass.SetValue("CHARVALUE", mri.detecCode);
+
+            mriClass.Append();
+            mriClass.SetValue("CLASSTYPE", "017");
+            mriClass.SetValue("CLASSNAME", "Z_MRI");
+            mriClass.SetValue("CHARNAME", "Z_ACTK_FINDING_REPORT_REQ");
+            mriClass.SetValue("CHARVALUE", mri.inspReportReq);
+
+            mriClass.Append();
+            mriClass.SetValue("CLASSTYPE", "017");
+            mriClass.SetValue("CLASSNAME", "Z_MRI");
+            mriClass.SetValue("CHARNAME", "Z_TG_INT_OFFSET_NOTE");
+            mriClass.SetValue("CHARVALUE", mri.tgIntervalOffsetNote);
+
+            mriClass.Append();
+            mriClass.SetValue("CLASSTYPE", "017");
+            mriClass.SetValue("CLASSNAME", "Z_MRI");
+            mriClass.SetValue("CHARNAME", "Z_TG_DEPENDING");
+            mriClass.SetValue("CHARVALUE", mri.tgDepending);
+
+            mriClass.Append();
+            mriClass.SetValue("CLASSTYPE", "017");
+            mriClass.SetValue("CLASSNAME", "Z_MRI");
+            mriClass.SetValue("CHARNAME", "Z_REASON");
+            mriClass.SetValue("CHARVALUE", mri.reason);
+
+            mriClass.Append();
+            mriClass.SetValue("CLASSTYPE", "017");
+            mriClass.SetValue("CLASSNAME", "Z_MRI");
+            mriClass.SetValue("CHARNAME", "Z_ENGINEERING_NOTE");
+            mriClass.SetValue("CHARVALUE", mri.engineeringNote);            
+
+            /*
+                        IRfcTable longTextTab = createFunc.GetTable("LT_LONGTXT");
+                        longTextTab.Append();
+                        longTextTab.SetValue("DELETEVALUE", ' ');
+                        longTextTab.SetValue("LANGUAGE", 'S');
+                        longTextTab.SetValue("LANGUAGE_ISO", "EN");
+                        longTextTab.SetValue("TEXTLINE", "TEXT LINE");
+
+                        IRfcTable descTab = createFunc.GetTable("LT_DESC");
+                        descTab.Append();
+                        descTab.SetValue("DELETEVALUE", ' ');
+                        descTab.SetValue("LANGUAGE", 'S');
+                        descTab.SetValue("LANGUAGE_ISO", "EN");
+                        descTab.SetValue("DESCRIPTION", "DESCRIPTION");
+                        descTab.SetValue("TEXTINDICATOR", 'X');            
+            */
+
+            IRfcTable descTable = createFunc.GetTable("IT_DESC");
+            descTable.Append();
+            descTable.SetValue("DELETEVALUE", ' ');
+            descTable.SetValue("LANGUAGE", 'E');
+            descTable.SetValue("LANGUAGE_ISO", "EN");
+            descTable.SetValue("DESCRIPTION", doc.description);
+            descTable.SetValue("TEXTINDICATOR", ' ');
+
+            createFunc.Invoke(rfcDestination);
+
+            IRfcStructure createResult = createFunc.GetStructure("EX_RETURN");
+            char iResult = createResult.GetChar("TYPE");
+
+            if (iResult == 'S' || iResult == 'W')
+            {
+                result.result = true;
+                result.message = $"{doc.docNo}-{doc.docType}-{doc.docPart}-{doc.docVersion} has been updated successfully";
+            }
+            else
+            {
+                result.result = false;
+                result.message = createResult.GetString("MESSAGE");
+            }
+        }
+        catch (Exception ex)
+        {
+            throw new Exception("Save MRI document error: " + ex.Message);
+        }
+        return result;
+    }
+
     public List<MRI_Charact_Values> getMRICharacteristics()
     {
         RfcResult result = new RfcResult();

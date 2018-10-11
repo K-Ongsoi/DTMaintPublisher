@@ -1022,6 +1022,22 @@
         getDocumentDetail(docNo, docPart, docVersion);
     }
 
+    function getTemplateDoc(operation, docNo, docPart, docVersion, ref_docNo, ref_docPart, ref_docVersion) {
+        $('#documentNo').val(docNo);
+        $('#documentPart').val(docPart);
+
+
+        if (operation != undefined && operation == 'CHANGE') {
+            $('#docSave_lbl').text('Save');
+            $('#documentVersion').val(docVersion);
+        }
+        else {
+            $('#docSave_lbl').text('Create');
+            $('#documentVersion').val("");
+        }
+        getDocumentDetail(ref_docNo, ref_docPart, ref_docVersion);
+    }
+
     var v_docHeader = {};
     var v_mriClass = {};
     var userName = 'TG27394';
@@ -1198,8 +1214,17 @@
         var u_docPart = decodeURIComponent(getUrlVars()["DOCUMENTPART"]);
         var u_docVersion = decodeURIComponent(getUrlVars()["DOCUMENTVERSION"]);
 
+        var t_docNo = decodeURIComponent(getUrlVars()["REFDOCUMENTNUMBER"]);
+        var t_docPart = decodeURIComponent(getUrlVars()["REFDOCUMENTPART"]);
+        var t_docVersion = decodeURIComponent(getUrlVars()["REFDOCUMENTVERSION"]);
+
         if (u_docNo != 'undefined' && u_docNo != '') {
-            getURLsDoc(u_mode, u_docNo, u_docPart, u_docVersion);
+            if (u_mode != undefined && u_mode == "TEMPLATE") {
+                getTemplateDoc(u_mode, u_docNo, u_docPart, u_docVersion, t_docNo, t_docPart, t_docVersion);
+            }
+            else {
+                getURLsDoc(u_mode, u_docNo, u_docPart, u_docVersion);
+            }
         }
         else {
             $('#DocumentSelector').modal('show');
@@ -1216,24 +1241,47 @@
             mriClass: v_mriClass
         };
 
-        $.ajax({
-            type: 'POST',
-            url: 'DocumentWS.asmx/createMRIDoc',
-            contentType: "application/json; charset=utf-8",
-            dataType: 'json',
-            data: JSON.stringify(postObj),
-            success: function (response) {
-                var jsonData = (response.d) ? $.parseJSON(response.d) : $.parseJSON(response);
+        var operationMode = $('#docSave_lbl').text();
+        if (operationMode == 'Save') {
+            $.ajax({
+                type: 'POST',
+                url: 'DocumentWS.asmx/saveMRIDoc',
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                data: JSON.stringify(postObj),
+                success: function (response) {
+                    var jsonData = (response.d) ? $.parseJSON(response.d) : $.parseJSON(response);
 
-                if (jsonData.result)
-                    toastr["success"](jsonData.message);
-                else
-                    toastr["error"](jsonData.message);
-            },
-            error: function (response) {
-                toastr["error"]("Error while saving document data to SAP system!!!");
-            }
-        });
+                    if (jsonData.result)
+                        toastr["success"](jsonData.message);
+                    else
+                        toastr["error"](jsonData.message);
+                },
+                error: function (response) {
+                    toastr["error"]("Error while saving document data to SAP system!!!");
+                }
+            });
+        }
+        else {
+            $.ajax({
+                type: 'POST',
+                url: 'DocumentWS.asmx/createMRIDoc',
+                contentType: "application/json; charset=utf-8",
+                dataType: 'json',
+                data: JSON.stringify(postObj),
+                success: function (response) {
+                    var jsonData = (response.d) ? $.parseJSON(response.d) : $.parseJSON(response);
+
+                    if (jsonData.result)
+                        toastr["success"](jsonData.message);
+                    else
+                        toastr["error"](jsonData.message);
+                },
+                error: function (response) {
+                    toastr["error"]("Error while saving document data to SAP system!!!");
+                }
+            });
+        }
     });
 
     $('#more_aczone').click(function (e) {

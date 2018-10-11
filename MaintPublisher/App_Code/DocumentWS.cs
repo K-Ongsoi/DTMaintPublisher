@@ -70,6 +70,15 @@ public class DocumentWS : System.Web.Services.WebService
     }
 
     [WebMethod]
+    public String saveMRIDoc(DMSDocument doc, MRIClass mriClass)
+    {
+        SAPConnectionInterface sapConnector = new SAPConnectionInterface();
+
+        RfcResult result = sapConnector.saveMRIDocument(doc, mriClass);
+        return JsonConvert.SerializeObject(result);
+    }
+
+    [WebMethod]
     public String GetLaboratories()
     {
         SAPConnectionInterface sapConnector = new SAPConnectionInterface();

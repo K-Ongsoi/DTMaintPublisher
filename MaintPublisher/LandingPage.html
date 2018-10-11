@@ -116,7 +116,7 @@
                     </div>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-outline-success"><i class="far fa-copy"></i> Copy</button>
+                    <button type="button" id="createTemplateBtn" class="btn btn-outline-success"><i class="far fa-copy"></i> Copy</button>
                     <button type="button" class="btn btn-outline-danger" data-dismiss="modal"><i class="fas fa-ban"></i> Cancel</button>
                 </div>
             </div>
@@ -316,6 +316,8 @@
         });
     }
 
+
+
     $(document).ready(function () {
         var userName = localStorage.getItem("USERNAME");
         if (userName == undefined || userName == "") {
@@ -331,6 +333,17 @@
 
         $('#btnNew').click(function () {
             window.location = "DocEditor.html";
+        });
+
+        $('#createTemplateBtn').click(function () {
+            var newDocNo = $('#n_docNo').val();
+            var newDocPart = $('#n_docPart').val();
+            var newDocVersion = $('#n_docVersion').val();
+            var refDocNo = $('#t_docNo').val();
+            var refDocPart = $('#t_docPart').val();
+            var refDocVersion = $('#t_docVersion').val();
+            window.open("NewVersion.html?MODE=TEMPLATE&DOCUMENTNUMBER=" + newDocNo + "&DOCUMENTPART=" + newDocPart + "&DOCUMENTVERSION=" + newDocVersion + "&REFDOCUMENTNUMBER=" + refDocNo + "&REFDOCUMENTPART=" + refDocPart + "&REFDOCUMENTVERSION=" + refDocVersion, "_blank");
+            $("#dmsCreateFromTemplate").modal('hide');
         });
     });
 </script>
