@@ -258,13 +258,17 @@
                                             <div class="col-md-8 p-1 form-inline"><input type="number" class="form-control col-sm-8" id="c_mpdlimitinterval" name="c_mpdlimitinterval" placeholder="MPD/OEM Task Limit/Interval" /><select class="form-control col-sm-4" id="MPDInterval" name="MPDInterval"></select></div>
                                         </div>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="col-md-4"><label>MPD/OEM Task Offset Sample</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" id="c_mpdoffsetsample" placeholder="MPD/OEM Task Offset Sample" /></div>
+                                    <div id="mpdoffsetsampleArea">
+                                        <div class="form-row">
+                                            <div class="col-md-4"><label>MPD/OEM Task Offset Sample <i id="more_mpdoffsetsample" class="fas fa-chevron-circle-down"></i></label></div>
+                                            <div class="col-md-8 p-1"><input type="text" class="form-control" id="c_mpdoffsetsample" name="c_mpdoffsetsample" placeholder="MPD/OEM Task Offset Sample" /></div>
+                                        </div>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="col-md-4"><label>MPD/OEM Task Interval Sample</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" id="c_mpdintervalsample" placeholder="MPD/OEM Task Interval Sample" /></div>
+                                    <div id="mpdintervalsampleArea">
+                                        <div class="form-row">
+                                            <div class="col-md-4"><label>MPD/OEM Task Interval Sample <i id="more_mpdintervalsample" class="fas fa-chevron-circle-down"></i></label></div>
+                                            <div class="col-md-8 p-1"><input type="text" class="form-control" id="c_mpdintervalsample" placeholder="MPD/OEM Task Interval Sample" /></div>
+                                        </div>
                                     </div>
                                     <div id="tgTaskOffsetArea">
                                         <div class="form-row">
@@ -278,21 +282,29 @@
                                             <div class="col-md-8 p-1 form-inline"><input type="number" class="form-control col-sm-8" id="c_tgtasklimit" name="c_tgtasklimit" placeholder="TG Task Limit/Interval" /><select class="form-control col-sm-4" id="TGInterval" name="TGInterval"></select></div>
                                         </div>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="col-md-4"><label>TG Task Offset Sample</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" id="c_tgtaskoffsetsample" placeholder="TG Task Offset Sample" /></div>
+                                    <div id="tgtaskoffsetsampleArea">
+                                        <div class="form-row">
+                                            <div class="col-md-4"><label>TG Task Offset Sample <i id="more_tgtaskoffsetsample" class="fas fa-chevron-circle-down"></i></label></div>
+                                            <div class="col-md-8 p-1"><input type="text" class="form-control" id="c_tgtaskoffsetsample" name="c_tgtaskoffsetsample" placeholder="TG Task Offset Sample" /></div>
+                                        </div>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="col-md-4"><label>TG Task Interval Sample</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" id="c_tgtasklimitsample" placeholder="TG Task Interval Sample" /></div>
+                                    <div id="tgtasklimitsampleArea">
+                                        <div class="form-row">
+                                            <div class="col-md-4"><label>TG Task Interval Sample <i id="more_tgtasklimitsample" class="fas fa-chevron-circle-down"></i></label></div>
+                                            <div class="col-md-8 p-1"><input type="text" class="form-control" id="c_tgtasklimitsample" name="c_tgtasklimitsample" placeholder="TG Task Interval Sample" /></div>
+                                        </div>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="col-md-4"><label>MPD Engine Effectivity</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" id="c_mpdengineeff" placeholder="MPD Engine Effectivity" /></div>
+                                    <div id="mpdengineeffArea">
+                                        <div class="form-row">
+                                            <div class="col-md-4"><label>MPD Engine Effectivity <i id="more_mpdengineeff" class="fas fa-chevron-circle-down"></i></label></div>
+                                            <div class="col-md-8 p-1"><input type="text" class="form-control" id="c_mpdengineeff" name="c_mpdengineeff" placeholder="MPD Engine Effectivity" /></div>
+                                        </div>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="col-md-4"><label>MPD Aircraft Effectivity</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" id="c_mpdaircrafteff" placeholder="MPD Aircraft Effectivity" /></div>
+                                    <div id="mpdaircrafteffArea">
+                                        <div class="form-row">
+                                            <div class="col-md-4"><label>MPD Aircraft Effectivity <i id="more_mpdaircrafteff" class="fas fa-chevron-circle-down"></i></label></div>
+                                            <div class="col-md-8 p-1"><input type="text" class="form-control" id="c_mpdaircrafteff" name="c_mpdaircrafteff" placeholder="MPD Aircraft Effectivity" /></div>
+                                        </div>
                                     </div>
                                     <div id="mpdReferenceArea">
                                         <div class="form-row">
@@ -314,13 +326,17 @@
                                         <div class="col-md-4"><label>Insp. Report Req.</label></div>
                                         <div class="col-md-8 p-1"><div class="form-check-inline"><input type="checkbox" class="form-check-input" id="c_inspreportreq" value="Y"/><label class="form-check-label" for=" c_inspreqporereq"> YES</label></div></div>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="col-md-4"><label>TG Interval/Offset Note</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" id="c_tgintervaloffsetnote" placeholder="TG Interval/Offset Note" /></div>
+                                    <div id="tgintervaloffsetnoteArea">
+                                        <div class="form-row">
+                                            <div class="col-md-4"><label>TG Interval/Offset Note <i id="more_tgintervaloffsetnote" class="fas fa-chevron-circle-down"></i></label></div>
+                                            <div class="col-md-8 p-1"><input type="text" class="form-control" id="c_tgintervaloffsetnote" placeholder="TG Interval/Offset Note" name="c_tgintervaloffsetnote" /></div>
+                                        </div>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="col-md-4"><label>Depending</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" id="c_tgdepending" placeholder="Depending" /></div>
+                                    <div id="tgdependingArea">
+                                        <div class="form-row">
+                                            <div class="col-md-4"><label>Depending <i id="more_tgdepending" class="fas fa-chevron-circle-down"></i></label></div>
+                                            <div class="col-md-8 p-1"><input type="text" class="form-control" id="c_tgdepending" placeholder="Depending" name="c_tgdepending" /></div>
+                                        </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>Reason of Add/Del./Rev.</label></div>
@@ -405,8 +421,16 @@
 <script src="framework/jqwidgets/globalization/globalize.js"></script>
 <script src="Scripts/toastr.min.js"></script>
 <script>
+    var o_acModel = [];
     var acModel = [];
+
     var tgAcEff = []
+    var o_tgAcEff = [];
+
+    var o_aczone = [];
+    var o_mpsource = [];
+    var o_tasksection = [];
+
     var selected = [];
     var intervalUnits = [];
     var laboratories = [];
@@ -647,9 +671,11 @@
 
     function dissectCharacteristics(charact) {
         var arr_acModel = [];
+        o_acmodel = [];
         selected = [];
         $.each(charact.acModel, function (index, value) {
             arr_acModel.push(value);
+            o_acmodel.push(value);
             selected.push({ 'value': value });
         });
         $("#acModel").multiselect("select", arr_acModel);
@@ -657,11 +683,12 @@
         renderAircraftEff();
 
         var arr_tgAcEff = [];
+        o_tgAcEff = [];
         $.each(charact.tgAircraftEff, function (index, value) {
             var acValue = aircrafts.filter(function (item) {
                 return item.displayAC == value;
             })[0].acreg;
-            arr_tgAcEff.push(acValue);
+            arr_tgAcEff.push(acValue);            
         });
 
         if (arr_tgAcEff && arr_tgAcEff.indexOf('ALL') >= 0) {
@@ -673,6 +700,7 @@
         var tgAircrafts = $('#TG_ACEff option:selected');
         tgAcEff = [];
         $(tgAircrafts).each(function (index, sel_acreg) {
+            o_tgAcEff.push(sel_acreg.label);
             tgAcEff.push(sel_acreg.label);
         });
         $('#TG_ACEff').multiselect('refresh');
@@ -684,7 +712,9 @@
         })[0].revisionCode;
         $("#c_revcode").val(revCode);
 
+        o_aczone = [];
         $.each(charact.acZone, function (index, value) {
+            o_aczone.push(value);
             if (index == 0) {
                 $("[name=c_aczone]")[0].value = value;
             }
@@ -693,12 +723,14 @@
             }
         });
 
-        $.each(charact.taskSection, function (index, value) {
+        o_tasksection = [];
+        $.each(charact.taskSection, function (index, value) {           
             if (index == 0) {
                 var s_tasksection = taskSections.filter(function (item) {
                     return item.taskText == value;
                 })[0].taskCode;
                 $("#c_mpsection").val(s_tasksection);
+                o_tasksection.push(s_tasksection);
             }
             else {
                 var strHTML = ""
@@ -706,6 +738,7 @@
                 $(taskSections).each(function (index, val) {
                     if (val.taskText == value) {
                         strHTML += ("<option value='" + val.taskCode + "' selected>" + val.taskText + "</option>");
+                        o_tasksection.push(val.taskCode);
                     } else {
                         strHTML += ("<option value='" + val.taskCode + "'>" + val.taskText + "</option>");
                     }
@@ -743,12 +776,14 @@
             }
         });        
 
-        $.each(charact.mpSource, function (index, value) {
+        o_mpsource = [];
+        $.each(charact.mpSource, function (index, value) {            
             if (index == 0) {
                 var v_mpSource = mpSources.filter(function (item) {
                     return item.sourceText == value;
                 })[0].sourceCode;
                 $("[name=c_mpsource")[0].value = v_mpSource;
+                o_mpsource.push(v_mpSource);
             }
             else {                
                 var strHTML = ""
@@ -756,6 +791,7 @@
                 $(mpSources).each(function (index, val) {
                     if (val.sourceText == value) {
                         strHTML += ("<option value='" + val.sourceCode + "' selected>" + val.sourceText + "</option>");
+                        o_mpsource.push(val.sourceCode);
                     } else {
                         strHTML += ("<option value='" + val.sourceCode + "'>" + val.sourceText + "</option>");
                     }
@@ -1054,9 +1090,9 @@
     }
 
     function getMRIClassData() {
-        var aircraftModel = '';
+        var aircraftModel = [];
         $(selected).each(function (index, item) {
-            aircraftModel = aircraftModel + (item.value + "; ");
+            aircraftModel.push(item.value);
         });
 
         var revNumber = $('#c_revno').val();
@@ -1064,30 +1100,55 @@
         var revCode = $('#c_revcode').val();
 
 
-        var acZone = '';
+        var acZone = [];
         $('input[name ^= "c_aczone"]').each(function () {
-            acZone = acZone + ($(this).val() + "; ");
+            acZone.push($(this).val());
         });
-        
-        var mpSource = $('#c_mpsource').val();        
-        var taskSelection = $('#c_mpsection').val();
+
+        $.each(o_aczone, function (index, value) {            
+            var idx = $.inArray(value, acZone);
+            if (idx < 0) {
+                acZone.push("X-DELETED-X" + value);
+            }
+        });
+
+        var mpSource = [];      
+        $('select[name ^= "c_mpsource"]').each(function () {
+            mpSource.push($(this).val());
+        });
+        $.each(o_mpsource, function (index, value) {
+            var idx = $.inArray(value, mpSource);
+            if (idx < 0) {
+                mpSource.push("X-DELETED-X" + value);
+            }
+        });
+
+        var taskSelection = [];
+        $('select[name ^= "c_mpsection"]').each(function () {
+            taskSelection.push($(this).val());
+        });
         var samplingPercent = $('#c_persampling').val();
         var workType = $('#c_worktype').val();
-        var inspectSpecial = $('#c_insptask').val();
+
+        var inspectSpecial = [];
+        $('select[name ^= "c_insptask"]').each(function () {
+            inspectSpecial.push($(this).val());
+        });
+
         var mpTaskNumber = $('c_mptasknumber').val();
         var tgTaskNumber = $('#c_tgtasknumber').val();
         var validFrom = $('#c_validfrom').val();
         var mpTaskStatus = $('#c_mptaskstatus').val();
         var mpTaskMH = $('#c_mptaskmh').val();
 
-        var accessPanel = '';
+        var accessPanel = [];
         $('input[name ^= "c_accesspanel"]').each(function () {
-            accessPanel = accessPanel + ($(this).val() + "; ");
+            accessPanel.push($(this).val());
         });
         
-        var mpdOffset = '';
+        var mpdOffset = [];
         $('input[name ^= "c_mpdoffset"]').each(function () {
-            mpdOffset = mpdOffset + ($(this).val() + "; ");
+            mpdOffset.push($(this).val());
         });
 
         var arr_mpdlimitinterval = [];
@@ -1103,17 +1164,24 @@
             arr_mpdinterval.push($(this).val());
         });
 
-        var mpdLimitInterval = '';
+        var mpdLimitInterval = [];
         $.each(arr_mpdlimitinterval, function (index, value) {
-            mpdLimitInterval = mpdLimitInterval + (value + " " + arr_mpdinterval[index] + "; ");
+            mpdLimitInterval.push(value + " " + arr_mpdinterval[index]);
         });
 
-        var mpdOffsetSample = $('#c_mpdoffsetsample').val();
-        var mpdIntervalSample = $('#c_mpdintervalsample').val();
+        var mpdOffsetSample = [];
+        $('input[name ^= "c_mpdoffsetsample"]').each(function () {
+            mpdOffsetSample.push($(this).val());
+        });
 
-        var tgTaskOffset = '';
+        var mpdIntervalSample = [];
+        $('input[name ^= "c_mpdintervalsample"]').each(function () {
+            mpdIntervalSample.push($(this).val());
+        });
+
+        var tgTaskOffset = [];
         $('input[name ^= "c_tgtaskoffset"]').each(function () {
-            tgTaskOffset = tgTaskOffset + ($(this).val() + "; ");
+            tgTaskOffset.push($(this).val());
         });
 
         var arr_tglimitinterval = [];
@@ -1129,24 +1197,45 @@
             arr_tginterval.push($(this).val());
         });
 
-        var tgTaskLimit = '';
+        var tgTaskLimit = [];
         $.each(arr_tglimitinterval, function (index, value) {
-            tgTaskLimit = tgTaskLimit + (value + " " + arr_tginterval[index] + "; ");
+            tgTaskLimit.push(value + " " + arr_tginterval[index]);
         });
        
-        var tgTaskOffsetSample = $('#c_tgtaskoffsetsample').val();
-        var tgTaskLimitSample = $('#mri_tgtasklimitsample').val();
-        var mpdEngineEff = $('#c_mpdengineeff').val();
-        var mpdAircraftEff = $('c_mpdaircrafteff').val();
-        var tgAircraftEff = '';
-        $(tgAcEff).each(function (index, item) {
-            tgAircraftEff = tgAircraftEff + (item + "; ");
+        var tgTaskOffsetSample = [];
+        $('input[name ^= "c_tgtaskoffsetsample"]').each(function () {
+            tgTaskOffsetSample.push($(this).val());
         });
-        var mpdReference = $('#c_mpdreference').val();
 
-        var otherReference = '';
+        var tgTaskLimitSample = [];
+        $('input[name ^= "c_tgtasklimitsample"]').each(function () {
+            tgTaskLimitSample.push($(this).val());
+        });
+
+        var mpdEngineEff = [];
+        $('input[name ^= "c_mpdengineeff"]').each(function () {
+            mpdEngineEff.push($(this).val());
+        });
+
+        var mpdAircraftEff = [];
+        $('input[name ^= "c_mpdaircrafteff"]').each(function () {
+            mpdAircraftEff.push($(this).val());
+        });
+
+        var tgAircraftEff = [];
+        $(tgAcEff).each(function (index, item) {
+            tgAircraftEff.push(item);
+        });
+
+
+        var mpdReference = [];
+        $('input[name ^= "c_mpdreference"]').each(function () {
+            mpdReference.push($(this).val());
+        });
+
+        var otherReference = [];
         $('input[name ^= "c_otherreference"]').each(function () {
-            otherReference = otherReference + ($(this).val() + "; ");
+            otherReference.push($(this).val());
         });
         
         var detecCode = $('#c_deteccode').val();
@@ -1156,8 +1245,17 @@
             v_inspreq = "Y";
         }
         var inspReportReq = v_inspreq;
-        var tgIntervalOffsetNote = $('#c_tgintervaloffsetnote').val();
-        var tgDepending = $('#c_tgdepending').val();
+
+        var tgIntervalOffsetNote = [];
+        $('input[name ^= "c_tgintervaloffsetnote"]').each(function () {
+            tgIntervalOffsetNote.push(($(this).val()));
+        });
+
+        var tgDepending = [];
+        $('input[name ^= "c_tgdepending"]').each(function () {
+            tgDepending.push(($(this).val()));
+        });
+
         var reason = $('#c_reason').val();
         var engineeringNote = $('#c_engineeringnote').val();
 
@@ -1414,6 +1512,70 @@
             $('#inspTaskArea').append(strHTML);
         }
         $('#inspTaskArea select:last').focus();
+    });
+
+    $('#more_tgintervaloffsetnote').click(function (e) {
+        lastValue = $('#tgintervaloffsetnoteArea input:last').val();
+        if (lastValue != undefined && lastValue != "") {
+            $('#tgintervaloffsetnoteArea').append('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1"><input type="text" class="form-control" name="c_tgintervaloffsetnote[]" placeholder="TG Interval/Offset Note" value="" /></div></div>');
+        }
+        $('#tgintervaloffsetnoteArea input:last').focus();
+    });
+
+    $('#more_tgdepending').click(function (e) {
+        lastValue = $('#tgdependingArea input:last').val();
+        if (lastValue != undefined && lastValue != "") {
+            $('#tgdependingArea').append('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1"><input type="text" class="form-control" name="c_tgdepending[]" placeholder="Depending" value="" /></div></div>');
+        }
+        $('#tgdependingArea input:last').focus();
+    });
+
+    $('#more_mpdoffsetsample').click(function (e) {
+        lastValue = $('#mpdoffsetsampleArea input:last').val();
+        if (lastValue != undefined && lastValue != "") {
+            $('#mpdoffsetsampleArea').append('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1"><input type="text" class="form-control" name="c_mpdoffsetsample[]" placeholder="MPD/OEM Task Offset Sample" value="" /></div></div>');
+        }
+        $('#mpdoffsetsampleArea input:last').focus();
+    });
+
+    $('#more_mpdintervalsample').click(function (e) {
+        lastValue = $('#mpdintervalsampleArea input:last').val();
+        if (lastValue != undefined && lastValue != "") {
+            $('#mpdintervalsampleArea').append('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1"><input type="text" class="form-control" name="c_mpdintervalsample[]" placeholder="MPD/OEM Task Interval Sample" value="" /></div></div>');
+        }
+        $('#mpdintervalsampleArea input:last').focus();
+    });
+
+    $('#more_tgtaskoffsetsample').click(function (e) {
+        lastValue = $('#tgtaskoffsetsampleArea input:last').val();
+        if (lastValue != undefined && lastValue != "") {
+            $('#tgtaskoffsetsampleArea').append('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1"><input type="text" class="form-control" name="c_tgtaskoffsetsample[]" placeholder="TG Task Offset Sample" value="" /></div></div>');
+        }
+        $('#tgtaskoffsetsampleArea input:last').focus();
+    });
+
+    $('#more_tgtasklimitsample').click(function (e) {
+        lastValue = $('#tgtasklimitsampleArea input:last').val();
+        if (lastValue != undefined && lastValue != "") {
+            $('#tgtasklimitsampleArea').append('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1"><input type="text" class="form-control" name="c_tgtasklimitsample[]" placeholder="TG Task Interval Sample" value="" /></div></div>');
+        }
+        $('#tgtasklimitsampleArea input:last').focus();
+    });
+
+    $('#more_mpdengineeff').click(function (e) {
+        lastValue = $('#mpdengineeffArea input:last').val();
+        if (lastValue != undefined && lastValue != "") {
+            $('#mpdengineeffArea').append('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1"><input type="text" class="form-control" name="c_mpdengineeff[]" placeholder="MPD Engine Effectivity" value="" /></div></div>');
+        }
+        $('#mpdengineeffArea input:last').focus();
+    });
+
+    $('#more_mpdaircrafteff').click(function (e) {
+        lastValue = $('#mpdaircrafteffArea input:last').val();
+        if (lastValue != undefined && lastValue != "") {
+            $('#mpdaircrafteffArea').append('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1"><input type="text" class="form-control" name="c_mpdaircrafteff[]" placeholder="MPD Aircraft Effectivity" value="" /></div></div>');
+        }
+        $('#mpdaircrafteffArea input:last').focus();
     });
 </script>
 <!-- End Java Script -->
