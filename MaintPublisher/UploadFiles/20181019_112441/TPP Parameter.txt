@@ -1,0 +1,4 @@
+﻿-XX:+JavaMonitorsInStackTrace 
+-Xbootclasspath/p:C:/usr/sap/SMD/SMDA97/SMDAgent/applications.config/com.sap.smd.agent.application.wily/BytecodeAgent/ISAGENT.8.2.5.0-2015-10-28/wily/connectors/TPP_AutoProbeConnector.jar;C:/usr/sap/SMD/SMDA97/SMDAgent/applications.config/com.sap.smd.agent.application.wily/BytecodeAgent/ISAGENT.8.2.5.0-2015-10-28/wily/Agent.jar  
+-Dcom.wily.introscope.agent.agentName=TPP_JC00_server0  
+-Dcom.wily.introscope.agentProfile=C:/usr/sap/SMD/SMDA97/SMDAgent/applications.config/com.sap.smd.agent.application.wily/BytecodeAgent/ISAGENT.8.2.5.0-2015-10-28/wily/TPP_IntroscopeAgent.profile

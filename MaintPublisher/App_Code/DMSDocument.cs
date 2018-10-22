@@ -45,6 +45,20 @@ public class DocCharacteristics
     public String engineeringNote;
 }
 
+public class dmsFile
+{
+    public String originalType;
+    public String storageCategory;
+    public String application;
+    public String origFile;
+    public String docFile;
+    public String applicationID;
+    public String fileID;
+    public String checkedIN;
+    public String activeVersion;
+    public String updateStatus;
+}
+
 public class DMSDocument
 {
     public String docNo;
@@ -57,4 +71,5 @@ public class DMSDocument
     public String labCode;
     public String laboratory;
     public DocCharacteristics characteristics;
+    public List<dmsFile> attachments;
 }

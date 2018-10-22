@@ -14,6 +14,7 @@
     <link href="style/master.css" rel="stylesheet" />
     <link href="framework/bootstrap4/css/open-iconic-bootstrap.css" rel="stylesheet" />
     <link href="framework/bootstrap4/css/bootstrap-multiselect.css" rel="stylesheet" />
+    <link href="framework/css/jquery.fileupload.css" rel="stylesheet" />
     <link href="content/toastr.min.css" rel="stylesheet" />
 </head>
 <body>
@@ -111,39 +112,26 @@
                                             <div class="form-group">
                                                 <div>Originals:</div>
                                                 <div class="table-responsive-sm" id="originalDocs">
-                                                    <table class="table table-striped table-hover">
+                                                    <table id="attachmentTab" class="table table-striped table-hover">
                                                         <thead class="thead-light">
                                                             <tr>
                                                                 <th width="5%">APPL.</th>
-                                                                <th width="*">Application</th>
-                                                                <th width="15%">Storage Cat.</th>
-                                                                <th width="12%"></th>
+                                                                <th width="30%">Application</th>
+                                                                <th width="*">File Name</th>
+                                                                <th width="10%">Checked</th>
+                                                                <th width="13%"></th>
                                                             </tr>
                                                         </thead>
-                                                        <tbody>
-                                                            <tr>
-                                                                <td align="center"><i class="far fa-file-word fa-2x"></i></td>
-                                                                <td>Word-Document.doc</td>
-                                                                <td align="center">A</td>
-                                                                <td align="center"><button type="button" class="btn-sm btn-light"><i class="fas fa-glasses"></i></button><button type="button" class="btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td align="center"><i class="far fa-file-pdf fa-2x"></i></td>
-                                                                <td>PDF-Document.pdf</td>
-                                                                <td align="center">A</td>
-                                                                <td align="center"><button type="button" class="btn-sm btn-light"><i class="fas fa-glasses"></i></button><button type="button" class="btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button></td>
-                                                            </tr>
-                                                            <tr>
-                                                                <td align="center"><i class="far fa-file-excel fa-2x"></i></td>
-                                                                <td>Excel-Document.xlsx</td>
-                                                                <td align="center">A</td>
-                                                                <td align="center"><button type="button" class="btn-sm btn-light"><i class="fas fa-glasses"></i></button><button type="button" class="btn-sm btn-danger"><i class="fas fa-trash-alt"></i></button></td>
-                                                            </tr>
-                                                        </tbody>
+                                                        <tbody></tbody>
                                                         <tfoot>
                                                             <tr>
-                                                                <td colspan="3">
-                                                                    <button type="button" class="btn btn-outline-secondary"><i class="fas fa-file-import"></i></button>
+                                                                <td colspan="5">
+                                                                    <span class="btn btn-success fileinput-button">
+                                                                        <i class="fas fa-plus-circle"></i>
+                                                                        <span>Check-in files...</span>
+                                                                        <!-- The file input field used as target for the file upload widget -->
+                                                                        <input id="fileupload" type="file" name="files[]" multiple>
+                                                                    </span>
                                                                 </td>
                                                             </tr>
                                                         </tfoot>
@@ -181,19 +169,25 @@
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>Revision Code of Original Task:</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" id="mri_revCode" class="form-control" placeholder="Revision Code" /></div>
+                                        <div class="col-md-8 p-1"><select id="mri_revCode" class="form-control"></select></div>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="col-md-4"><label>A/C Zone:</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" id="mri_acZone" class="form-control" placeholder="Aircraft Zonal" /></div>
+                                    <div id="acZoneArea">
+                                        <div class="form-row">
+                                            <div class="col-md-4"><label>A/C Zone: <i id="more_aczone" class="fas fa-chevron-circle-down"></i></label></div>
+                                            <div class="col-md-8 p-1"><input type="text" id="mri_acZone" class="form-control" placeholder="Aircraft Zonal" name="mri_acZone" /></div>
+                                        </div>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="col-md-4"><label>MP Task Source</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" id="mri_mpSource" class="form-control" placeholder="MP Task Source" /></div>
+                                    <div id="mpSourceArea">
+                                        <div class="form-row">
+                                            <div class="col-md-4"><label>MP Task Source <i id="more_mpsource" class="fas fa-chevron-circle-down"></i></label></div>
+                                            <div class="col-md-8 p-1"><select id="mri_mpSource" class="form-control" name="mri_mpSource"></select></div>
+                                        </div>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="col-md-4"><label>MP Task Section</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" id="mri_mptasksection" class="form-control" placeholder="MP Task Section" /></div>
+                                    <div id="mpSectionArea">
+                                        <div class="form-row">
+                                            <div class="col-md-4"><label>MP Task Section  <i id="more_mpsection" class="fas fa-chevron-circle-down"></i></label></div>
+                                            <div class="col-md-8 p-1"><select id="mri_mptasksection" class="form-control" name="mri_mptasksection"></select></div>
+                                        </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>Percentage of Sampling Inspect</label></div>
@@ -203,9 +197,11 @@
                                         <div class="col-md-4"><label>Work Type</label></div>
                                         <div class="col-md-8 p-1"><input type="text" id="mri_worktype" class="form-control" placeholder="Work Type" /></div>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="col-md-4"><label>Spec. Ident. Inspection Task</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" id="mri_specident" class="form-control" placeholder="Spec. Ident. Inspection Task" /></div>
+                                    <div id="inspTaskArea">
+                                        <div class="form-row">
+                                            <div class="col-md-4"><label>Spec. Ident. Inspection Task  <i id="more_insptask" class="fas fa-chevron-circle-down"></i></label></div>
+                                            <div class="col-md-8 p-1"><select id="mri_specident" class="form-control" name="mri_specident"></select></div>
+                                        </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>Original MP Task Number</label></div>
@@ -227,73 +223,103 @@
                                         <div class="col-md-4"><label>MP Task MH</label></div>
                                         <div class="col-md-8 p-1"><input type="text" id="mri_mpTaskMH" class="form-control" placeholder="MP Task MH" /></div>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="col-md-4"><label>Access Panel Information</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" id="mri_accesspanelinfo" class="form-control" placeholder="Access Panel Information" /></div>
+                                    <div id="accessPanelArea">
+                                        <div class="form-row">
+                                            <div class="col-md-4"><label>Access Panel Information  <i id="more_accesspanel" class="fas fa-chevron-circle-down"></i></label></div>
+                                            <div class="col-md-8 p-1"><input type="text" id="mri_accesspanelinfo" class="form-control" name="mri_accesspanelinfo" placeholder="Access Panel Information" /></div>
+                                        </div>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="col-md-4"><label>MPD/OEM Task Offset</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" id="mri_oemtaskoffset" class="form-control" placeholder="MPD/OEM Task Offset" /></div>
+                                    <div id="mpdOffsetArea">
+                                        <div class="form-row">
+                                            <div class="col-md-4"><label>MPD/OEM Task Offset  <i id="more_mpdoffset" class="fas fa-chevron-circle-down"></i></label></div>
+                                            <div class="col-md-8 p-1"><input type="text" id="mri_oemtaskoffset" class="form-control" name="mri_oemtaskoffset" placeholder="MPD/OEM Task Offset" /></div>
+                                        </div>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="col-md-4"><label>MPD/OEM Task Limit/Interval</label></div>
-                                        <div class="col-md-8 p-1 form-inline"><input type="number" id="mri_oemtasklimit" class="form-control col-sm-8" placeholder="MPD/OEM Task Limit/Interval" /><select class="form-control col-sm-4" id="MPDInterval"></select></div>
+                                    <div id="mpdLimitIntervalArea">
+                                        <div class="form-row">
+                                            <div class="col-md-4"><label>MPD/OEM Task Limit/Interval  <i id="more_mpdinterval" class="fas fa-chevron-circle-down"></i></label></div>
+                                            <div class="col-md-8 p-1 form-inline"><input type="number" id="mri_oemtasklimit" name="mri_oemtasklimit" class="form-control col-sm-8" placeholder="MPD/OEM Task Limit/Interval" /><select class="form-control col-sm-4" id="MPDInterval" name="MPDInterval"></select></div>
+                                        </div>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="col-md-4"><label>MPD/OEM Task Offset Sample</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" id="mri_oemtaskoffset" placeholder="MPD/OEM Task Offset Sample" /></div>
+                                    <div id="mpdoffsetsampleArea">
+                                        <div class="form-row">
+                                            <div class="col-md-4"><label>MPD/OEM Task Offset Sample  <i id="more_mpdoffsetsample" class="fas fa-chevron-circle-down"></i></label></div>
+                                            <div class="col-md-8 p-1"><input type="text" class="form-control" id="mrioemtaskoffset" name="mrioemtaskoffset" placeholder="MPD/OEM Task Offset Sample" /></div>
+                                        </div>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="col-md-4"><label>MPD/OEM Task Interval Sample</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" id="mri_oemtaskinterval" placeholder="MPD/OEM Task Interval Sample" /></div>
+                                    <div id="mpdintervalsampleArea">
+                                        <div class="form-row">
+                                            <div class="col-md-4"><label>MPD/OEM Task Interval Sample  <i id="more_mpdintervalsample" class="fas fa-chevron-circle-down"></i></label></div>
+                                            <div class="col-md-8 p-1"><input type="text" class="form-control" id="mri_oemtaskinterval" name="mri_oemtaskinterval" placeholder="MPD/OEM Task Interval Sample" /></div>
+                                        </div>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="col-md-4"><label>TG Task Offset</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" class="form-control" id="mri_tgtaskoffset" placeholder="TG Task Offset" /></div>
+                                    <div id="tgTaskOffsetArea">
+                                        <div class="form-row">
+                                            <div class="col-md-4"><label>TG Task Offset  <i id="more_tgtaskoffset" class="fas fa-chevron-circle-down"></i></label></div>
+                                            <div class="col-md-8 p-1"><input type="text" class="form-control" id="mri_tgtaskoffset" name="mri_tgtaskoffset" placeholder="TG Task Offset" /></div>
+                                        </div>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="col-md-4"><label>TG Task Limit/Interval</label></div>
-                                        <div class="col-md-8 p-1 form-inline"><input type="number" id="mri_tgtasklimit" class="form-control col-sm-8" placeholder="TG Task Limit/Interval" /><select class="form-control col-sm-4" id="TGInterval"></select></div>
+                                    <div id="tgTaskLimitArea">
+                                        <div class="form-row">
+                                            <div class="col-md-4"><label>TG Task Limit/Interval  <i id="more_tgtasklimit" class="fas fa-chevron-circle-down"></i></label></div>
+                                            <div class="col-md-8 p-1 form-inline"><input type="number" id="mri_tgtasklimit" name="mri_tgtasklimit" class="form-control col-sm-8" placeholder="TG Task Limit/Interval" /><select class="form-control col-sm-4" id="TGInterval" name="TGInterval"></select></div>
+                                        </div>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="col-md-4"><label>TG Task Offset Sample</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" id="mri_tgoffsetsamp" class="form-control" placeholder="TG Task Offset Sample" /></div>
+                                    <div id="tgtaskoffsetsampleArea">
+                                        <div class="form-row">
+                                            <div class="col-md-4"><label>TG Task Offset Sample  <i id="more_tgtaskoffsetsample" class="fas fa-chevron-circle-down"></i></label></div>
+                                            <div class="col-md-8 p-1"><input type="text" id="mri_tgoffsetsamp" name="mri_tgoffsetsamp" class="form-control" placeholder="TG Task Offset Sample" /></div>
+                                        </div>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="col-md-4"><label>TG Task Interval Sample</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" id="mri_tgintervalsam" class="form-control" placeholder="TG Task Interval Sample" /></div>
+                                    <div id="tgtasklimitsampleArea">
+                                        <div class="form-row">
+                                            <div class="col-md-4"><label>TG Task Interval Sample  <i id="more_tgtasklimitsample" class="fas fa-chevron-circle-down"></i></label></div>
+                                            <div class="col-md-8 p-1"><input type="text" id="mri_tgintervalsam" name="mri_tgintervalsam" class="form-control" placeholder="TG Task Interval Sample" /></div>
+                                        </div>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="col-md-4"><label>MPD Engine Effectivity</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" id="mri_mpdengeff" class="form-control" placeholder="MPD Engine Effectivity" /></div>
+                                    <div id="mpdengineeffArea">
+                                        <div class="form-row">
+                                            <div class="col-md-4"><label>MPD Engine Effectivity  <i id="more_mpdengineeff" class="fas fa-chevron-circle-down"></i></label></div>
+                                            <div class="col-md-8 p-1"><input type="text" id="mri_mpdengeff" name="mri_mpdengeff" class="form-control" placeholder="MPD Engine Effectivity" /></div>
+                                        </div>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="col-md-4"><label>MPD Aircraft Effectivity</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" id="mri_mpdaceff" class="form-control" placeholder="MPD Aircraft Effectivity" /></div>
+                                    <div id="mpdaircrafteffArea">
+                                        <div class="form-row">
+                                            <div class="col-md-4"><label>MPD Aircraft Effectivity  <i id="more_mpdaircrafteff" class="fas fa-chevron-circle-down"></i></label></div>
+                                            <div class="col-md-8 p-1"><input type="text" id="mri_mpdaceff" name="mri_mpdaceff" class="form-control" placeholder="MPD Aircraft Effectivity" /></div>
+                                        </div>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="col-md-4"><label>MPD Reference</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" id="mri_mpdref" class="form-control" placeholder="MPD Reference" /></div>
+                                    <div id="mpdReferenceArea">
+                                        <div class="form-row">
+                                            <div class="col-md-4"><label>MPD Reference  <i id="more_mpdreference" class="fas fa-chevron-circle-down"></i></label></div>
+                                            <div class="col-md-8 p-1"><input type="text" id="mri_mpdref" name="mri_mpdref" class="form-control" placeholder="MPD Reference" /></div>
+                                        </div>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="col-md-4"><label>Other Reference</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" id="mri_otherref" class="form-control" placeholder="Other Reference" /></div>
+                                    <div id="otherReferenceArea">
+                                        <div class="form-row">
+                                            <div class="col-md-4"><label>Other Reference  <i id="more_otherreference" class="fas fa-chevron-circle-down"></i></label></div>
+                                            <div class="col-md-8 p-1"><input type="text" id="mri_otherref" name="mri_otherref" class="form-control" placeholder="Other Reference" /></div>
+                                        </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>Detectability Code</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" id="mri_detectcode" class="form-control" placeholder="Detectability Code" /></div>
+                                        <div class="col-md-8 p-1"><select id="mri_detectcode" class="form-control"></select></div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>Insp. Report Req.</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" id="mri_inspreq" class="form-control" placeholder="Insp. Report Req." /></div>
+                                        <div class="col-md-8 p-1"><div class="form-check-inline"><input type="checkbox" id="mri_inspreq" class="form-check-input" value="Y"/><label class="form-check-label"> YES</label></div></div>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="col-md-4"><label>TG Interval/Offset Note</label></div>
-                                        <div class="col-md-8 p-1"><input id="mri_tgoffsetnote" type="text" class="form-control" placeholder="TG Interval/Offset Note" /></div>
+                                    <div id="tgintervaloffsetnoteArea">
+                                        <div class="form-row">
+                                            <div class="col-md-4"><label>TG Interval/Offset Note  <i id="more_tgintervaloffsetnote" class="fas fa-chevron-circle-down"></i></label></div>
+                                            <div class="col-md-8 p-1"><input id="mri_tgoffsetnote" name="mri_tgoffsetnote" type="text" class="form-control" placeholder="TG Interval/Offset Note" /></div>
+                                        </div>
                                     </div>
-                                    <div class="form-row">
-                                        <div class="col-md-4"><label>Depending</label></div>
-                                        <div class="col-md-8 p-1"><input id="mri_depending" type="text" class="form-control" placeholder="Depending" /></div>
+                                    <div id="tgdependingArea">
+                                        <div class="form-row">
+                                            <div class="col-md-4"><label>Depending  <i id="more_tgdepending" class="fas fa-chevron-circle-down"></i></label></div>
+                                            <div class="col-md-8 p-1"><input id="mri_depending" name="mri_depending" type="text" class="form-control" placeholder="Depending" /></div>
+                                        </div>
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>Reason of Add/Del./Rev.</label></div>
@@ -317,6 +343,9 @@
 <script src="framework/bootstrap4/js/popper.min.js"></script>
 <script src="framework/bootstrap4/js/bootstrap.min.js"></script>
 <script src="framework/bootstrap4/js/bootstrap-multiselect.js"></script>
+<script src="framework/fileupload/js/vendor/jquery.ui.widget.js"></script>
+<script src="framework/fileupload/js/jquery.iframe-transport.js"></script>
+<script src="framework/fileupload/js/jquery.fileupload.js"></script>
 <script src="Scripts/toastr.min.js"></script>
 <script>
     var acModel = [];
@@ -324,12 +353,21 @@
     var selected = [];
     var intervalUnits = [];
     var laboratories = [];
+    var aircrafts = [];
+    var revisionCodes = [];
+    var workTypes = [];
+    var mpSources = [];
+    var taskSections = [];
+    var inspectSpecials = [];
+    var detectCodes = [];
 
     var v_docHeader = {};
     var v_mriClass = {};
     var aircrafts = [];
     var userName = 'TG27394';
-    
+
+    var attachmentList = [];
+
     function getDocumentHeader() {
         var docNumber = $('#documentNo').val();
         var docType = 'MRI';
@@ -364,8 +402,7 @@
         var accessPanel = $('#mri_accesspanelinfo').val();
         var mpdOffset = $('#mri_oemtaskoffset').val();
         var mpdLimitInterval = '';
-        if ($('#mri_oemtasklimit').val() != undefined && $('#mri_oemtasklimit').val() != '')
-        {
+        if ($('#mri_oemtasklimit').val() != undefined && $('#mri_oemtasklimit').val() != '') {
             mpdLimitInterval = $('#mri_oemtasklimit').val() + $('#MPDInterval').val();
         }
         var mpdOffsetSample = $('#mri_oemtaskoffset').val();
@@ -405,11 +442,11 @@
                 var jsonData = (response.d) ? $.parseJSON(response.d) : $.parseJSON(response);
                 $(jsonData).each(function (index, value) {
                     laboratories.push(value);
-                });               
+                });
 
                 $('#labOffice').empty();
-                $(laboratories).each(function (index,  item) {
-                    $('#labOffice').append("<option value='" + item.labCode + "'>" + item.labText + "</option>");                   
+                $(laboratories).each(function (index, item) {
+                    $('#labOffice').append("<option value='" + item.labCode + "'>" + item.labText + "</option>");
                 });
             }
         });
@@ -454,7 +491,7 @@
             }
         });
     }
-    
+
     function renderAircraftEff() {
         $('#TG_ACEff').empty();
         $(selected).each(function (i, item) {
@@ -462,8 +499,8 @@
             for (var i = 0, len = aircrafts.length; i < len; i++) {
                 if (aircrafts[i] && aircrafts[i].actype == item.value) {
                     $('#TG_ACEff').append("<option value='" + aircrafts[i].acreg + "'>" + aircrafts[i].acreg + "</option>");
-                }                
-            }    
+                }
+            }
             $('#TG_ACEff').append("</optgroup>");
             $('#TG_ACEff').multiselect('destroy');
             $('#TG_ACEff').multiselect({
@@ -501,15 +538,59 @@
         });
     }
 
+    function renderRevisionCode() {
+        $(revisionCodes).each(function (item, value) {
+            $('#mri_revCode').append("<option value='" + value.revisionCode + "'>" + value.revisionText + "</option>");
+        });
+    }
+
+    function renderMPSource() {
+        $(mpSources).each(function (item, value) {
+            $('#mri_mpSource').append("<option value='" + value.sourceCode + "'>" + value.sourceText + "</option>");
+        });
+    }
+
+    function renderTaskSection() {
+        $(taskSections).each(function (item, value) {
+            $('#mri_mptasksection').append("<option value='" + value.taskCode + "'>" + value.taskText + "</option>");
+        });
+    }
+
+    function renderWorkType() {
+        $(workTypes).each(function (item, value) {
+            $('#mri_worktype').append("<option value='" + value.workValue + "'>" + value.workText + "</option>");
+        });
+    }
+
+    function renderInspectSpecial() {
+        $(inspectSpecials).each(function (item, value) {
+            $('#mri_specident').append("<option value='" + value.inspectValue + "'>" + value.inspectText + "</option>");
+        });
+    }
+
+    function renderDetectCode() {
+        $(detectCodes).each(function (item, value) {
+            $('#mri_detectcode').append("<option value='" + value.detectCode + "'>" + value.detectText + "</option>");
+        });
+    }
+
     $(document).ready(function () {
         getLaboratories();
         getIntervalUnit();
         getAircraftModel();
-        
+
+        aircrafts = JSON.parse(localStorage.getItem("ACFLEET"));
+        revisionCodes = JSON.parse(localStorage.getItem("REVISIONCODE")); renderRevisionCode();
+        workTypes = JSON.parse(localStorage.getItem("WORKTYPE")); renderWorkType();
+        inspectSpecials = JSON.parse(localStorage.getItem("INSPECTSPECIAL")); renderInspectSpecial();
+        mpSources = JSON.parse(localStorage.getItem("MPSOURCE")); renderMPSource();
+        taskSections = JSON.parse(localStorage.getItem("TASKSECTION")); renderTaskSection();
+        detectCodes = JSON.parse(localStorage.getItem("DETECTCODE")); renderDetectCode();
+
         var userName = localStorage.getItem("USERNAME");
         if (userName == undefined || userName == "") {
             window.location = "index.html";
-        }           
+        }
         $('#userName').text(userName);
         $('#TG_ACEff').multiselect({
             nonSelectedText: 'Please select an aircraft',
@@ -569,11 +650,224 @@
                 else
                     toastr["error"](jsonData.message);
             },
-            error: function (response) {                
+            error: function (response) {
                 toastr["error"]("Error while saving document data to SAP system!!!");
             }
         });
-    })
+    });
+
+    $('#more_aczone').click(function (e) {
+        lastValue = $('#acZoneArea input:last').val();
+
+        if (lastValue != undefined && lastValue != "") {
+            $('#acZoneArea').append('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1"><input type="text" class="form-control" name="mri_acZone[]" placeholder="Aircraft Zonal" value="" /></div></div>');
+        }
+        $('#acZoneArea input:last').focus();
+    });
+
+    $('#more_accesspanel').click(function (e) {
+        lastValue = $('#accessPanelArea input:last').val();
+
+        if (lastValue != undefined && lastValue != "") {
+            $('#accessPanelArea').append('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1"><input type="text" class="form-control" name="mri_accesspanelinfo[]" placeholder="Access Panel Information" value="" /></div></div>');
+        }
+        $('#accessPanelArea input:last').focus();
+    });
+
+    $('#more_mpsource').click(function (e) {
+        lastValue = $('#mpSourceArea select:last').val();
+        if (lastValue != undefined && lastValue != "") {
+            var strHTML = ""
+            strHTML = ('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1"><select class="form-control" name="mri_mpSource[]">');
+            $(mpSources).each(function (index, val) {
+                if (val == '') {
+                    strHTML += ("<option value='" + val.sourceCode + "' selected>" + val.sourceText + "</option>");
+                } else {
+                    strHTML += ("<option value='" + val.sourceCode + "'>" + val.sourceText + "</option>");
+                }
+            });
+            strHTML += '</select></div ></div >';
+            $('#mpSourceArea').append(strHTML);
+        }
+        $('#mpSourceArea select:last').focus();
+    });
+
+    $('#more_mpdoffset').click(function (e) {
+        lastValue = $('#mpdOffsetArea input:last').val();
+        if (lastValue != undefined && lastValue != "") {
+            $('#mpdOffsetArea').append('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1"><input type="text" class="form-control" name="mri_oemtaskoffset[]" placeholder="MPD/OEM Task Offset" value="" /></div></div>');
+        }
+        $('#mpdOffsetArea input:last').focus();
+    });
+
+    $('#more_mpdinterval').click(function (e) {
+        lastValue = $('#mpdLimitIntervalArea input:last').val();
+        if (lastValue != undefined && lastValue != "") {
+            var strHTML = ""
+            strHTML = ('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1 form-inline"><input type="number" class="form-control col-sm-8" name="mri_oemtasklimit[]" placeholder="MPD/OEM Task Limit/Interval" value="" /><select class="form-control col-sm-4" name="MPDInterval[]">');
+            $(intervalUnits).each(function (index, val) {
+                strHTML += ("<option value='" + val + "'>" + val + "</option>");
+            });
+            strHTML += '</select></div ></div >'
+            $('#mpdLimitIntervalArea').append(strHTML);
+        }
+        $('#mpdLimitIntervalArea input:last').focus();
+    });
+
+    $('#more_tgtaskoffset').click(function (e) {
+        lastValue = $('#tgTaskOffsetArea input:last').val();
+        if (lastValue != undefined && lastValue != "") {
+            $('#tgTaskOffsetArea').append('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1"><input type="text" class="form-control" name="mri_tgtaskoffset[]" placeholder="TG Task Offset" value="" /></div></div>');
+        }
+        $('#tgTaskOffsetArea input:last').focus();
+    });
+
+    $('#more_tgtasklimit').click(function (e) {
+        lastValue = $('#tgTaskLimitArea input:last').val();
+        if (lastValue != undefined && lastValue != "") {
+            var strHTML = ""
+            strHTML = ('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1 form-inline"><input type="number" class="form-control col-sm-8" name="mri_tgtasklimit[]" placeholder=""TG Task Interval Sample" value="" /><select class="form-control col-sm-4" name="TGInterval[]">');
+            $(intervalUnits).each(function (index, val) {
+                strHTML += ("<option value='" + val + "'>" + val + "</option>");
+            });
+            strHTML += '</select></div ></div >'
+            $('#tgTaskLimitArea').append(strHTML);
+        }
+        $('#tgTaskLimitArea input:last').focus();
+    });
+
+    $('#more_mpdreference').click(function (e) {
+        lastValue = $('#mpdReferenceArea input:last').val();
+        if (lastValue != undefined && lastValue != "") {
+            $('#mpdReferenceArea').append('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1"><input type="text" class="form-control" name="mri_mpdref[]" placeholder="MPD References" value="" /></div></div>');
+        }
+        $('#mpdReferenceArea input:last').focus();
+    });
+
+    $('#more_otherreference').click(function (e) {
+        lastValue = $('#otherReferenceArea input:last').val();
+        if (lastValue != undefined && lastValue != "") {
+            $('#otherReferenceArea').append('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1"><input type="text" class="form-control" name="mri_otherref[]" placeholder="Other References" value="" /></div></div>');
+        }
+        $('#otherReferenceArea input:last').focus();
+    });
+
+    $('#more_mpsection').click(function (e) {
+        lastValue = $('#mpSectionArea select:last').val();
+        if (lastValue != undefined && lastValue != "") {
+            var strHTML = ""
+            strHTML = ('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1"><select class="form-control" name="mri_mptasksection[]">');
+            $(taskSections).each(function (index, val) {
+                if (val == '') {
+                    strHTML += ("<option value='" + val.taskCode + "' selected>" + val.taskText + "</option>");
+                } else {
+                    strHTML += ("<option value='" + val.taskCode + "'>" + val.taskText + "</option>");
+                }
+            });
+            strHTML += '</select></div ></div >';
+            $('#mpSectionArea').append(strHTML);
+        }
+        $('#mpSectionArea select:last').focus();
+    });
+
+    $('#more_insptask').click(function (e) {
+        lastValue = $('#inspTaskArea select:last').val();
+        if (lastValue != undefined && lastValue != "") {
+            var strHTML = ""
+            strHTML = ('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1"><select class="form-control" name="mri_specident[]">');
+            $(inspectSpecials).each(function (index, val) {
+                if (val == '') {
+                    strHTML += ("<option value='" + val.inspectValue + "' selected>" + val.inspectText + "</option>");
+                } else {
+                    strHTML += ("<option value='" + val.inspectValue + "'>" + val.inspectText + "</option>");
+                }
+            });
+            strHTML += '</select></div ></div >';
+            $('#inspTaskArea').append(strHTML);
+        }
+        $('#inspTaskArea select:last').focus();
+    });
+
+    $('#more_tgintervaloffsetnote').click(function (e) {
+        lastValue = $('#tgintervaloffsetnoteArea input:last').val();
+        if (lastValue != undefined && lastValue != "") {
+            $('#tgintervaloffsetnoteArea').append('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1"><input type="text" class="form-control" name="mri_tgoffsetnote[]" placeholder="TG Interval/Offset Note" value="" /></div></div>');
+        }
+        $('#tgintervaloffsetnoteArea input:last').focus();
+    });
+
+    $('#more_tgdepending').click(function (e) {
+        lastValue = $('#tgdependingArea input:last').val();
+        if (lastValue != undefined && lastValue != "") {
+            $('#tgdependingArea').append('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1"><input type="text" class="form-control" name="mri_depending[]" placeholder="Depending" value="" /></div></div>');
+        }
+        $('#tgdependingArea input:last').focus();
+    });
+
+    $('#more_mpdoffsetsample').click(function (e) {
+        lastValue = $('#mpdoffsetsampleArea input:last').val();
+        if (lastValue != undefined && lastValue != "") {
+            $('#mpdoffsetsampleArea').append('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1"><input type="text" class="form-control" name="mrioemtaskoffset[]" placeholder="MPD/OEM Task Offset Sample" value="" /></div></div>');
+        }
+        $('#mpdoffsetsampleArea input:last').focus();
+    });
+
+    $('#more_mpdintervalsample').click(function (e) {
+        lastValue = $('#mpdintervalsampleArea input:last').val();
+        if (lastValue != undefined && lastValue != "") {
+            $('#mpdintervalsampleArea').append('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1"><input type="text" class="form-control" name="mri_oemtaskinterval[]" placeholder="MPD/OEM Task Interval Sample" value="" /></div></div>');
+        }
+        $('#mpdintervalsampleArea input:last').focus();
+    });
+
+    $('#fileupload').fileupload({
+        url: 'DocUploadHandler.ashx',
+        dataType: 'json',
+        done: function (event, data) {
+            console.log(data);
+
+            if (data.textStatus && data.textStatus == 'success') {
+                $.each(data.files, function (index, file) {
+                    var htmlRow = "<tr>";
+                    var appIcon;
+                    var application;
+                    var fileName = data.result.fullFileName;
+                    var extension = file.name.substr(file.name.lastIndexOf(".") + 1).toUpperCase();
+                    switch (extension) {
+                        case 'PDF': appIcon = "far fa-file-pdf "; application = "Acrobat Reader"; break;
+                        case 'DOC': appIcon = "far fa-file-word "; application = "MS WinWord"; break;
+                        case 'DOCX': appIcon = "far fa-file-word "; application = "MS WinWord"; break;
+                        case 'WWI': appIcon = "far fa-file-word "; application = "MS WinWord"; break;
+                        case 'MPP': appIcon = "far fa-file-invoice "; application = "MS Project"; break;
+                        case 'XLS': appIcon = "far fa-file-excel "; application = "MS Excel"; break;
+                        case 'XLSX': appIcon = "far fa-file-excel "; application = "MS Excel"; break;
+                        case 'TXT': appIcon = "far fa-file-alt "; application = "Text File"; break;
+                        case 'PPT': appIcon = "far fa-file-powerpoint "; application = "MS Powerpoint"; break;
+                        case 'JPG': appIcon = "far fa-file-image "; application = "JPEG Image"; break;
+                        case 'PNG': appIcon = "far fa-file-image "; application = "GIF Image"; break;
+                        case 'GRF': appIcon = "far fa-file-image "; application = "Graphic File"; break;
+                        case 'SND': appIcon = "far fa-file-audio "; application = "Sound File"; break;
+                        case 'ACD': appIcon = "far fa-file-contract "; application = "Autocad"; break;
+                        case 'ZIP': appIcon = "far fa-file-archive "; application = "Compressed DocCreate J/C files"; break;
+                        default: appIcon = "far fa-file "; application = "N/A"; break;
+                    }
+                    var lockIcon = "fas fa-lock-open ";
+                    htmlRow += "<td align='center'><i class='" + appIcon + " fa-2x'></i></td><td align='left'>" + application + "</td><td>" + file.name + "</td><td align='center'><i class='" + lockIcon + " fa-2x'></i></td><td align='center'><button type='button' class='btn-sm btn-light'><i class='fas fa-glasses'></i></button><button type='button' class='btn-sm btn-danger'><i class='fas fa-trash-alt'></i></button></td>";
+                    htmlRow += "</tr>";
+
+                    attachmentList.push({ "application": extension, "origFile": fileName, "docFile": fileName, "applicationID": '', "fileID": '', "checkedIN": '', "updateStatus": 'N' });
+                    $('#attachmentTab tbody').append(htmlRow);
+                });
+            }
+        },
+        progressall: function (e, data) {
+            var progress = parseInt(data.loaded / data.total * 100, 10);
+            $('#progress .progress-bar').css(
+                'width',
+                progress + '%'
+            );
+        }
+    }).prop('disabled', !$.support.fileInput).parent().addClass($.support.fileInput ? undefined : 'disabled');
 </script>
 <!-- End Java Script -->
 </html>
