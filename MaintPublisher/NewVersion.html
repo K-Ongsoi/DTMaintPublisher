@@ -1533,8 +1533,10 @@
                 success: function (response) {
                     var jsonData = (response.d) ? $.parseJSON(response.d) : $.parseJSON(response);
 
-                    if (jsonData.result)
+                    if (jsonData.result) {
                         toastr["success"](jsonData.message);
+                        window.location = "NewVersion.html?MODE=CHANGE&DOCUMENTNUMBER=" + jsonData.docNumber + "&DOCUMENTPART=" + jsonData.docPart + "&DOCUMENTVERSION=" + jsonData.docVersion;
+                    }
                     else
                         toastr["error"](jsonData.message);
                 },
@@ -1553,8 +1555,11 @@
                 success: function (response) {
                     var jsonData = (response.d) ? $.parseJSON(response.d) : $.parseJSON(response);
 
-                    if (jsonData.result)
+                    if (jsonData.result) {
                         toastr["success"](jsonData.message);
+
+                        window.location = "NewVersion.html?MODE=CHANGE&DOCUMENTNUMBER=" + jsonData.docNumber + "&DOCUMENTPART=" + jsonData.docPart + "&DOCUMENTVERSION=" + jsonData.docVersion;
+                    }
                     else
                         toastr["error"](jsonData.message);
                 },

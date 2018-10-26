@@ -65,7 +65,7 @@
                                 <div class="card-body">
                                     <div class="form-row">
                                         <div class="col-md-4">
-                                            <button id="fromTEMPLATE" class="btn btn-sm btn-outline-primary"><i class="fas fa-clone"></i> Use Template</button>
+                                           &nbsp;
                                         </div>
                                         <div class="col-auto ml-md-auto">
                                             <label>Document Status:&nbsp;</label><span class="badge badge-success">CREATED</span>
@@ -142,7 +142,7 @@
                                     </div>
                                 </div>
                                 <div class="card-footer">
-                                    <button type="button" id="docSave" class="btn btn-sm btn-outline-primary"><i class="far fa-save"></i> Save</button>
+                                    <button type="button" id="docSave" class="btn btn-sm btn-outline-primary"><i class="far fa-save"></i> Create</button>
                                     <button type="button" id="docCancel" class="btn btn-sm btn-outline-danger"><i class="fas fa-undo"></i> Cancel</button>
                                 </div>
                             </div>
@@ -195,7 +195,7 @@
                                     </div>
                                     <div class="form-row">
                                         <div class="col-md-4"><label>Work Type</label></div>
-                                        <div class="col-md-8 p-1"><input type="text" id="mri_worktype" class="form-control" placeholder="Work Type" /></div>
+                                        <div class="col-md-8 p-1"><select id="mri_worktype" class="form-control"></select></div>
                                     </div>
                                     <div id="inspTaskArea">
                                         <div class="form-row">
@@ -268,7 +268,7 @@
                                     <div id="tgtaskoffsetsampleArea">
                                         <div class="form-row">
                                             <div class="col-md-4"><label>TG Task Offset Sample  <i id="more_tgtaskoffsetsample" class="fas fa-chevron-circle-down"></i></label></div>
-                                            <div class="col-md-8 p-1"><input type="text" id="mri_tgoffsetsamp" name="mri_tgoffsetsamp" class="form-control" placeholder="TG Task Offset Sample" /></div>
+                                            <div class="col-md-8 p-1"><input type="text" id="mritgoffsetsamp" name="mritgoffsetsamp" class="form-control" placeholder="TG Task Offset Sample" /></div>
                                         </div>
                                     </div>
                                     <div id="tgtasklimitsampleArea">
@@ -376,60 +376,166 @@
         var labOffice = $('#labOffice').val();
         var docDesc = $('#documentDesc').val();
 
-        v_docHeader = { 'docNo': docNumber, 'docType': docType, 'docPart': docPart, 'docVersion': docVersion, 'description': docDesc, 'laboratory': labOffice, 'userName': userName };
+        v_docHeader = { 'docNo': docNumber, 'docType': docType, 'docPart': docPart, 'docVersion': docVersion, 'description': docDesc, 'laboratory': labOffice, 'userName': userName, 'attachments': attachmentList };
     }
 
     function getMRIClassData() {
-        var aircraftModel = '';
+        var aircraftModel = [];
         $(selected).each(function (index, item) {
-            aircraftModel = aircraftModel + (item.value + "; ");
+            aircraftModel.push(item.value);
         });
 
         var revNumber = $('#mri_revNo').val();
         var revDate = $('#mri_revDate').val();
         var revCode = $('#mri_revCode').val();
-        var acZone = $('#mri_acZone').val();
-        var mpSource = $('#mri_mpSource').val();
-        var taskSelection = $('#mri_mptasksection').val();
+
+        var acZone = [];
+        $('input[name ^= "mri_acZone"]').each(function () {
+            acZone.push($(this).val());
+        });
+        
+        var mpSource = [];
+        $('select[name ^= "mri_mpSource"]').each(function () {
+            mpSource.push($(this).val());
+        });
+
+        var taskSelection = [];
+        $('select[name ^= "mri_mptasksection"]').each(function () {
+            taskSelection.push($(this).val());
+        });
+
         var samplingPercent = $('#mri_persampinsp').val();
         var workType = $('#mri_worktype').val();
-        var inspectSpecial = $('#mri_specident').val();
+
+        var inspectSpecial = [];
+        $('select[name ^= "mri_specident"]').each(function () {
+            inspectSpecial.push($(this).val());
+        });
+        
         var mpTaskNumber = $('#mri_origMPTask').val();
-        var tgTaskNumber = $('#mri_origMPTask').val();
+        var tgTaskNumber = $('#mri_tgmptask').val();
         var validFrom = $('#mri_begEffDate').val();
         var mpTaskStatus = $('#mri_mpTaskStatus').val();
         var mpTaskMH = $('#mri_mpTaskMH').val();
-        var accessPanel = $('#mri_accesspanelinfo').val();
-        var mpdOffset = $('#mri_oemtaskoffset').val();
-        var mpdLimitInterval = '';
-        if ($('#mri_oemtasklimit').val() != undefined && $('#mri_oemtasklimit').val() != '') {
-            mpdLimitInterval = $('#mri_oemtasklimit').val() + $('#MPDInterval').val();
-        }
-        var mpdOffsetSample = $('#mri_oemtaskoffset').val();
-        var mpdIntervalSample = $('#mri_oemtaskinterval').val();
-        var tgTaskOffset = $('#mri_tgtaskoffset').val();
-        var tgTaskLimit = '';
-        if ($('#mri_tgtasklimit').val() != undefined && $('#mri_tgtasklimit').val() != '') {
-            tgTaskLimit = $('#mri_tgtasklimit').val() + $('#TGInterval').val();
-        }
-        var tgTaskOffsetSample = $('#mri_tgoffsetsamp').val();
-        var tgTaskLimitSample = $('#mri_tgintervalsam').val();
-        var mpdEngineEff = $('#mri_mpdengeff').val();
-        var mpdAircraftEff = $('mri_mpdaceff').val();
-        var tgAircraftEff = '';
-        $(tgAcEff).each(function (index, item) {
-            tgAircraftEff = tgAircraftEff + (item + "; ");
+
+        var accessPanel = [];
+        $('input[name ^= "mri_accesspanelinfo"]').each(function () {
+            accessPanel.push($(this).val());
         });
-        var mpdReference = $('#mri_mpdref').val();
-        var otherReference = $('#mri_otherref').val();
+
+        var mpdOffset = [];
+        $('input[name ^= "mri_oemtaskoffset"]').each(function () {
+            mpdOffset.push($(this).val());
+        });
+
+        var arr_mpdlimitinterval = [];
+        var arr_mpdinterval = [];
+
+        $('input[name ^= "mri_oemtasklimit"]').each(function () {
+            arr_mpdlimitinterval.push($(this).val());
+        });
+
+        $('select[name ^= "MPDInterval"]').each(function () {
+            arr_mpdinterval.push($(this).val());
+        });
+
+        var mpdLimitInterval = [];
+        $.each(arr_mpdlimitinterval, function (index, value) {
+            if (arr_mpdlimitinterval[index] != undefined && arr_mpdlimitinterval[index] != "") {
+                mpdLimitInterval.push(arr_mpdlimitinterval[index] + " " + arr_mpdinterval[index]);
+            }
+        });
+        
+        var mpdOffsetSample = [];
+        $('input[name ^= "mrioemtaskoffset"]').each(function () {
+            mpdOffsetSample.push($(this).val());
+        });
+        
+        var mpdIntervalSample = [];
+        $('input[name ^= "mri_oemtaskinterval"]').each(function () {
+            mpdIntervalSample.push($(this).val());             
+        });
+        
+        var tgTaskOffset = [];
+        $('input[name ^= "mri_tgtaskoffset"]').each(function () {
+            tgTaskOffset.push($(this).val());
+        });
+
+        var arr_tglimitinterval = [];
+        var arr_tginterval = [];
+
+        $('input[name ^= "mri_tgtasklimit"]').each(function () {
+            arr_tglimitinterval.push($(this).val());
+        });
+
+        $('select[name ^= "TGInterval"]').each(function () {
+            arr_tginterval.push($(this).val());
+        });
+
+        var tgTaskLimit = [];
+        $.each(arr_tglimitinterval, function (index, value) {
+            if (arr_tglimitinterval[index] != undefined && arr_tglimitinterval[index] != "") {
+                tgTaskLimit.push(arr_tglimitinterval[index] + " " + arr_tginterval[index]);
+            }
+        });
+        
+        var tgTaskOffsetSample = [];
+        $('input[name ^= "mritgoffsetsamp"]').each(function () {
+            tgTaskOffsetSample.push($(this).val());
+        });
+        
+        var tgTaskLimitSample = [];
+        $('input[name ^= "mri_tgintervalsam"]').each(function () {
+            tgTaskLimitSample.push($(this).val());
+        });
+        
+        var mpdEngineEff = [];
+        $('input[name ^= "mri_mpdengeff"]').each(function () {
+            mpdEngineEff.push($(this).val());
+        });
+        
+        var mpdAircraftEff = [];
+        $('input[name ^= "mri_mpdaceff"]').each(function () {
+            mpdAircraftEff.push($(this).val());
+        });
+        
+        var tgAircraftEff = [];
+        $(tgAcEff).each(function (index, item) {
+            tgAircraftEff.push(item);
+        });
+
+        var mpdReference = [];
+        $('input[name ^= "mri_mpdref"]').each(function () {
+            mpdReference.push($(this).val());
+        });
+        
+        var otherReference = [];
+        $('input[name ^= "mri_otherref"]').each(function () {
+            otherReference.push($(this).val());
+        });
+        
         var detecCode = $('#mri_detectcode').val();
-        var inspReportReq = $('#mri_inspreq').val();
-        var tgIntervalOffsetNote = $('#mri_tgoffsetnote').val();
-        var tgDepending = $('#mri_depending').val();
+
+        var v_inspreq = "";
+        if ($('#mri_inspreq').prop('checked') == true)
+        {
+            v_inspreq = "Y";
+        }
+        var inspReportReq = v_inspreq;
+
+        var tgIntervalOffsetNote = [];
+        $('input[name ^= "mri_tgoffsetnote"]').each(function () {
+            tgIntervalOffsetNote.push($(this).val());
+        });
+        
+        var tgDepending = [];
+        $('input[name ^=  "mri_depending"]').each(function () {
+            tgDepending.push($(this).val());
+        });        
         var reason = $('#mri_reason').val();
         var engineeringNote = $('#mri_engnote').val();
 
-        v_mriClass = { 'acModel': aircraftModel, 'revNumber': revNumber, 'revDate': revDate, 'revCode': revCode, 'acZone': acZone, 'mpSource': mpSource, 'taskSelection': taskSelection, 'samplingPercent': samplingPercent, 'workType': workType, 'inspectSpecial': inspectSpecial, 'mpTaskNumber': mpTaskNumber, 'tgTaskNumber': tgTaskNumber, 'validFrom': validFrom, 'mpTaskStatus': mpTaskStatus, 'mpTaskMH': mpTaskMH, 'accessPanel': accessPanel, 'mpdOffset': mpdOffset, 'mpdLimitInterval': mpdLimitInterval, 'mpdOffsetSample': mpdOffsetSample, 'mpdIntervalSample': mpdIntervalSample, 'tgTaskOffset': tgTaskOffset, 'tgTaskLimit': tgTaskLimit, 'tgTaskOffsetSample': tgTaskOffsetSample, 'tgTaskLimitSample': tgTaskLimitSample, 'mpdEngineEff': mpdEngineEff, 'mpdAircraftEff': mpdAircraftEff, 'tgAircraftEff': tgAircraftEff, 'mpdReference': mpdReference, 'otherReference': otherReference, 'detecCode': detecCode, 'inspReportReq': inspReportReq, 'tgIntervalOffsetNote': tgIntervalOffsetNote, 'tgDepending': tgDepending, 'reason': reason, 'engineeringNote': engineeringNote };
+        v_mriClass = { 'acModel': aircraftModel, 'revNumber': revNumber, 'revDate': revDate, 'revCode': revCode, 'acZone': acZone, 'mpSource': mpSource, 'taskSection': taskSelection, 'samplingPercent': samplingPercent, 'workType': workType, 'inspectSpecial': inspectSpecial, 'mpTaskNumber': mpTaskNumber, 'tgTaskNumber': tgTaskNumber, 'validFrom': validFrom, 'mpTaskStatus': mpTaskStatus, 'mpTaskMH': mpTaskMH, 'accessPanel': accessPanel, 'mpdOffset': mpdOffset, 'mpdLimitInterval': mpdLimitInterval, 'mpdOffsetSample': mpdOffsetSample, 'mpdIntervalSample': mpdIntervalSample, 'tgTaskOffset': tgTaskOffset, 'tgTaskLimit': tgTaskLimit, 'tgTaskOffsetSample': tgTaskOffsetSample, 'tgTaskLimitSample': tgTaskLimitSample, 'mpdEngineEff': mpdEngineEff, 'mpdAircraftEff': mpdAircraftEff, 'tgAircraftEff': tgAircraftEff, 'mpdReference': mpdReference, 'otherReference': otherReference, 'detecCode': detecCode, 'inspReportReq': inspReportReq, 'tgIntervalOffsetNote': tgIntervalOffsetNote, 'tgDepending': tgDepending, 'reason': reason, 'engineeringNote': engineeringNote };
     }
 
     function getLaboratories() {
@@ -645,8 +751,10 @@
             success: function (response) {
                 var jsonData = (response.d) ? $.parseJSON(response.d) : $.parseJSON(response);
 
-                if (jsonData.result)
+                if (jsonData.result) {                    
                     toastr["success"](jsonData.message);
+                    window.location = "NewVersion.html?MODE=CHANGE&DOCUMENTNUMBER=" + jsonData.docNumber + "&DOCUMENTPART=" + jsonData.docPart + "&DOCUMENTVERSION=" + jsonData.docVersion;
+                }
                 else
                     toastr["error"](jsonData.message);
             },
@@ -819,6 +927,39 @@
         }
         $('#mpdintervalsampleArea input:last').focus();
     });
+
+    $('#more_tgtaskoffsetsample').click(function (e) {
+        lastValue = $('#tgtaskoffsetsampleArea input:last').val();
+        if (lastValue != undefined && lastValue != "") {
+            $('#tgtaskoffsetsampleArea').append('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1"><input type="text" class="form-control" name="mritgoffsetsamp[]" placeholder="TG Task Offset Sample" value="" /></div></div>');
+        }
+        $('#tgtaskoffsetsampleArea input:last').focus();
+    });
+
+    $('#more_tgtasklimitsample').click(function (e) {
+        lastValue = $('#tgtasklimitsampleArea input:last').val();
+        if (lastValue != undefined && lastValue != "") {
+            $('#tgtasklimitsampleArea').append('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1"><input type="text" class="form-control" name="mri_tgintervalsam[]" placeholder="TG Task Interval Sample" value="" /></div></div>');
+        }
+        $('#tgtasklimitsampleArea input:last').focus();
+    });
+
+    $('#more_mpdengineeff').click(function (e) {
+        lastValue = $('#mpdengineeffArea input:last').val();
+        if (lastValue != undefined && lastValue != "") {
+            $('#mpdengineeffArea').append('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1"><input type="text" class="form-control" name="mri_mpdengeff[]" placeholder="MPD Engine Effectivity" value="" /></div></div>');
+        }
+        $('#mpdengineeffArea input:last').focus();
+    });
+
+    $('#more_mpdaircrafteff').click(function (e) {
+        lastValue = $('#mpdaircrafteffArea input:last').val();
+        if (lastValue != undefined && lastValue != "") {
+            $('#mpdaircrafteffArea').append('<div class="form-row"><div class="col-md-4">&nbsp;</div><div class="col-md-8 p-1"><input type="text" class="form-control" name="mri_mpdaceff[]" placeholder="MPD Aircraft Effectivity" value="" /></div></div>');
+        }
+        $('#mpdaircrafteffArea input:last').focus();
+    });
+
 
     $('#fileupload').fileupload({
         url: 'DocUploadHandler.ashx',

@@ -278,7 +278,7 @@ public class SAPConnectionInterface
             allocTab.Append();
             allocTab.SetValue("CLASSTYPE", "017");
             allocTab.SetValue("CLASSNAME", "Z_MRI");
-
+            
             IRfcTable mriClass = createFunc.GetTable("LT_CHARACT");
 
             foreach (String acModel in mri.acModel)
@@ -318,8 +318,17 @@ public class SAPConnectionInterface
                     mriClass.Append();
                     mriClass.SetValue("CLASSTYPE", "017");
                     mriClass.SetValue("CLASSNAME", "Z_MRI");
-                    mriClass.SetValue("CHARNAME", "Z_AC_ZONE");
-                    mriClass.SetValue("CHARVALUE", acZone);
+                    mriClass.SetValue("CHARNAME", "Z_AC_ZONE");                    
+
+                    if (acZone.StartsWith("X-DELETED-X"))
+                    {
+                        mriClass.SetValue("CHARVALUE", acZone.Substring(11)); ;
+                        mriClass.SetValue("DELETEVALUE", 'X');
+                    }
+                    else
+                    {
+                        mriClass.SetValue("CHARVALUE", acZone);
+                    }
                 }
             }
 
@@ -331,7 +340,15 @@ public class SAPConnectionInterface
                     mriClass.SetValue("CLASSTYPE", "017");
                     mriClass.SetValue("CLASSNAME", "Z_MRI");
                     mriClass.SetValue("CHARNAME", "Z_MP_SOURCE");
-                    mriClass.SetValue("CHARVALUE", mpSource);
+                    if (mpSource.StartsWith("X-DELETED-X"))
+                    {
+                        mriClass.SetValue("CHARVALUE", mpSource.Substring(11));
+                        mriClass.SetValue("DELETEVALUE", 'X');
+                    }
+                    else
+                    {
+                        mriClass.SetValue("CHARVALUE", mpSource);
+                    }
                 }
             }
 
@@ -343,7 +360,15 @@ public class SAPConnectionInterface
                     mriClass.SetValue("CLASSTYPE", "017");
                     mriClass.SetValue("CLASSNAME", "Z_MRI");
                     mriClass.SetValue("CHARNAME", "Z_TASK_SECTION");
-                    mriClass.SetValue("CHARVALUE", taskSection);
+                    if (taskSection.StartsWith("X-DELETED-X"))
+                    {
+                        mriClass.SetValue("CHARVALUE", taskSection.Substring(11));
+                        mriClass.SetValue("DELETEVALUE", 'X');
+                    }
+                    else
+                    {
+                        mriClass.SetValue("CHARVALUE", taskSection);
+                    }
                 }
             }
 
@@ -367,7 +392,15 @@ public class SAPConnectionInterface
                     mriClass.SetValue("CLASSTYPE", "017");
                     mriClass.SetValue("CLASSNAME", "Z_MRI");
                     mriClass.SetValue("CHARNAME", "Z_INSP_SPECIAL1");
-                    mriClass.SetValue("CHARVALUE", inspectSpecial);
+                    if (inspectSpecial.StartsWith("X-DELETED-X"))
+                    {
+                        mriClass.SetValue("CHARVALUE", inspectSpecial.Substring(11));
+                        mriClass.SetValue("DELETEVALUE", 'X');
+                    }
+                    else
+                    {
+                        mriClass.SetValue("CHARVALUE", inspectSpecial);
+                    }
                 }
             }
 
@@ -414,7 +447,15 @@ public class SAPConnectionInterface
                     mriClass.SetValue("CLASSTYPE", "017");
                     mriClass.SetValue("CLASSNAME", "Z_MRI");
                     mriClass.SetValue("CHARNAME", "Z_ACCESS_PANEL_NUMBER");
-                    mriClass.SetValue("CHARVALUE", accessPanel);
+                    if (accessPanel.StartsWith("X-DELETED-X"))
+                    {
+                        mriClass.SetValue("CHARVALUE", accessPanel.Substring(11));
+                        mriClass.SetValue("DELETEVALUE", 'X');
+                    }
+                    else
+                    {
+                        mriClass.SetValue("CHARVALUE", accessPanel);
+                    }
                 }
             }
 
@@ -426,7 +467,15 @@ public class SAPConnectionInterface
                     mriClass.SetValue("CLASSTYPE", "017");
                     mriClass.SetValue("CLASSNAME", "Z_MRI");
                     mriClass.SetValue("CHARNAME", "Z_MPD_OFFSET");
-                    mriClass.SetValue("CHARVALUE", mpdOffset);
+                    if (mpdOffset.StartsWith("X-DELETED-X"))
+                    {
+                        mriClass.SetValue("CHARVALUE", mpdOffset.Substring(11));
+                        mriClass.SetValue("DELETEVALUE", 'X');
+                    }
+                    else
+                    {
+                        mriClass.SetValue("CHARVALUE", mpdOffset);
+                    }
                 }
             }
 
@@ -438,7 +487,15 @@ public class SAPConnectionInterface
                     mriClass.SetValue("CLASSTYPE", "017");
                     mriClass.SetValue("CLASSNAME", "Z_MRI");
                     mriClass.SetValue("CHARNAME", "Z_MPD_LIMIT-INTERVAL");
-                    mriClass.SetValue("CHARVALUE", mpdLimitInterval);
+                    if (mpdLimitInterval.StartsWith("X-DELETED-X"))
+                    {
+                        mriClass.SetValue("CHARVALUE", mpdLimitInterval.Substring(11));
+                        mriClass.SetValue("DELETEVALUE", 'X');
+                    }
+                    else
+                    {
+                        mriClass.SetValue("CHARVALUE", mpdLimitInterval);
+                    }
                 }
             }
 
@@ -450,7 +507,15 @@ public class SAPConnectionInterface
                     mriClass.SetValue("CLASSTYPE", "017");
                     mriClass.SetValue("CLASSNAME", "Z_MRI");
                     mriClass.SetValue("CHARNAME", "Z_MPD_OFFSET_SAMPLE");
-                    mriClass.SetValue("Z_MPD_OFFSET_SAMPLE", mpdOffsetSample);
+                    if (mpdOffsetSample.StartsWith("X-DELETED-X"))
+                    {
+                        mriClass.SetValue("CHARVALUE", mpdOffsetSample.Substring(11));
+                        mriClass.SetValue("DELETEVALUE", 'X');
+                    }
+                    else
+                    {
+                        mriClass.SetValue("CHARVALUE", mpdOffsetSample);
+                    }
                 }
             }
 
@@ -462,7 +527,15 @@ public class SAPConnectionInterface
                     mriClass.SetValue("CLASSTYPE", "017");
                     mriClass.SetValue("CLASSNAME", "Z_MRI");
                     mriClass.SetValue("CHARNAME", "Z_MPD_LIMIT-INTERVAL_SAMPLE");
-                    mriClass.SetValue("CHARVALUE", mpdIntervalSample);
+                    if (mpdIntervalSample.StartsWith("X-DELETED-X"))
+                    {
+                        mriClass.SetValue("CHARVALUE", mpdIntervalSample.Substring(11));
+                        mriClass.SetValue("DELETEVALUE", 'X');
+                    }
+                    else
+                    {
+                        mriClass.SetValue("CHARVALUE", mpdIntervalSample);
+                    }
                 }
             }
 
@@ -474,7 +547,15 @@ public class SAPConnectionInterface
                     mriClass.SetValue("CLASSTYPE", "017");
                     mriClass.SetValue("CLASSNAME", "Z_MRI");
                     mriClass.SetValue("CHARNAME", "Z_TG_OFFSET");
-                    mriClass.SetValue("Z_TG_OFFSET", tgTaskOffset);
+                    if (tgTaskOffset.StartsWith("X-DELETED-X"))
+                    {
+                        mriClass.SetValue("CHARVALUE", tgTaskOffset.Substring(11));
+                        mriClass.SetValue("DELETEVALUE", 'X');
+                    }
+                    else
+                    {
+                        mriClass.SetValue("CHARVALUE", tgTaskOffset);
+                    }
                 }
             }
 
@@ -486,7 +567,15 @@ public class SAPConnectionInterface
                     mriClass.SetValue("CLASSTYPE", "017");
                     mriClass.SetValue("CLASSNAME", "Z_MRI");
                     mriClass.SetValue("CHARNAME", "Z_TG_LIMIT-INTERVAL");
-                    mriClass.SetValue("CHARVALUE", tgTaskLimit);
+                    if (tgTaskLimit.StartsWith("X-DELETED-X"))
+                    {
+                        mriClass.SetValue("CHARVALUE", tgTaskLimit.Substring(11));
+                        mriClass.SetValue("DELETEVALUE", 'X');
+                    }
+                    else
+                    {
+                        mriClass.SetValue("CHARVALUE", tgTaskLimit);
+                    }
                 }
             }
 
@@ -498,7 +587,15 @@ public class SAPConnectionInterface
                     mriClass.SetValue("CLASSTYPE", "017");
                     mriClass.SetValue("CLASSNAME", "Z_MRI");
                     mriClass.SetValue("CHARNAME", "Z_TG_OFFSET_SAMPLE");
-                    mriClass.SetValue("CHARVALUE", tgTaskOffsetSample);
+                    if (tgTaskOffsetSample.StartsWith("X-DELETED-X"))
+                    {
+                        mriClass.SetValue("CHARVALUE", tgTaskOffsetSample.Substring(11));
+                        mriClass.SetValue("DELETEVALUE", 'X');
+                    }
+                    else
+                    {
+                        mriClass.SetValue("CHARVALUE", tgTaskOffsetSample);
+                    }
                 }
             }
 
@@ -510,7 +607,15 @@ public class SAPConnectionInterface
                     mriClass.SetValue("CLASSTYPE", "017");
                     mriClass.SetValue("CLASSNAME", "Z_MRI");
                     mriClass.SetValue("CHARNAME", "Z_TG_LIMIT-INTERVAL_SAMPLE");
-                    mriClass.SetValue("CHARVALUE", tgTaskLimitSample);
+                    if (tgTaskLimitSample.StartsWith("X-DELETED-X"))
+                    {
+                        mriClass.SetValue("CHARVALUE", tgTaskLimitSample.Substring(11));
+                        mriClass.SetValue("DELETEVALUE", 'X');
+                    }
+                    else
+                    {
+                        mriClass.SetValue("CHARVALUE", tgTaskLimitSample);
+                    }
                 }
             }
 
@@ -522,7 +627,15 @@ public class SAPConnectionInterface
                     mriClass.SetValue("CLASSTYPE", "017");
                     mriClass.SetValue("CLASSNAME", "Z_MRI");
                     mriClass.SetValue("CHARNAME", "Z_MPD_APPLICABILITY_ENG");
-                    mriClass.SetValue("CHARVALUE", mpdEngineEff);
+                    if (mpdEngineEff.StartsWith("X-DELETED-X"))
+                    {
+                        mriClass.SetValue("CHARVALUE", mpdEngineEff.Substring(11));
+                        mriClass.SetValue("DELETEVALUE", 'X');
+                    }
+                    else
+                    {
+                        mriClass.SetValue("CHARVALUE", mpdEngineEff);
+                    }
                 }
             }
 
@@ -534,7 +647,15 @@ public class SAPConnectionInterface
                     mriClass.SetValue("CLASSTYPE", "017");
                     mriClass.SetValue("CLASSNAME", "Z_MRI");
                     mriClass.SetValue("CHARNAME", "Z_MPD_APPLICABILITY_AC");
-                    mriClass.SetValue("CHARVALUE", mpdAircraftEff);
+                    if (mpdAircraftEff.StartsWith("X-DELETED-X"))
+                    {
+                        mriClass.SetValue("CHARVALUE", mpdAircraftEff.Substring(11));
+                        mriClass.SetValue("DELETEVALUE", 'X');
+                    }
+                    else
+                    {
+                        mriClass.SetValue("CHARVALUE", mpdAircraftEff);
+                    }
                 }
             }
 
@@ -546,7 +667,15 @@ public class SAPConnectionInterface
                     mriClass.SetValue("CLASSTYPE", "017");
                     mriClass.SetValue("CLASSNAME", "Z_MRI");
                     mriClass.SetValue("CHARNAME", "Z_TG_APPLICABILITY_AC");
-                    mriClass.SetValue("CHARVALUE", tgAircraftEff);
+                    if (tgAircraftEff.StartsWith("X-DELETED-X"))
+                    {
+                        mriClass.SetValue("CHARVALUE", tgAircraftEff.Substring(11));
+                        mriClass.SetValue("DELETEVALUE", 'X');
+                    }
+                    else
+                    {
+                        mriClass.SetValue("CHARVALUE", tgAircraftEff);
+                    }
                 }
             }
 
@@ -558,7 +687,15 @@ public class SAPConnectionInterface
                     mriClass.SetValue("CLASSTYPE", "017");
                     mriClass.SetValue("CLASSNAME", "Z_MRI");
                     mriClass.SetValue("CHARNAME", "Z_MPD_REFERENCE_DOCUMENT");
-                    mriClass.SetValue("Z_MPD_REFERENCE_DOCUMENT", mpdReference);
+                    if (mpdReference.StartsWith("X-DELETED-X"))
+                    {
+                        mriClass.SetValue("CHARVALUE", mpdReference.Substring(11));
+                        mriClass.SetValue("DELETEVALUE", 'X');
+                    }
+                    else
+                    {
+                        mriClass.SetValue("CHARVALUE", mpdReference);
+                    }
                 }
             }
 
@@ -570,7 +707,15 @@ public class SAPConnectionInterface
                     mriClass.SetValue("CLASSTYPE", "017");
                     mriClass.SetValue("CLASSNAME", "Z_MRI");
                     mriClass.SetValue("CHARNAME", "Z_REFERENCE_DOCUMENT");
-                    mriClass.SetValue("CHARVALUE", otherReference);
+                    if (otherReference.StartsWith("X-DELETED-X"))
+                    {
+                        mriClass.SetValue("CHARVALUE", otherReference.Substring(11));
+                        mriClass.SetValue("DELETEVALUE", 'X');
+                    }
+                    else
+                    {
+                        mriClass.SetValue("CHARVALUE", otherReference);
+                    }
                 }
             }
 
@@ -594,7 +739,15 @@ public class SAPConnectionInterface
                     mriClass.SetValue("CLASSTYPE", "017");
                     mriClass.SetValue("CLASSNAME", "Z_MRI");
                     mriClass.SetValue("CHARNAME", "Z_TG_INT_OFFSET_NOTE");
-                    mriClass.SetValue("CHARVALUE", tgIntervalOffsetNote);
+                    if (tgIntervalOffsetNote.StartsWith("X-DELETED-X"))
+                    {
+                        mriClass.SetValue("CHARVALUE", tgIntervalOffsetNote.Substring(11));
+                        mriClass.SetValue("DELETEVALUE", 'X');
+                    }
+                    else
+                    {
+                        mriClass.SetValue("CHARVALUE", tgIntervalOffsetNote);
+                    }
                 }
             }            
 
@@ -606,7 +759,15 @@ public class SAPConnectionInterface
                     mriClass.SetValue("CLASSTYPE", "017");
                     mriClass.SetValue("CLASSNAME", "Z_MRI");
                     mriClass.SetValue("CHARNAME", "Z_TG_DEPENDING");
-                    mriClass.SetValue("CHARVALUE", tgDepending);
+                    if (tgDepending.StartsWith("X-DELETED-X"))
+                    {
+                        mriClass.SetValue("CHARVALUE", tgDepending.Substring(11));
+                        mriClass.SetValue("DELETEVALUE", 'X');
+                    }
+                    else
+                    {
+                        mriClass.SetValue("CHARVALUE", tgDepending);
+                    }
                 }
             }            
 
@@ -628,33 +789,109 @@ public class SAPConnectionInterface
                         longTextTab.SetValue("LANGUAGE", 'S');
                         longTextTab.SetValue("LANGUAGE_ISO", "EN");
                         longTextTab.SetValue("TEXTLINE", "TEXT LINE");
-
-                        IRfcTable descTab = createFunc.GetTable("LT_DESC");
-                        descTab.Append();
-                        descTab.SetValue("DELETEVALUE", ' ');
-                        descTab.SetValue("LANGUAGE", 'S');
-                        descTab.SetValue("LANGUAGE_ISO", "EN");
-                        descTab.SetValue("DESCRIPTION", "DESCRIPTION");
-                        descTab.SetValue("TEXTINDICATOR", 'X');            
             */
+              
+            IRfcTable descTab = createFunc.GetTable("LT_DESC");
+            descTab.Append();
+            descTab.SetValue("DELETEVALUE", ' ');
+            descTab.SetValue("LANGUAGE", 'E');
+            descTab.SetValue("LANGUAGE_ISO", "EN");
+            descTab.SetValue("DESCRIPTION", doc.description);
+            descTab.SetValue("TEXTINDICATOR", ' ');            
+            
             createFunc.Invoke(rfcDestination);
 
             IRfcStructure createResult = createFunc.GetStructure("EX_RETURN");
             char iResult = createResult.GetChar("TYPE");
 
-            if (iResult == 'S' || iResult == 'W')
+            if (iResult == 'S' || iResult == 'W' || iResult == ' ')
             {
                 result.result = true;
                 String docType = createFunc.GetString("EX_DOCTYPE");
                 String docNumber = createFunc.GetString("EX_DOCNUMBER");
                 String docPart = createFunc.GetString("EX_DOCPART");
                 String docVersion = createFunc.GetString("EX_DOCVERSION");
+                result.docNumber = docNumber;
+                result.docType = docType;
+                result.docPart = docPart;
+                result.docVersion = docVersion;
                 result.message = $"{docNumber}-{docType}-{docPart}-{docVersion} has been created successfully";
             }
             else
             {
                 result.result = false;
                 result.message = createResult.GetString("MESSAGE");
+            }
+
+            if (result.result)
+            {
+                foreach (dmsFile attch in doc.attachments)
+                {
+                    if (attch.updateStatus != null && attch.updateStatus.Equals("N"))
+                    {
+                        IRfcFunction checkinFunc = rfcRepo.CreateFunction("CVAPI_DOC_CHECKIN");
+                        checkinFunc.SetValue("PF_DOKAR", result.docType);
+                        checkinFunc.SetValue("PF_DOKNR", result.docNumber);
+                        checkinFunc.SetValue("PF_DOKTL", result.docPart);
+                        checkinFunc.SetValue("PF_DOKVR", result.docVersion);
+                        checkinFunc.SetValue("PF_CONTENT_PROVIDE", "TBL");
+
+                        IRfcTable docFile = checkinFunc.GetTable("PT_FILES_X");
+                        docFile.Append();
+                        String appl = attch.application.ToUpper();
+                        switch (appl)
+                        {
+                            case "PPT": appl = "PPT"; break;
+                            case "PPTX": appl = "PPT"; break;
+                            case "DOC": appl = "WWI"; break;
+                            case "DOCX": appl = "WWI"; break;
+                            case "JPG": appl = "GRF"; break;
+                            case "PNG": appl = "GRF"; break;
+                            case "GIF": appl = "GRF"; break;
+                            case "XLS": appl = "XLS"; break;
+                            case "XLSX": appl = "XLS"; break;
+                            case "ZIP": appl = "ZIP"; break;
+                            case "RAR": appl = "ZIP"; break;
+                        }
+                        docFile.SetValue("DAPPL", appl);
+                        docFile.SetValue("STORAGE_CAT", "XD");
+                        docFile.SetValue("FILENAME", attch.docFile);
+
+                        IRfcTable contentFile = checkinFunc.GetTable("PT_CONTENT");
+                        byte[] content = ReadAllBytes(attch.origFile);
+                        int fileSize = content.Length;
+                        int remaining = content.Length;
+
+                        int xPos = 0;
+
+                        int rowCount = 0;
+                        while (xPos < fileSize)
+                        {
+                            byte[] rowData = new byte[2550];
+
+                            contentFile.Append();
+                            if (xPos + 2550 > fileSize)
+                            {
+                                System.Array.Copy(content, xPos, rowData, 0, fileSize - xPos);
+                                contentFile.SetValue("ORBkl", fileSize - xPos);
+                                contentFile.SetValue("orblk", rowData);
+                            }
+                            else
+                            {
+                                System.Array.Copy(content, xPos, rowData, 0, 2550);
+                                contentFile.SetValue("ORBkl", 2550);
+                                contentFile.SetValue("orblk", rowData);
+                            }
+                            contentFile.SetValue("appnr", '1');
+                            contentFile.SetValue("orln", fileSize);
+                            contentFile.SetValue("zaehl", ++rowCount);
+                            xPos += 2550;
+                        }
+                        checkinFunc.Invoke(rfcDestination);
+                        IRfcStructure message = checkinFunc.GetStructure("PSX_MESSAGE");
+                        Console.WriteLine("Check-in Status: " + message.GetString("MSG_TXT"));
+                    }
+                }
             }
         }
         catch (Exception ex)
@@ -1235,6 +1472,10 @@ public class SAPConnectionInterface
             if (iResult == 'S' || iResult == 'W' || iResult == ' ')
             {
                 result.result = true;
+                result.docNumber = doc.docNo;
+                result.docPart = doc.docPart;
+                result.docType = doc.docType;
+                result.docVersion = doc.docVersion;
                 result.message = $"{doc.docNo}-{doc.docType}-{doc.docPart}-{doc.docVersion} has been updated successfully";
             }
             else

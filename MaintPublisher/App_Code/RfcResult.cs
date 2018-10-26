@@ -10,6 +10,10 @@ public class RfcResult
 {
     public bool result;
     public String message;
+    public String docNumber;
+    public String docType;
+    public String docPart;
+    public String docVersion;
 
     public RfcResult()
     {
